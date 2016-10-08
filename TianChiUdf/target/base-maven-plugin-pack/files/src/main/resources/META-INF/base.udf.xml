@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<udf>
+    <!-- profile -->
+    <baseId>0761455691</baseId>
+    <projectId>12744</projectId>
+    <resourceName>TianChiUdf</resourceName>
+    <functionName>myudf</functionName>
+    <idePath>工作流/udf</idePath>
+
+    <!-- classes -->
+    <className>hadoop.TianChiUdf.MyUDF</className>
+</udf>
