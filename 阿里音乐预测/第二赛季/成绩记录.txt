@@ -1,0 +1,163 @@
+成绩记录--(第一赛季最后成绩=0.75(一阶指数平滑+均值)+0.25STL+人工调整异常)
+随机森林+53均值----52256
+53天均值平滑-------52200
+一阶指数平滑-------52838
+xgboost算法 -------51503
+随机森林预测-------51953
+一阶指数平滑+53均值---53180
+规则1+2+53180------52916  (有新歌的所有的歌手--前30使用指数平滑plays1  后30使用均值/融合plays2)
+规则1+53180--------53011 (plays1周67预测值减去前七天方差)
+Xgboost线上--------49663
+一阶指数平滑新序列--52915
+30均值--------------52667
+一阶指数平滑新序列+30均值----53148
+错误的均值回归---------49551
+stlm两个月----------52906
+0.75指数平滑+53均值+0.25stlm两个月---53313  0.8 0.2
+0.75(指数平滑x+14均值)+0.25stlm两个月--53553 
+0.75(每首歌指数平滑x+14均值)+0.25stlm两个月--53953 
+
+1 错误的均值回归---------49551
+2 Xgboost线上------------49663
+  xgboost算法 -----------51503x--无法唯一一个数
+  随机森林预测-----------51953x
+3 53天均值平滑-----------52200
+  随机森林+53均值--------52256x
+4 30均值x-----------------52667
+5 一阶指数平滑-----------52838
+6 一阶指数平滑新序列-----52915
+7 指数平滑新+30均值------53148
+8 指数平滑+53均值--------53180
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每个歌手每天播放量.csv",header = FALSE,sep=",")
+w1=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/错误的均值回归49551.txt",header = FALSE,sep=",")
+w2=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/Xgboostresult3.txt",header = FALSE,sep=",")
+w2=w2[-1,]
+w3=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/53均值.csv",header = FALSE,sep=",")
+w4=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/均值30平滑-52667.csv",header = FALSE,sep=",")
+w5=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/指数平滑78月.csv",header = FALSE,sep=",")
+w6=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/新序列指数平滑78月2-52915.csv",header = FALSE,sep=",")
+w7=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/新指数30均值融合53148.txt",header = FALSE,sep=",")
+w8=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/指数平滑融合均值.txt",header = FALSE,sep=",")
+w8=w8[-1,]
+s1=sqldf("select * from w1 order by V1,V2")
+s2=sqldf("select * from w2 order by V1,V2")
+s3=sqldf("select V1,V2 from w3 group by V1,V2 order by V1,V2")
+s4=sqldf("select V1,V2 from w4 group by V1,V2 order by V1,V2")
+s5=sqldf("select V1,V2 from w5 group by V1,V2 order by V1,V2")
+s6=sqldf("select V1,V2 from w6 group by V1,V2 order by V1,V2")
+s7=sqldf("select * from w7 order by V1,V2")
+s8=sqldf("select * from w8 order by V1,V2")
+re=data.frame(s1$V1,s1$V2,s2$V2,s3$V2,s4$V2,s5$V2,s6$V2,s7$V2,s8$V2)
+names(re)=c("V1","V2","V3","V4","V5","V6","V7","V8","V9")
+library(recharts)
+source("echartR.R")
+#echartR(q,~V2,~V3,type = "linesmooth")
+x=t(re[,-1])
+y=re$V1
+for(i in 1:100) {
+#r=data.frame(c(1:8),as.numeric(x[,i]))
+pic=data.frame(c(1:8),as.numeric(x[,i]))
+names(pic)=c("V1","V2")
+echartR(pic,~V1,~V2,type = "linesmooth")
+q=w[which(w$V1==y[i]),]
+echartR(q,~V2,~V3,type = "linesmooth")
+}
+小结论：有上升趋势
+re2=re[which(re$V6>8000),]
+x2=t(re2[,-1])
+y2=re2$V1
+for(i in 1:length(re2$V1)) {
+pic2=data.frame(c(1:8),as.numeric(x2[,i]))
+names(pic2)=c("V1","V2")
+echartR(pic2,~V1,~V2,type = "linesmooth")
+q=w[which(w$V1==y2[i]),]
+echartR(q,~V2,~V3,type = "linesmooth")
+}
+write.table (re, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/多组数据对比.csv",sep =",",row.names = F,col.names=F,quote =F) 
+
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每个歌手每天播放量.csv",header = FALSE,sep=",")
+w1=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/指数平滑融合均值2.csv",header = FALSE,sep=",")
+w2=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/新序列均值14天不平滑.csv",header = FALSE,sep=",")
+w3=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/STL分解均值.csv",header = FALSE,sep=",")
+s1=sqldf("select * from w1 order by V1,V2")
+s2=sqldf("select * from w2 order by V1,V2")
+s3=sqldf("select V1,V2 from w3 group by V1,V2 order by V1,V2")
+re=data.frame(s1$V1,s1$V2,s2$V2,s3$V2,(s2$V2-s1$V2),(s3$V2-s1$V2))
+names(re)=c("V1","V2","V3","V4","V5","V6")
+
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/featuretest1.txt",header = TRUE,sep=",")
+re=data.frame(w$recentplay,w$recentplayd3,w$recentplayd7,w$recentplayd15,w$target)
+names(re)=c("V1","V2","V3","V4","V5")
+library(rpart)
+modeltree=rpart(V5 ~ ., data =re)
+summary(modeltree)#查看模型 
+re2=data.frame(w$recentplayd7,w$recentplayavgd7,w$recentplaystddev_sampd7,w$recentplaymind7,w$target)
+names(re2)=c("V1","V2","V3","V4","V5")
+modeltree2=rpart(V5 ~ ., data =re2)
+summary(modeltree2)#查看模型 
+
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每个歌手每天播放量.csv",header = FALSE,sep=",")
+w3=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/STL分解均值.csv",header = FALSE,sep=",")
+library(recharts)
+source("echartR.R")
+e=unique(w$V1)
+for (i in 1:length(e)){
+q=w[which(w$V1==e[i]),]
+plot(c(1:length(q$V1)),q$V3,type="l",main=i)
+}
+q=w[which(w$V1=="97fd17d25cddbe4f97a826c84157a4d7"),]
+echartR(q,~V2,~V3,type = "linesmooth")
+
+q=w[which(w$V1==e[58]),]
+echartR(q,~V2,~V3,type = "linesmooth")
+
+1b322374de83520bf45aa8928e18e70a-改低
+97fd17d25cddbe4f97a826c84157a4d7
+27000试试 或者26000
+x=c(89,82,81,56,34,28,25,18,10,5,4)  #最近明显增加
+x1=data.frame(x,e[x])
+names(x1)=c("V1","V2")
+    x                             e.x.
+1  89 e7912240b9fb5bb5f560a8855f626789
+融合STL均+均值
+2  82 d69b0cfe8844b969529787a82ef5f88a
+STL均--8.13增高忽略不计
+3  81 d6583ed54536fecf80dcc3b020a42ebc
+融合STL均+均值8.30突然升高
+4  56 a507ecc6efacca68b8c275c7becbf5fb
+STL均--周期增高 
+5  34 6bd5ba4ea00af0509268f8842ce7bb04
+STL均--周期增高
+6  28 586fc93567498123193e02f3335b8876
+STL均--周期增高
+7  25 5540d2c258d7da1fa83a2a59846748ef
+融合STL均+均值--一直下降
+8  18 40bbb0da5570702dd6ff3af5e9e3aea6
+融合STL均+均值--周期增高
+9  10 1731019fbaa825714d5f8e61ad1bb7ff
+STL均--8.20突然增高一次
+10  5 0a5d7c11c11c717e65cc0b4edf910a5e
+融合STL均+均值
+11  4 088ff4b427effea392d3fd9bb94be25c
+STL均 8.06突然增高后来基本稳定
+y=c(75,66,57,49,44,40,2)            #异常数据
+y1=data.frame(y,e[y])
+names(y1)=c("V1","V2")
+   y                             e.y.
+1 75 c7425ea3ecbea3a51b5550c698be7e71
+2 66 b26955262273f5cc9a276f792e51efe0
+3 57 a5eada19f77ccc52667238ca96480e21
+4 49 97fd17d25cddbe4f97a826c84157a4d7
+5 44 8ce69d477ff6f1f7242ba0e941a53508
+6 40 78b775ea3d045cd5483bfc3681ee686b
+7  2 05f476c6f043a73f83f3e4dd3003246a
+sqldf("select count(*) from w1 where V1 in (select V2 from y1)")
+sqldf("select * from w1 where V1 in (select V2 from y1)")

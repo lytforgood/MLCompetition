@@ -1,0 +1,455 @@
+比对
+
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/指数平滑78月.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+歌手每天播放量
+create table if not  exists tmpxx1  as
+select artist_id,concat(ds,"-",plays) as key from aidnumxin;
+select  artist_id,wm_concat(',',key) as keyx from  tmpxx1   group by artist_id;
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每个歌手每天播放量.txt",header = FALSE,sep="")
+library(stringr)
+for(i in 1:100){
+t=w[i,]
+x=str_split(t,",")
+x1=x[[1]][1]
+x2=x[[1]][2:length(x[[1]])]
+x3=str_split(x2,"-")
+d=data.frame(x3)
+dd=as.matrix(d)
+dd1=t(dd)
+d1=dd1[,1]
+d2=dd1[,2]
+d3=rep(x1,length(d1))
+re=data.frame(d3,d1,d2)
+write.table (re, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每个歌手每天播放量.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+
+指数平滑融合均值
+res53_ph2
+指数平滑78月
+
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/featuretest2.txt",header = TRUE,sep=",")
+w1=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/歌手每天的播放量.csv",header = FALSE,sep=",")
+w2=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/指数平滑78月.csv",header = FALSE,sep=",")
+w3=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/res53_ph2.csv",header = FALSE,sep=",")
+w4=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/指数平滑融合均值.txt",header = TRUE,sep=",")
+w5=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/LRresult.txt",header = TRUE,sep=",")
+w6=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/Xgboostresult.txt",header = TRUE,sep=",")
+w7=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/Xgboostresult2.txt",header = TRUE,sep=",")
+w8=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/Xgboostresult3.txt",header = TRUE,sep=",")
+w9=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/GBDTresult1.txt",header = TRUE,sep=",")
+
+data.frame(w$artist_id,w$recentplay,w$recentplayd3,w$recentplaymediand3,w$recentplayd7,w$recentplaymediand7)
+
+s1=sqldf("select * from w1 order by V1,V2")
+s2=sqldf("select V1,V2 from w2 group by V1,V2")
+s3=sqldf("select V1,V2 from w3 group by V1,V2")
+s4=w4
+names(s4)=c('V1','V2')
+re=data.frame(s4$V1,s4$V2,s2$V2,s4$V2-s2$V2,s3$V2,s4$V2-s3$V2)
+names(re)=c('Vx','V4','V2','V42','V3','V43')
+
+names(w5)=c('V1','V2')
+names(w6)=c('V1','V2')
+names(w7)=c('V1','V2')
+names(w8)=c('V1','V2')
+names(w9)=c('V1','V2')
+s5=sqldf("select V1,V2 from w5 group by V1,V2")
+s6=sqldf("select V1,V2 from w6 group by V1,V2")
+s7=sqldf("select V1,V2 from w7 group by V1,V2")
+s8=sqldf("select V1,V2 from w8 group by V1,V2")
+s9=sqldf("select V1,V2 from w9 group by V1,V2")
+re2=data.frame(s4$V1,s4$V2,s5$V2,s6$V2,s7$V2)
+re3=data.frame(s4$V1,s4$V2-s5$V2,s4$V2-s6$V2,s4$V2-s7$V2)
+names(re3)=c('V1','V2','V3','V4')
+
+re4=data.frame(s4$V1,s4$V2,floor(s9$V2),s4$V2-floor(s9$V2))
+names(re4)=c('V1','V2','V3','V4')
+re4
+去掉异常--做预测
+Xgboostresult归一化特别差
+Xgboostresult2--可以参考剔除大异常
+LRresult--!!有负值  
+LRresult2--!!有负值  
+Xgboostresult3--可以参考剔除大异常1b322374de83520bf45aa8928e18e70a  49663
+
+1b322374de83520bf45aa8928e18e70a
+d1383958e0c89e6195d57cf92e70a9a0
+create table if not  exists  Xgboostresult3update as
+select  artist_id,floor(prediction_score) as paly from  Xgboostresult3 where artist_id not in ("1b322374de83520bf45aa8928e18e70a","d1383958e0c89e6195d57cf92e70a9a0");
+insert into table Xgboostresult3update
+select artist_id,case when 1==1 then 230000 end as paly  from  Xgboostresult3 where artist_id="1b322374de83520bf45aa8928e18e70a";
+insert into table Xgboostresult3update
+select artist_id,case when 1==1 then 2000 end as paly  from  Xgboostresult3 where artist_id="d1383958e0c89e6195d57cf92e70a9a0";
+生成序列
+select avg53.*,Xgboostresult3update.paly from avg53 
+left outer join Xgboostresult3update on avg53.artist_id=Xgboostresult3update.artist_id;
+
+create table if not  exists  Xgboostresult3update2 as
+select avg53.artist_id,Xgboostresult3update.paly as plays,avg53.ds from avg53 
+left outer join Xgboostresult3update on avg53.artist_id=Xgboostresult3update.artist_id;
+
+
+library(recharts)
+source("echartR.R")
+q=s1[which(s1$V1=="4acf09fb6a44f995ba0c48d053599074"),]
+echartR(q,~V2,~V3,type = "linesmooth")
+
+前7天循环8次---有新歌--前30使用指数平滑后30使用均值/融合---较平稳的使用均值---波动的使用其他值---随机加方差？加噪声？
+088ff4b427effea392d3fd9bb94be25c  新歌
+140ef1f57652ab448b0a6ed1e00424a4   x
+1b322374de83520bf45aa8928e18e70a
+2dc8d3a917b12e65d4695e2277dd4943
+300dde62b988fc83eb6dba1b702e9af3  x
+4acf09fb6a44f995ba0c48d053599074  前n天循环x次--有明显周期性
+5540d2c258d7da1fa83a2a59846748ef  新歌-下降趋势
+924aae262d158a554ebcc6766f7ee848  轻微持续下降x
+97fd17d25cddbe4f97a826c84157a4d7  新歌下降
+9bc1528c1e692d918f6f323907f8ed7a  新歌下降--   x
+a507ecc6efacca68b8c275c7becbf5fb  有高的局势
+b56689f01bc9febd785aba53ac37a14f  有周期性x
+c5f0170f87a2fbb17bf65dc858c745e2  有周期性-周六日低x
+d1383958e0c89e6195d57cf92e70a9a0   明显异常！！
+d6583ed54536fecf80dcc3b020a42ebc   最后一天突然有新歌
+e7912240b9fb5bb5f560a8855f626789   最后突然增高
+efbbfd2611307e97bd36298b2fce2a02   波动带周期x
+
+w[which(w$artist_id=="b56689f01bc9febd785aba53ac37a14f"),]
+re[which(re$Vx=="b56689f01bc9febd785aba53ac37a14f"),]
+
+53180
+规则1 没有新歌的所有的歌手--plays1周67预测值减去前七天方差 plays2 效果不对  53011
+规则2 有新歌的所有的歌手--前30使用指数平滑plays1  后30使用均值/融合plays2  效果不对  规则1+2 52916
+
+drop table if exists guize1;
+
+create table if not  exists  guize2 as
+select artist_id,plays  from modelsum3 group by artist_id,plays;
+
+drop table if exists guize1;
+create table if not  exists  guize1 as
+select guize2.*,holt1.plays as holtplays,featuretest2.recentplaystddevd7,
+featuretest2.newm1,featuretest2.recentplaymaxd7  from guize2 
+left outer join holt1  on guize2.artist_id=holt1.artist_id
+left outer join featuretest2  on guize2.artist_id=featuretest2.artist_id;
+
+create table if not  exists  guize3 as
+select artist_id,plays,holtplays,recentplaystddevd7,newm1,recentplaymaxd7 from guize1 
+group by artist_id,plays,holtplays,recentplaystddevd7,newm1,recentplaymaxd7;
+
+select artist_id,plays,holtplays,recentplaystddevd7,newm1
+,case when newm1>0 then holtplays  else plays end as plays1
+,case when newm1>0 then plays  else floor(plays-recentplaystddevd7) end as plays2
+,recentplaymaxd7,plays/recentplaymaxd7  from guize3
+
+drop table if exists guize4;
+create table if not  exists  guize4 as
+select artist_id,plays,holtplays,recentplaystddevd7,newm1
+,case when newm1>0 and artist_id not in ("d6583ed54536fecf80dcc3b020a42ebc","d1383958e0c89e6195d57cf92e70a9a0") then holtplays  else plays end as plays1
+,case when newm1>0  then plays  else floor(plays-recentplaystddevd7) end as plays2
+,recentplaymaxd7,plays/recentplaymaxd7  from guize3;
+
+select modelsum3.*,guize4.plays1,guize4.plays2,guize4.newm1 from  modelsum3 join guize4 on modelsum3.artist_id=guize4.artist_id;
+
+create table if not  exists  guize5 as
+select modelsum3.*,guize4.plays1,
+guize4.plays2,guize4.newm1 
+,case when newm1>0 and ds>20150930  then plays2  else plays1 end as playsx
+,case when newm1=0 and ds in ("20150903","20150904","20150905","20150912","20150913","20150919","20150920",
+"20150926","20150927","20151003","20151004","20151011","20151017","20151018","20151024","20151025")  then plays2  else plays1 end as playsx1
+from  modelsum3 join guize4 on modelsum3.artist_id=guize4.artist_id;
+
+create table if not  exists  guize7 as
+select  artist_id,
+case when newm1>0  then plays  else playsx1 end as plays
+,ds  from  guize5;
+
+
+write.table (s1, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/真实8月份.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/laber8.txt",header = TRUE,sep=",")
+names(w)=c("V1","V2","V3")
+w1=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/歌手每天的播放量有序.csv",header = FALSE,sep=",")
+s1=sqldf("select * from w1 where V2>20150731")
+d=seq(as.Date("2015/08/01"),as.Date("2015/08/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+
+e=unique(w$V1)
+for (i in 1:length(e)){
+q1=w[which(w$V1==e[i]),]
+a=q1$V2
+p=rep(a,30)
+aid=c(1:30)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/均值8月份.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+
+write.table (re, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/测试数据.csv",sep =",",row.names = F,col.names=F,quote =F) 
+
+均值8月份39859.09
+中位数8月份39874.27
+rm(list=ls())
+t=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/真实8月份.csv",header = FALSE,sep=",")
+p=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/中位数8月份.csv",header = FALSE,sep=",")
+library(sqldf)
+d=sqldf("select t1.*,t2.*  from t t1 join p t2  on t1.V1=t2.V1 and t1.V2=t2.V3")
+names(d)=c('V1','V2','V3','V4','V5','V6')
+e=unique(d$V1)
+ff=0
+for (i in 1:length(e)){
+s=d[which(d$V1==e[i]),]
+fc=(sum(((s$V5-s$V3)/s$V3)^2)/length(s$V2))^(1/2)
+qz=(sum(s$V3))^(1/2)
+ff[i]=(1-fc)*qz
+}
+f=sum(ff)
+f
+
+预测第二个月的均值？中位数？
+我当时线下分了两类
+然后再对播放次数用dbscan聚类去除离群点/其实我想删最大最小各2-3个、、?
+最后提交K天均值
+稳定前十
+均值53400
+
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每个歌手每天播放量.csv",header = FALSE,sep=",")
+s=sqldf("select V1,V2,V3  from  w where V2>=20150701  ")
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+for (i in 1:length(e)){
+w1=s[which(s$V1==e[i]),]
+a=w1$V3
+#alpha不指定,beta=不指定,gamma不指定 三阶指数平滑 seasonal="additive"默认加法模型 "multiplicative"乘法模型
+rp=HoltWinters(a,beta=F,gamma=F)
+tmp=rp$coefficients
+#forecast(rp,h=2)
+p=rep(tmp,60)
+p=floor(p)
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/新序列指数平滑78月2.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每个歌手每天播放量.csv",header = FALSE,sep=",")
+s=sqldf("select V1,V2,V3  from  w where V2>=20150801")
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+for (i in 1:length(e)){
+w1=s[which(s$V1==e[i]),]
+a=w1$V3
+rp=floor((boxplot.stats(a)$conf[1]+mean(a))/2)
+p=rep(rp,60)
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/均值平滑.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/新序列指数平滑78月2.csv",header = FALSE,sep=",")
+w1=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/均值平滑.csv",header = FALSE,sep=",")
+s1=sqldf("select V1,V2  from  w group by V1,V2 order by V1,V2")
+s2=sqldf("select V1,V2  from  w1 group by V1,V2 order by V1,V2")
+re=data.frame(s1$V1,s1$V2,s2$V2)
+write.table (re, file="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/第一个指数第二个均值平滑.csv",sep =",",row.names = F,col.names=F,quote =F) 
+write.table (s2$V2, file="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/第均值平滑.csv",sep =",",row.names = F,col.names=F,quote =F) 
+\n替换成空\t替换成,
+
+训练集相似的可以用各种情况
+未来情况和训练情况差别大可考虑其他思路-抽出来重做
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每个歌手每天播放量.csv",header = FALSE,sep=",")
+s=sqldf("select V1,V2,V3  from  w where V2>=20150701  ")
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+for (i in 1:length(e)){
+w1=s[which(s$V1==e[i]),]
+a=w1$V3
+#STL分解
+ts1=ts(a,frequency=7,start=c(1,1)) 
+library(forecast)
+pre<-stlf(ts1)
+#预测未来3个值
+p=forecast(pre,h=7)
+p=p$mean
+#mean(p)
+p=rep(floor(p),9)
+p=p[1:60]
+min=ceiling((p[7]+p[6])/2)
+mean=p[2]
+p[3]=min
+p[4]=min
+p[6]=mean
+p[31]=min
+p[32]=min
+p[35]=min
+p[36]=min
+p[37]=min
+p[40]=mean
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/STL分解.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+STL均值
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每个歌手每天播放量.csv",header = FALSE,sep=",")
+s=sqldf("select V1,V2,V3  from  w where V2>=20150701  ")
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+for (i in 1:length(e)){
+w1=s[which(s$V1==e[i]),]
+a=w1$V3
+#STL分解
+ts1=ts(a,frequency=7,start=c(1,1)) 
+library(forecast)
+pre<-stlf(ts1)
+#预测未来3个值
+p=forecast(pre,h=7)
+p=p$mean
+#mean(p)
+p=rep(floor(mean(p)),60)
+p=p[1:60]
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/STL分解均值.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+#stlm分解stl改进
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每个歌手每天播放量.csv",header = FALSE,sep=",")
+s=sqldf("select V1,V2,V3  from  w where V2>=20150701  ")
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+for (i in 1:length(e)){
+w1=s[which(s$V1==e[i]),]
+a=w1$V3
+#stlm分解
+#ts1=ts(a,frequency=7,start=c(1,1)) 
+library(forecast)
+pre<-stlm(ts(a,frequency = 7),s.window = "periodic",allow.multiplicative.trend = TRUE,robust = T,etsmodel = 'MNN',)
+#pre2<-stlf(ts(a,frequency = 7))
+#预测未来7个值 plot(forecast(pre2,h=7))   plot(pre$stl)
+p=forecast(pre,h=61)
+p=p$mean
+p=ceiling(p[2:length(p)])
+#mean(p)
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/stlm分解.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/stlm分解.csv",header = FALSE,sep=",")
+w1=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/指数平滑融合均值2.csv",header = FALSE,sep=",")
+s=sqldf("select w.V1,w.V2,w.V3,w1.V2  from  w left join w1 where w.V1=w1.V1")
+names(s)=c("V1","V2","V3","V4")
+d=floor(0.25*s$V2+0.75*s$V4)
+sc=data.frame(s$V1,d,s$V3)
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/stlm融合指数均值.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+
+14均值平滑
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每个歌手每天播放量.csv",header = FALSE,sep=",")
+s=sqldf("select V1,V2,V3  from  w where V2>20150816  ")
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+for (i in 1:length(e)){
+w1=s[which(s$V1==e[i]),]
+a=w1$V3
+#p=rep(floor(boxplot.stats(a)$conf[1]),60)
+#p=rep(floor(boxplot.stats(a)$conf[2]),60)
+p=rep(floor(mean(a)),60)
+p=p[1:60]
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/均值14直接.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+融合0.75(指数平滑x+14均值)+0.25stlm两个月
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/均值14平滑.csv",header = FALSE,sep=",")
+w1=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/新序列指数平滑78月2-52915.csv",header = FALSE,sep=",")
+w2=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/stlm分解.csv",header = FALSE,sep=",")
+re=data.frame(w$V1,floor((0.75*(floor(0.5*w$V2+0.5*w1$V2))+0.25*w2$V2)),w$V3)
+write.table (re, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/指数平滑x14均值stlm.csv",sep =",",row.names = F,col.names=F,quote =F) 
+
+前7天循环
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每个歌手每天播放量.csv",header = FALSE,sep=",")
+s=sqldf("select V1,V2,V3  from  w where V2>=20150824  ")
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+for (i in 1:length(e)){
+w1=s[which(s$V1==e[i]),]
+a=w1$V3
+#p=rep(floor(boxplot.stats(a)$conf[1]),60)
+#p=rep(floor(boxplot.stats(a)$conf[2]),60)
+p=rep(a,9)
+p=p[2:61]
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/前7天循环.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+每首歌指数平滑
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每首歌指数平滑.txt",header = FALSE,sep=",")
+s=sqldf("select V1,V2  from  w order by V1,V2")
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+for (i in 1:length(e)){
+w1=s[which(s$V1==e[i]),]
+p=rep(w1$V2,60)
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每首歌指数平滑60.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+
+融合0.75(指数平滑x+14均值)+0.25stlm两个月
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/均值14平滑.csv",header = FALSE,sep=",")
+w1=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每首歌指数平滑60.csv",header = FALSE,sep=",")
+w2=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/stlm分解.csv",header = FALSE,sep=",")
+re=data.frame(w$V1,floor((0.75*(floor(0.5*w$V2+0.5*w1$V2))+0.25*w2$V2)),w$V3)
+write.table (re, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/每首歌指数平滑x14均值stlm.csv",sep =",",row.names = F,col.names=F,quote =F) 

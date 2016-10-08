@@ -1,0 +1,240 @@
+音乐比赛特征提取
+
+create table if not  exists p2_allxx  as
+SELECT t1.artist_id,t2.* FROM p2_mars_tianchi_songs t1 JOIN p2_mars_tianchi_user_actions t2 on t1.song_id=t2.song_id;
+
+
+--艺人每天的收藏量
+drop table  if exists p2_aidshou;
+create table if not  exists p2_aidshou  as
+select  artist_id,Ds,count(gmt_create) as shou from  p2_allxx where action_type='3' group by artist_id,Ds;
+
+create table if not  exists p2_aidshou1  as
+select artist_id,concat(ds,"-",shou) as key from p2_aidshou;
+--压缩行数
+create table if not  exists p2_aidshou2  as
+select  artist_id,wm_concat(',',key) as keyx from  p2_aidshou1   group by artist_id;
+
+drop table  if exists p2_aidshou3;
+create table if not  exists p2_aidshou3  as
+select concat(artist_id,"+",keyx) as key,num2() from p2_aidshou2;
+ 
+select wm_concat('=',key)  from p2_aidshou3 group by floor(_c1/6);
+
+--艺人每天的下载量
+drop table  if exists p2_aidxia;
+create table if not  exists p2_aidxia  as
+select  artist_id,Ds,count(gmt_create) as xia from  p2_allxx where action_type='2' group by artist_id,Ds;
+
+--压缩行数
+create table if not  exists p2_aidxia1  as
+select artist_id,concat(ds,"-",xia) as key from p2_aidxia;
+
+create table if not  exists p2_aidxia2  as
+select  artist_id,wm_concat(',',key) as keyx from  p2_aidxia1   group by artist_id;
+
+create table if not  exists p2_aidxia3  as
+select concat(artist_id,"+",keyx) as key,num2() from p2_aidxia2;
+ 
+select wm_concat('=',key)  from p2_aidxia3 group by floor(_c1/6);
+
+
+--艺人每天播放的用户数
+create table if not  exists p2_aiduser1  as
+select  artist_id,Ds,count(distinct user_id) as uid_count from  p2_allxx where action_type='1' group by artist_id,Ds;
+
+--压缩行数
+create table if not  exists p2_aiduser11  as
+select artist_id,concat(ds,"-",uid_count) as key from p2_aiduser1;
+
+create table if not  exists p2_aiduser12  as
+select  artist_id,wm_concat(',',key) as keyx from  p2_aiduser11   group by artist_id;
+
+create table if not  exists p2_aiduser13  as
+select concat(artist_id,"+",keyx) as key,num2() from p2_aiduser12;
+ 
+select wm_concat('=',key)  from p2_aiduser13 group by floor(_c1/6);
+
+
+create table if not  exists p2_aiduser2  as
+select  artist_id,Ds,count(distinct user_id) as uid_count from  p2_allxx where action_type='2' group by artist_id,Ds;
+create table if not  exists p2_aiduser3  as
+select  artist_id,Ds,count(distinct user_id) as uid_count from  p2_allxx where action_type='3' group by artist_id,Ds;
+--艺人每天的歌曲数
+create table if not  exists p2_aidsong1  as
+select  artist_id,Ds,count(distinct song_id) as sid_count from  p2_allxx where action_type='1' group by artist_id,Ds;
+
+--压缩行数
+create table if not  exists p2_aidsong11  as
+select artist_id,concat(ds,"-",sid_count) as key from p2_aidsong1;
+
+create table if not  exists p2_aidsong12  as
+select  artist_id,wm_concat(',',key) as keyx from  p2_aidsong11   group by artist_id;
+
+create table if not  exists p2_aidsong13  as
+select concat(artist_id,"+",keyx) as key,num2() from p2_aidsong12;
+ 
+select wm_concat('=',key)  from p2_aidsong13 group by floor(_c1/6);
+
+
+
+create table if not  exists p2_aidsong2  as
+select  artist_id,Ds,count(distinct song_id) as sid_count from  p2_allxx where action_type='2' group by artist_id,Ds;
+create table if not  exists p2_aidsong3  as
+select  artist_id,Ds,count(distinct song_id) as sid_count from  p2_allxx where action_type='3' group by artist_id,Ds;
+新歌出现的时间
+create table if not  exists p2_sidnew  as
+select song_id,min(ds) as newds from  p2_uidtimenum4  group by song_id;
+7月份之后的新歌
+select song_id,min(ds) as newds from  p2_uidtimenum4  group by song_id having newds>='20150701';
+新歌连接歌手
+create table if not  exists p2_sidnew2  as
+SELECT t1.artist_id,t2.* FROM p2_mars_tianchi_songs t1 JOIN p2_sidnew t2 on t1.song_id=t2.song_id;
+歌手每天的新歌数量
+create table if not  exists p2_sidnew3  as
+select artist_id,newds,count(song_id) from p2_sidnew2 group by artist_id,newds;
+
+
+--压缩行数
+create table if not  exists p2_sidnew31  as
+select artist_id,concat(newds,"-",_c2) as key from p2_sidnew3;
+
+create table if not  exists p2_sidnew32  as
+select  artist_id,wm_concat(',',key) as keyx from  p2_sidnew31   group by artist_id;
+
+create table if not  exists p2_sidnew33  as
+select concat(artist_id,"+",keyx) as key,num2() from p2_sidnew32;
+ 
+select wm_concat('=',key)  from p2_sidnew33 group by floor(_c1/6);
+
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/特征/艺人每天的新歌数量.txt",header = FALSE,sep="")
+library(stringr)
+for(i in 1:length(w$V1)){
+t=w[i,]
+x=str_split(t,",")
+x1=x[[1]][1]
+x2=x[[1]][2:length(x[[1]])]
+x3=str_split(x2,"-")
+d=data.frame(x3)
+dd=as.matrix(d)
+dd1=t(dd)
+d1=dd1[,1]
+d2=dd1[,2]
+d3=rep(x1,length(d1))
+re=data.frame(d3,d1,d2)
+write.table (re, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/特征/艺人每天的新歌数量.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/特征/艺人每天播放的用户数.csv",header = FALSE,sep=",")
+w=sqldf("select V1,V2,V3  from  w order by V1,V2")
+w2=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/特征/艺人每天的歌曲数.csv",header = FALSE,sep=",")
+w2=sqldf("select V1,V2,V3  from  w2 order by V1,V2")
+w3=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/特征/艺人每天的收藏量.csv",header = FALSE,sep=",")
+w3=sqldf("select V1,V2,V3  from  w3 order by V1,V2")
+w4=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/特征/艺人每天的下载量.csv",header = FALSE,sep=",")
+w5=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/特征/艺人每天的新歌数量.csv",header = FALSE,sep=",")
+w6=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/特征/艺人每天播放量.csv",header = FALSE,sep=",")
+date1=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/特征/date.csv",header = FALSE,sep=",")
+
+s1=sqldf("select s.V1,s.V2,s.V3,w2.V3  from  s left join w2 on s.V1=w2.V1 and s.V2=w2.V2")
+names(s1)=c("V1","V2","V3","V4")
+
+合并字段
+paste(s1$V1,s1$V2)
+
+s2=sqldf("select s1.*,w3.V3  from  s1 left join w3 on s1.V1=w3.V1 and s1.V2=w3.V2")
+names(s2)=c("V1","V2","V3","V4","V5")
+s2[which(is.na(s2$V5)),]$V5=0
+
+s3=sqldf("select s2.*,w4.V3  from  s2 left join w4 on s2.V1=w4.V1 and s2.V2=w4.V2")
+names(s3)=c("V1","V2","V3","V4","V5","V6")
+s3[which(is.na(s3$V6)),]$V6=0
+
+s4=sqldf("select s3.*,w5.V3  from  s3 left join w5 on s3.V1=w5.V1 and s3.V2=w5.V2")
+names(s4)=c("V1","V2","V3","V4","V5","V6","V7")
+s4[which(is.na(s4$V7)),]$V7=0
+
+s5=sqldf("select s4.*,w6.V3  from  s4 left join w6 on s4.V1=w6.V1 and s4.V2=w6.V2")
+names(s5)=c("V1","V2","V3","V4","V5","V6","V7","V8")
+write.table (s5, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/特征/特征用户数歌曲数收藏下载新歌播放.csv",sep =",",row.names = F,col.names=F,quote =F) 
+names(date1)=c("x1","x2","x3","x4","x5","x6","x7","x8")
+s1=sqldf("select s5.*,date1.x3 as V9,date1.x4 as V10  from  s5 left join date1 on  s5.V2=date1.x1")
+write.table (s1, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/特征/特征用户数歌曲数收藏下载新歌播放星期周末.csv",sep =",",row.names = F,col.names=F,quote =F) 
+
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/特征/特征用户数歌曲数收藏下载新歌播放星期周末.csv",header = FALSE,sep=",")
+e=unique(w$V1)
+library(randomForest)
+d=seq(as.Date("2015/06/01"),as.Date("2015/07/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+for (i in 1:length(e)){
+q=w[which(w$V1==e[i]),]
+q1=sqldf("select *  from  q where V2>=20150401 and V2<=20150530")
+q2=sqldf("select *  from  q where V2>=20150601 and V2<=20150730")
+model.forest <-randomForest(q1[,c(3,4,5,6,7,9,10)],q1[,8],ntree=100)
+pre=predict(model.forest,q2[,c(3,4,5,6,7,9,10)])
+pre=floor(pre)
+re=q2[,8]
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/均值14平滑.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+#(sum((pre-re)^2)/length(re))^0.5
+#q1=sqldf("select *  from  q where V2>=20150518 and V2<=20150530")
+#pre=rep(floor(boxplot.stats(q1[,8])$conf[2]),60)
+#pre=rep(floor(mean(q1[,8])),60)
+
+
+
+}
+
+服务器目录说明
+listenlisten
+训练集-4-5预测-6-7
+
+rm(list=ls())
+library(sqldf)
+w=read.table("E:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/结果测试x1.txt",header = FALSE,sep="")
+library(stringr)
+for(i in 1:length(w$V1)){
+t=w[i,]
+x=str_split(t,",")
+x1=x[[1]][1]
+x2=x[[1]][2:length(x[[1]])]
+x3=str_split(x2,"-")
+d=data.frame(x3)
+dd=as.matrix(d)
+dd1=t(dd)
+d1=dd1[,1]
+d2=dd1[,2]
+d3=rep(x1,length(d1))
+re=data.frame(d3,d2,d1)
+write.table (re, file ="E:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/特征/结果测试x2.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+
+
+修改1个值
+rm(list=ls())
+library(sqldf)
+w=read.table("E:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/xx.txt",header = FALSE,sep=",")
+aid="748c834ae76cb06743b9032fae099739"
+a=rep(aid,60)
+re=data.frame(a,w)
+write.table (re, file ="E:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/特征/xx1修改.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+
+
+create table if not  exists p2_jieguo2  as
+select artist_id,concat(ds,"-",plays) as key from mars_tianchi_artist_plays_predict;
+
+create table if not  exists p2_jieguo22  as
+select  artist_id,wm_concat(',',key) as keyx from  p2_jieguo2   group by artist_id;
+
+create table if not  exists p2_jieguo23  as
+select concat(artist_id,"+",keyx) as key,num2() from p2_jieguo22;
+
+select wm_concat('=',key)  from p2_jieguo23 group by floor(_c1/21);

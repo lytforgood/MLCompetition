@@ -1,0 +1,1181 @@
+阿里音乐预测平台赛
+根据评测函数-得出最优的成绩应该是求什么
+把规则总结成非线性函数
+线性函数算半个规则
+围绕目录展开猜想
+多个人工规则才能有效---看出规律--分析问题-解决问题--规则调参
+均值加权和--时间序列问题--相关性很弱--构建多个测试集
+规则用了bagging--看看不同测试集结果怎么样，多个测试集好一般就好
+穿衣搭配--看老王PPT
+寻找target的原因
+稀疏数据--大几百维特征容易过拟合
+线性加权： 即D1, D2, D3中的搭配预测分别乘以权重w1， w2， w3。 （ 满足w1+w2+w3=1
+， 且w1,w2,w3非负。 ） 如果某个搭配商品同时出现在多个搭配集合中， 其搭配度为加权
+和。
+权重的确定： 由于要确定的权重只有两个， 所以对不同大小的线下测试集， 我们可以考
+虑用回溯法得到经验权重（ 如果要确定的参数较多， 建议用GA） 。 另外， 发现权重在所
+选的不同大小测试集上不敏感， 因此获得的经验权重直接作为线上预测时融合权重。
+预测的时候不要设置特征列
+同一个表"insert overwrite table select...where 条件取反" 等价于 "delete from table where 条件"  
+把数值转成了int，可以预测了，XGBoost，之前的double确实报数据类型错误	
+
+GBDT回归把指数底数改为1就有结果了
+
+企业别名 ：aliyun-tianchi
+用户名：TIANCHI_783
+密码：gE5%QsK2
+DESC odps_tc_257100_f673506e024.mars_tianchi_user_actions
+user_id         | string     |       |                                             |
+| song_id         | string     |       |                                             |
+| gmt_create      | string     |       |                                             |
+| action_type     | string     |       |    
+
+DESC odps_tc_257100_f673506e024.mars_tianchi_songs
+song_id         | string     |       |                                             |
+| artist_id       | string     |       |                                             |
+| publish_time    | string     |       |                                             |
+| song_init_plays | string     |       |                                             |
+| language        | string     |       |                                             |
+| gender          | string     |       |         
+
+做表连接
+create table if not  exists allsong  as
+SELECT t1.artist_id,t2.* FROM odps_tc_257100_f673506e024.mars_tianchi_songs t1 JOIN odps_tc_257100_f673506e024.mars_tianchi_user_actions t2 on t1.song_id=t2.song_id;
+
+desc allsong;
+
+artist_id       | string     |       |                                             |
+| user_id         | string     |       |                                             |
+| song_id         | string     |       |                                             |
+| gmt_create      | string     |       |                                             |
+| action_type     | string     |       |                                             |
+| ds              | string     |       |  
+
+select  count(*) from allsong;  --230759929
+每个歌手每天的播放量
+
+create table if not  exists aidnum  as
+select  artist_id,Ds,count(gmt_create) from allsong where action_type='1'  group by artist_id,Ds order by artist_id,Ds;
+31471首歌
+select  count(distinct song_id) from odps_tc_257100_f673506e024.mars_tianchi_songs;
+100歌手
+select  count(distinct artist_id) from odps_tc_257100_f673506e024.mars_tianchi_songs;
+
+| artist_id       | string     |       |                                             |
+| ds              | string     |       |                                             |
+| _c2             | bigint  
+
+create table if not  exists mars_tianchi_songs  as
+select  * from odps_tc_257100_f673506e024.mars_tianchi_songs;
+
+create table if not  exists mars_tianchi_user_actions  as
+select  * from odps_tc_257100_f673506e024.mars_tianchi_user_actions;
+select * from mars_tianchi_songs1;
+select * from mars_tianchi_songs2;
+select * from mars_tianchi_songs3;
+select * from mars_tianchi_songs4;
+
+歌手表
+create table if not  exists artistid  as
+select  distinct artist_id from odps_tc_257100_f673506e024.mars_tianchi_songs;
+每首歌每天的播放量
+create table if not  exists songidnum  as
+select song_id,artist_id,Ds,count(gmt_create) from allsong  where action_type='1'  group by song_id,artist_id,Ds;
+select  count(*) from songidnum;--2648178
+
+create table if not  exists songidnum2  as
+select song_id,artist_id,ds,_c3 as bofang,num2() as num from songidnum;
+合并字段
+create table if not  exists songidnum4  as
+select concat(song_id,"-",artist_id,"-",ds,"-",bofang) as key,num  from songidnum2;
+合并记录
+select  wm_concat(',',key) as key from songidnum4 group by floor(num/270)
+歌手每天播放量
+create table if not  exists tmpxx1  as
+select artist_id,concat(ds,"-",plays) as key from aidnumxin;
+select  artist_id,wm_concat(',',key) as keyx from  tmpxx1   group by artist_id;
+
+窗口函数  artist_id 每隔6行算一次
+select artist_id,ds,sum(plays) over( partition by artist_id order by ds rows 6 preceding) from aidnumxin;
+avg(play) over( partition by artist_id order by ds rows 6 preceding)
+--距离该行的几行内数据
+--select artist_id,ds,sum(plays) over( partition by artist_id order by ds rows 6 preceding) from aidnumxin;
+
+18300每个歌手每天的播放量
+select * from aidnum;
+aidnum1  aidnum2
+select * from aidnum1;
+select * from aidnum2;
+
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/song1.csv",header = FALSE,sep=",")
+t1=w[-1,]
+w1=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/song2.csv",header = FALSE,sep=",")
+t2=w1[-1,]
+w2=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/song3.csv",header = FALSE,sep=",")
+t3=w2[-1,]
+w3=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/song4.csv",header = FALSE,sep=",")
+t4=w3[-1,]
+t5=rbind(t1,t2,t3,t4)
+write.table (t5, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/mars_tianchi_songs.csv",sep =",",row.names = F,col.names=F,quote =F) 
+
+53天均值平滑-----52200
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/data1.csv",header = FALSE,sep=",")
+t1=w[-1,]
+w1=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/data2.csv",header = FALSE,sep=",")
+t2=w1[-1,]
+t3=rbind(t1,t2)
+sww=sqldf("select V1,V2,V3  from  t3 order by V1,V2")
+
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/歌手每天的播放量.csv",header = FALSE,sep=",")
+sww=sqldf("select V1,V2,V3  from  w order by V1,V2")
+write.table (sww, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/歌手每天的播放量有序.csv",sep =",",row.names = F,col.names=F,quote =F) 
+s=sqldf("select V1,V2,V3  from sww where V2>=20150709  ")
+
+#s=w[which(w$V2>=20150709),]
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+for (i in 1:length(e)){
+w1=s[which(s$V1==e[i]),]
+a=w1$V3
+rp=floor(boxplot.stats(a)$conf[1])
+p=rep(rp,60)
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/res53_ph2.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+write.table (t3, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/歌手每天的播放量.csv",sep =",",row.names = F,col.names=F,quote =F) 
+
+
+create table if not  exists avg53 (
+artist_id string,
+Plays string,
+Ds string); 
+select  * from avg53;
+select  count(*) from avg53;
+truncate  table  avg53;
+select  count(*) from avg53;
+
+create table if not  exists mars_tianchi_artist_plays_predict (
+artist_id string,
+Plays string,
+Ds string); 
+truncate  table  mars_tianchi_artist_plays_predict;
+insert into table mars_tianchi_artist_plays_predict
+select  * from avg53;
+
+create table if not  exists datename (
+Ds string,
+t1 Double,
+t2 Double,
+t3 Double,
+t4 Double,
+t5 Double,
+t6 Double,
+t7 Double); 
+
+随机森林预测---51953
+把7,8月做训练集
+rm(list=ls())
+t=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/date.csv",header = FALSE,sep=",")
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/歌手每天的播放量有序.csv",header = FALSE,sep=",")
+s=sqldf("select t1.*,t2.*  from w t1 join t t2  on t1.V2=t2.V1 ")
+names(s)=c('V1','V2','V3','V4','V5','V6','V7','V8','V9','V10','V11')
+e=unique(s$V1)
+for(i in 1:length(e)){
+s1=s[which(s$V1==e[i]),]
+a=s1[which(s1$V5>=7),]
+tmp=a$V3
+#做平滑
+out=boxplot.stats(tmp)$out
+for(j in 1:length(out)){
+tmp[which(tmp==out[j])]=floor((boxplot.stats(tmp)$conf[2]+boxplot.stats(tmp)$conf[1])/2)
+#tmp[which(tmp==out[j])]=floor(boxplot.stats(tmp)$conf[2])
+
+}
+
+a1=data.frame(a$V6,a$V7,a$V8,a$V9,a$V10,tmp)
+names(a1)=c('V1','V2','V3','V4','V5','V6')
+a2=t[which(t$V2>=9),]
+a3=data.frame(a2$V3,a2$V4,a2$V5,a2$V6,a2$V7)
+names(a3)=c('V1','V2','V3','V4','V5')
+library(randomForest)
+model.forest <-randomForest(V6 ~ ., data = a1)
+pre.forest=predict(model.forest, a3)
+p=floor(pre.forest)
+a4=rep(e[i],60)
+re=data.frame(a4,p,a2$V1)
+write.table (re, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/randomForest_ph22.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE)
+}
+
+create table if not  exists randomForest1 (
+artist_id string,
+Plays string,
+Ds string);
+
+
+xgboost算法 ---51503
+rm(list=ls())
+t=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/date.csv",header = FALSE,sep=",")
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/歌手每天的播放量有序.csv",header = FALSE,sep=",")
+s=sqldf("select t1.*,t2.*  from w t1 join t t2  on t1.V2=t2.V1 ")
+names(s)=c('V1','V2','V3','V4','V5','V6','V7','V8','V9','V10','V11')
+e=unique(s$V1)
+for(i in 1:length(e)){
+s1=s[which(s$V1==e[i]),]
+a=s1[which(s1$V5>=7),]
+tmp=a$V3
+#做平滑
+out=boxplot.stats(tmp)$out
+for(j in 1:length(out)){
+tmp[which(tmp==out[j])]=floor(boxplot.stats(tmp)$conf[2])
+}
+a1=data.frame(a$V6,a$V7,a$V8,a$V9,a$V10,tmp)
+names(a1)=c('V1','V2','V3','V4','V5','V6')
+a2=t[which(t$V2>=9),]
+a3=data.frame(as.double(a2$V3),as.double(a2$V4),as.double(a2$V5),as.double(a2$V6),as.double(a2$V7))
+names(a3)=c('V1','V2','V3','V4','V5')
+a3=as.matrix(a3)
+traindatax=data.frame(as.double(a$V6),as.double(a$V7),as.double(a$V8),as.double(a$V9),as.double(a$V10))
+names(traindatax)=c('V1','V2','V3','V4','V5')
+traindatax=as.matrix(traindatax)
+traindatay=as.matrix(as.double(tmp))
+library(xgboost)
+bst <- xgboost(data = traindatax, label = traindatay, max.depth = 6, eta = 0.4,nround = 6)
+pred <- predict(bst, a3)
+p=floor(pred)
+a4=rep(e[i],60)
+re=data.frame(a4,p,a2$V1)
+write.table (re, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/xgboosty预测.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE)
+}
+
+create table if not  exists xgboost1 (
+artist_id string,
+Plays string,
+Ds string);
+
+一阶指数平滑---------52838
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/歌手每天的播放量有序.csv",header = FALSE,sep=",")
+s=sqldf("select V1,V2,V3  from  w where V2>=20150701  ")
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+for (i in 1:length(e)){
+w1=s[which(s$V1==e[i]),]
+a=w1$V3
+#alpha不指定,beta=不指定,gamma不指定 三阶指数平滑 seasonal="additive"默认加法模型 "multiplicative"乘法模型
+rp=HoltWinters(a,beta=F,gamma=F)
+tmp=rp$coefficients
+#forecast(rp,h=2)
+p=rep(tmp,60)
+p=floor(p)
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/指数平滑78月.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+
+create table if not  exists holt1 (
+artist_id string,
+Plays string,
+Ds string);
+
+融合随机森林+均值---52256
+rm(list=ls())
+t=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/randomForest_ph21.csv",header = FALSE,sep=",")
+t1=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/res53_ph2.csv",header = FALSE,sep=",")
+library(sqldf)
+s=sqldf("select * from t1 order by V1")
+s1=sqldf("select * from t order by V1")
+V2=floor((s$V2+s1$V2)/2)
+re=data.frame(s$V1,V2,s$V3)
+write.table (re, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/随机森林均值融合.csv",sep =",",row.names = F,col.names=F,quote =F)
+
+create table if not  exists modelsum1 (
+artist_id string,
+Plays string,
+Ds string);
+
+create table if not  exists wcout1 (
+key string,
+cnt bigint);
+
+一阶指数平滑+均值53180
+select avg53.*,holt1.plays as plays2 from avg53 left outer join holt1  on avg53.artist_id=holt1.artist_id;
+
+create table if not  exists modelsum3  as
+select avg53.artist_id,floor((avg53.plays+holt1.plays)/2) as plays,avg53.ds as Ds
+from avg53 left outer join holt1  on avg53.artist_id=holt1.artist_id and avg53.ds=holt1.ds order by avg53.artist_id,avg53.ds limit 10000;
+
+
+开始用聚类去异常数据
+create  table  if  not  exists mars_tianchi_user_actions2  as
+select *,time(gmt_create) as time  from mars_tianchi_user_actions;
+user_id,                         song_id,                         gmt_create,action_type,ds,time
+da7e6b5276e17936b6a9f4ab7fe47636,d20947afa10f6c25ac1cf4755674a107,1433340000,1,20150603,2015060322
+555f5aef2b56044f2d16d82781abea3e,671fb1c1394e6213929ad596df7d53aa,1433340000,1,20150603,2015060322
+460f1084f58a1f0866348a7f6219c7fe,4ed8317da2abf71ac27142b68633e0b4,1433293200,1,20150603,2015060309
+
+每首歌每个小时的播放量
+create table if not  exists  songtimenum as
+select song_id,count(gmt_create),time from mars_tianchi_user_actions2 where action_type='1' group by song_id,time;
+每个用户每个歌手每个小时的播放量  161337026
+create table if not  exists uidtimenum  as
+select user_id,song_id,count(gmt_create) as num,time from mars_tianchi_user_actions2 where action_type='1' group by user_id,song_id,time;
+---43619
+select count(*)  from uidtimenum where num>25;
+create table if not  exists uidtimenum2  as
+select *  from uidtimenum where num<20;
+| user_id         | string     |       |                                             |
+| song_id         | string     |       |                                             |
+| num             | bigint     |       |                                             |
+| time            | string     |       |                                             |
+分割、切割字符串 拼接
+concat(string a, string b...)连接字符串
+select split_part(str(item_id,target), ',', 1,2) as(a,b) from test2 group by item_id
+select item_id,store_code,split_part(config,'_',1) as bmin,split_part(config,'_',2) as bmax  from tianchi_data.config ;
+string substr(string str, bigint start_position[, bigint length])返回字符串str从start_position开始往后数，长度为length的子串。
+substr("abc", 2, 1) = "b"  -1start_position为负数时表示开始位置是从字符串的结尾往前倒数
+
+create table if not  exists uidtimenum3  as
+select *,substr(time,1,8) as ds  from uidtimenum2;
+create table if not  exists uidtimenum4  as
+select song_id,ds,sum(num) from uidtimenum3 group by song_id,ds;
+
+create table if not  exists allsongxin  as
+SELECT t1.artist_id,t2.* FROM mars_tianchi_songs t1 JOIN uidtimenum4 t2 on t1.song_id=t2.song_id;
+create table if not  exists aidnumxin  as
+select  artist_id,ds,sum(_c2) as plays from allsongxin group by artist_id,ds;
+select * from aidnumxin order  by  artist_id,ds limit 10000;
+
+uidtimenum3
+
+基于没去异常序列提取---去异常序列uidtimenum4   allsongxin  aidnumxin
+特征：1-n                 12+1+195+195=403
+标签：一个月的均值
+预测：未来一个月的均值
+
+特征 1-n   feature1  
+1，歌手的歌曲数量 aid_sid_count   -总数量  -8月的数量 -7月的数量 -6月的数量 -5月的数量 -4月的数量 -3月的数量
+create table if not  exists  songcount1 as
+select  artist_id,count(song_id) as aid_sid_count from mars_tianchi_songs group by artist_id;
+create table if not  exists  songcount2 as
+select  artist_id,count(distinct song_id) as aid_sid_count3 from allsong where action_type='1' and ds>=20150301 and ds<20150401 group by artist_id;
+create table if not  exists  songcount3 as
+select  artist_id,count(distinct song_id) as aid_sid_count4 from allsong where action_type='1' and ds>=20150401 and ds<20150501 group by artist_id;
+create table if not  exists  songcount4 as
+select  artist_id,count(distinct song_id) as aid_sid_count5 from allsong where action_type='1' and ds>=20150501 and ds<20150601 group by artist_id;
+create table if not  exists  songcount5 as
+select  artist_id,count(distinct song_id) as aid_sid_count6 from allsong where action_type='1' and ds>=20150601 and ds<20150701 group by artist_id;
+create table if not  exists  songcount6 as
+select  artist_id,count(distinct song_id) as aid_sid_count7 from allsong where action_type='1' and ds>=20150701 and ds<20150801 group by artist_id;
+create table if not  exists  songcount7 as
+select  artist_id,count(distinct song_id) as aid_sid_count8 from allsong where action_type='1' and ds>=20150801 and ds<20150901 group by artist_id;
+
+select a.*,b.aid_sid_count3,c.aid_sid_count4 from songcount1 a
+left outer join songcount2 b on a.artist_id=b.artist_id
+left outer join songcount3 c on a.artist_id=c.artist_id;
+
+create table if not  exists  songcountall as
+select songcount1.*,songcount2.aid_sid_count3,songcount3.aid_sid_count4,songcount4.aid_sid_count5,songcount5.aid_sid_count6,songcount6.aid_sid_count7,songcount7.aid_sid_count8 from songcount1 
+left outer join songcount2  on songcount1.artist_id=songcount2.artist_id
+left outer join songcount3  on songcount1.artist_id=songcount3.artist_id
+left outer join songcount4  on songcount1.artist_id=songcount4.artist_id
+left outer join songcount5  on songcount1.artist_id=songcount5.artist_id
+left outer join songcount6  on songcount1.artist_id=songcount6.artist_id
+left outer join songcount7  on songcount1.artist_id=songcount7.artist_id;
+
+songcountall
+每个月新歌的个数--new4,new5,new6,new7,new8
+create table if not  exists  songcountnew as
+select  artist_id,case when floor(aid_sid_count8-aid_sid_count7)>0 then floor(aid_sid_count8-aid_sid_count7) else 0 end as new8,case when floor(aid_sid_count7-aid_sid_count6)>0 then floor(aid_sid_count7-aid_sid_count6) else 0 end as new7,case when floor(aid_sid_count6-aid_sid_count5)>0 then floor(aid_sid_count6-aid_sid_count5) else 0 end as new6,case when floor(aid_sid_count5-aid_sid_count4)>0 then floor(aid_sid_count5-aid_sid_count4) else 0 end as new5,case when floor(aid_sid_count4-aid_sid_count3)>0 then floor(aid_sid_count4-aid_sid_count3) else 0 end as new4 from songcountall;
+
+2，歌手的初始总播放量---歌手-所有歌的初始播放量----sum(初始播放量)  initplays
+create table if not  exists  songinitplays as
+select  artist_id,floor(sum(song_init_plays)) as initplays from mars_tianchi_songs group by artist_id;
+
+4，歌手从3月1号至今的 总播放量---均值--总体标准差/样本标准差--最大--最小--中位数--      (查看阿里统计量)  听过/收藏/下载
+--3,4,5,6,7,8月的播放量
+create table if not  exists  songplay1 as
+select  artist_id,sum(_c2) as play,floor(avg(_c2)) as playavg,floor(stddev(_c2)) as playstddev,
+floor(stddev_samp(_c2)) as playstddev_samp,max(_c2) as playmax,min(_c2) as playmin,
+floor(median(_c2)) as playmedian  from aidnum  group by artist_id;
+	
+create table if not  exists  songplay2 as
+select  artist_id,sum(_c2) as play,floor(avg(_c2)) as playavg,floor(stddev(_c2)) as playstddev,
+floor(stddev_samp(_c2)) as playstddev_samp,max(_c2) as playmax,min(_c2) as playmin,
+floor(median(_c2)) as playmedian  from aidnum where  ds>=20150301 and ds<20150401 group by artist_id;
+
+create table if not  exists  songplay3 as
+select  artist_id,sum(_c2) as play,floor(avg(_c2)) as playavg,floor(stddev(_c2)) as playstddev,
+floor(stddev_samp(_c2)) as playstddev_samp,max(_c2) as playmax,min(_c2) as playmin,
+floor(median(_c2)) as playmedian  from aidnum where  ds>=20150401 and ds<20150501 group by artist_id;
+
+create table if not  exists  songplay4 as
+select  artist_id,sum(_c2) as play,floor(avg(_c2)) as playavg,floor(stddev(_c2)) as playstddev,
+floor(stddev_samp(_c2)) as playstddev_samp,max(_c2) as playmax,min(_c2) as playmin,
+floor(median(_c2)) as playmedian  from aidnum where  ds>=20150501 and ds<20150601 group by artist_id;
+
+create table if not  exists  songplay5 as
+select  artist_id,sum(_c2) as play,floor(avg(_c2)) as playavg,floor(stddev(_c2)) as playstddev,
+floor(stddev_samp(_c2)) as playstddev_samp,max(_c2) as playmax,min(_c2) as playmin,
+floor(median(_c2)) as playmedian  from aidnum where  ds>=20150601 and ds<20150701 group by artist_id;
+
+create table if not  exists  songplay6 as
+select  artist_id,sum(_c2) as play,floor(avg(_c2)) as playavg,floor(stddev(_c2)) as playstddev,
+floor(stddev_samp(_c2)) as playstddev_samp,max(_c2) as playmax,min(_c2) as playmin,
+floor(median(_c2)) as playmedian  from aidnum where  ds>=20150701 and ds<20150801 group by artist_id;
+
+create table if not  exists  songplay7 as
+select  artist_id,sum(_c2) as play,floor(avg(_c2)) as playavg,floor(stddev(_c2)) as playstddev,
+floor(stddev_samp(_c2)) as playstddev_samp,max(_c2) as playmax,min(_c2) as playmin,
+floor(median(_c2)) as playmedian  from aidnum where  ds>=20150801 and ds<20150901 group by artist_id;
+
+
+create table if not  exists  songplayall as
+select songplay1.*,
+songplay2.play as play3,songplay2.playavg as playavg3,
+songplay2.playstddev as playstddev3,songplay2.playstddev_samp as playstddev_samp3,
+songplay2.playmax as playmax3,songplay2.playmin as playmin3,songplay2.playmedian as playmedian3,
+songplay3.play as play4,songplay3.playavg as playavg4,
+songplay3.playstddev as playstddev4,songplay3.playstddev_samp as playstddev_samp4,
+songplay3.playmax as playmax4,songplay3.playmin as playmin4,songplay3.playmedian as playmedian4,
+songplay4.play as play5,songplay4.playavg as playavg5,
+songplay4.playstddev as playstddev5,songplay4.playstddev_samp as playstddev_samp5,
+songplay4.playmax as playmax5,songplay4.playmin as playmin5,songplay4.playmedian as playmedian5,
+songplay5.play as play6,songplay5.playavg as playavg6,
+songplay5.playstddev as playstddev6,songplay5.playstddev_samp as playstddev_samp6,
+songplay5.playmax as playmax6,songplay5.playmin as playmin6,songplay5.playmedian as playmedian6,
+songplay6.play as play7,songplay6.playavg as playavg7,
+songplay6.playstddev as playstddev7,songplay6.playstddev_samp as playstddev_samp7,
+songplay6.playmax as playmax7,songplay6.playmin as playmin7,songplay6.playmedian as playmedian7,
+songplay7.play as play8,songplay7.playavg as playavg8,
+songplay7.playstddev as playstddev8,songplay7.playstddev_samp as playstddev_samp8,
+songplay7.playmax as playmax8,songplay7.playmin as playmin8,songplay7.playmedian as playmedian8
+from songplay1 
+left outer join songplay2  on songplay1.artist_id=songplay2.artist_id
+left outer join songplay3  on songplay1.artist_id=songplay3.artist_id
+left outer join songplay4  on songplay1.artist_id=songplay4.artist_id
+left outer join songplay5  on songplay1.artist_id=songplay5.artist_id
+left outer join songplay6  on songplay1.artist_id=songplay6.artist_id
+left outer join songplay7  on songplay1.artist_id=songplay7.artist_id;
+
+
+
+
+5. 歌手的最近的播放量1 3 7 14 21 28 ---均值--方差--最大--最小--中位数    (查看阿里统计量)  听过/收藏/下载
+------DATEDIFF(time, '2014-11-18') AS daydiff  距离多少日差多少天
+训练集3-7--测试集预测8月份均值
+--前1天的播放量
+create table if not  exists  recentsongplay1 as
+select  artist_id,sum(_c2) as recentplay,floor(avg(_c2)) as recentplayavg,floor(stddev(_c2)) as recentplaystddev,
+floor(stddev_samp(_c2)) as recentplaystddev_samp,max(_c2) as recentplaymax,min(_c2) as recentplaymin,
+floor(median(_c2)) as recentplaymedian  from aidnum where  ds=20150730  group by artist_id;
+--前3天的播放量
+create table if not  exists  recentsongplay2 as
+select  artist_id,sum(_c2) as recentplay,floor(avg(_c2)) as recentplayavg,floor(stddev(_c2)) as recentplaystddev,
+floor(stddev_samp(_c2)) as recentplaystddev_samp,max(_c2) as recentplaymax,min(_c2) as recentplaymin,
+floor(median(_c2)) as recentplaymedian  from aidnum where  ds>=20150728 and ds<=20150730  group by artist_id;
+--前7天的播放量
+create table if not  exists  recentsongplay3 as
+select  artist_id,sum(_c2) as recentplay,floor(avg(_c2)) as recentplayavg,floor(stddev(_c2)) as recentplaystddev,
+floor(stddev_samp(_c2)) as recentplaystddev_samp,max(_c2) as recentplaymax,min(_c2) as recentplaymin,
+floor(median(_c2)) as recentplaymedian  from aidnum where  ds>=20150723 and ds<=20150730  group by artist_id;
+--前15天的播放量
+create table if not  exists  recentsongplay4 as
+select  artist_id,sum(_c2) as recentplay,floor(avg(_c2)) as recentplayavg,floor(stddev(_c2)) as recentplaystddev,
+floor(stddev_samp(_c2)) as recentplaystddev_samp,max(_c2) as recentplaymax,min(_c2) as recentplaymin,
+floor(median(_c2)) as recentplaymedian  from aidnum where  ds>=20150715 and ds<=20150730  group by artist_id;
+--前1月的播放量
+create table if not  exists  recentsongplay5 as
+select  artist_id,sum(_c2) as recentplay,floor(avg(_c2)) as recentplayavg,floor(stddev(_c2)) as recentplaystddev,
+floor(stddev_samp(_c2)) as recentplaystddev_samp,max(_c2) as recentplaymax,min(_c2) as recentplaymin,
+floor(median(_c2)) as recentplaymedian  from aidnum where  ds>=20150701 and ds<=20150730  group by artist_id;
+--select  * from  songplay6;
+--前2月的播放量--两个月和+单月
+create table if not  exists  recentsongplay6 as
+select  artist_id,sum(_c2) as recentplay,floor(avg(_c2)) as recentplayavg,floor(stddev(_c2)) as recentplaystddev,
+floor(stddev_samp(_c2)) as recentplaystddev_samp,max(_c2) as recentplaymax,min(_c2) as recentplaymin,
+floor(median(_c2)) as recentplaymedian  from aidnum where  ds>=20150601 and ds<20150801  group by artist_id;
+
+select  * from  songplay5;
+
+--前3月的播放量--三个月和+单月
+create table if not  exists  recentsongplay7 as
+select  artist_id,sum(_c2) as recentplay,floor(avg(_c2)) as recentplayavg,floor(stddev(_c2)) as recentplaystddev,
+floor(stddev_samp(_c2)) as recentplaystddev_samp,max(_c2) as recentplaymax,min(_c2) as recentplaymin,
+floor(median(_c2)) as recentplaymedian  from aidnum where  ds>=20150501 and ds<20150801  group by artist_id;
+
+select  * from  songplay4;
+
+
+create table if not  exists  recentsongplayall as
+select recentsongplay1.*,
+recentsongplay2.recentplay as recentplayd3,
+recentsongplay2.recentplayavg as recentplayavgd3,
+recentsongplay2.recentplaystddev as recentplaystddevd3,
+recentsongplay2.recentplaystddev_samp as recentplaystddev_sampd3,
+recentsongplay2.recentplaymax as recentplaymaxd3,
+recentsongplay2.recentplaymin as recentplaymind3,
+recentsongplay2.recentplaymedian as recentplaymediand3,
+recentsongplay3.recentplay as recentplayd7,
+recentsongplay3.recentplayavg as recentplayavgd7,
+recentsongplay3.recentplaystddev as recentplaystddevd7,
+recentsongplay3.recentplaystddev_samp as recentplaystddev_sampd7,
+recentsongplay3.recentplaymax as recentplaymaxd7,
+recentsongplay3.recentplaymin as recentplaymind7,
+recentsongplay3.recentplaymedian as recentplaymediand7,
+recentsongplay4.recentplay as recentplayd15,
+recentsongplay4.recentplayavg as recentplayavgd15,
+recentsongplay4.recentplaystddev as recentplaystddevd15,
+recentsongplay4.recentplaystddev_samp as recentplaystddev_sampd15,
+recentsongplay4.recentplaymax as recentplaymaxd15,
+recentsongplay4.recentplaymin as recentplaymind15,
+recentsongplay4.recentplaymedian as recentplaymediand15,
+recentsongplay5.recentplay as recentplaym1,
+recentsongplay5.recentplayavg as recentplayavgm1,
+recentsongplay5.recentplaystddev as recentplaystddevm1,
+recentsongplay5.recentplaystddev_samp as recentplaystddev_sampm1,
+recentsongplay5.recentplaymax as recentplaymaxm1,
+recentsongplay5.recentplaymin as recentplayminm1,
+recentsongplay5.recentplaymedian as recentplaymedianm1,
+recentsongplay6.recentplay as recentplaym2,
+recentsongplay6.recentplayavg as recentplayavgm2,
+recentsongplay6.recentplaystddev as recentplaystddevm2,
+recentsongplay6.recentplaystddev_samp as recentplaystddev_sampm2,
+recentsongplay6.recentplaymax as recentplaymaxm2,
+recentsongplay6.recentplaymin as recentplayminm2,
+recentsongplay6.recentplaymedian as recentplaymedianm2,
+recentsongplay7.recentplay as recentplaym3,
+recentsongplay7.recentplayavg as recentplayavgm3,
+recentsongplay7.recentplaystddev as recentplaystddevm3,
+recentsongplay7.recentplaystddev_samp as recentplaystddev_sampm3,
+recentsongplay7.recentplaymax as recentplaymaxm3,
+recentsongplay7.recentplaymin as recentplayminm3,
+recentsongplay7.recentplaymedian as recentplaymedianm3,
+songplay5.play as recentplaym21,
+songplay5.playavg as recentplayavgm21,
+songplay5.playstddev as recentplaystddevm21,
+songplay5.playstddev_samp as recentplaystddev_sampm21,
+songplay5.playmax as recentplaymaxm21,
+songplay5.playmin as recentplayminm21,
+songplay5.playmedian as recentplaymedianm21,
+songplay4.play as recentplaym31,
+songplay4.playavg as recentplayavgm31,
+songplay4.playstddev as recentplaystddevm31,
+songplay4.playstddev_samp as recentplaystddev_sampm31,
+songplay4.playmax as recentplaymaxm31,
+songplay4.playmin as recentplayminm31,
+songplay4.playmedian as recentplaymedianm31
+from recentsongplay1 
+left outer join recentsongplay2  on recentsongplay1.artist_id=recentsongplay2.artist_id
+left outer join recentsongplay3  on recentsongplay1.artist_id=recentsongplay3.artist_id
+left outer join recentsongplay4  on recentsongplay1.artist_id=recentsongplay4.artist_id
+left outer join recentsongplay5  on recentsongplay1.artist_id=recentsongplay5.artist_id
+left outer join recentsongplay6  on recentsongplay1.artist_id=recentsongplay6.artist_id
+left outer join recentsongplay7  on recentsongplay1.artist_id=recentsongplay7.artist_id
+left outer join songplay5  on recentsongplay1.artist_id=songplay5.artist_id
+left outer join songplay4  on recentsongplay1.artist_id=songplay4.artist_id;
+
+
+拼接训练集--近多少天播放量+歌曲数(总数,前1月,前2月,前3月)+新歌数(前1月,前2月,前3月)+初始总播放量  laber 8月的均值
+create table if not  exists  featuretest1 as
+select recentsongplayall.*,songcountall.aid_sid_count,
+songcountall.aid_sid_count7 as aid_sid_countm1,songcountall.aid_sid_count6 as aid_sid_countm2,
+songcountall.aid_sid_count5 as aid_sid_countm3,songcountnew.new7 as newm1,
+songcountnew.new6 as newm2,songcountnew.new5 as newm3,songinitplays.initplays,
+songplay7.playavg as target
+from recentsongplayall 
+left outer join songcountall  on recentsongplayall.artist_id=songcountall.artist_id
+left outer join songcountnew  on recentsongplayall.artist_id=songcountnew.artist_id
+left outer join songinitplays  on recentsongplayall.artist_id=songinitplays.artist_id
+left outer join songplay7  on recentsongplayall.artist_id=songplay7.artist_id;
+
+预测9月
+--前1天的播放量
+create table if not  exists  precentsongplay1 as
+select  artist_id,sum(_c2) as recentplay,floor(avg(_c2)) as recentplayavg,floor(stddev(_c2)) as recentplaystddev,
+floor(stddev_samp(_c2)) as recentplaystddev_samp,max(_c2) as recentplaymax,min(_c2) as recentplaymin,
+floor(median(_c2)) as recentplaymedian  from aidnum where  ds=20150830  group by artist_id;
+--前3天的播放量
+create table if not  exists  precentsongplay2 as
+select  artist_id,sum(_c2) as recentplay,floor(avg(_c2)) as recentplayavg,floor(stddev(_c2)) as recentplaystddev,
+floor(stddev_samp(_c2)) as recentplaystddev_samp,max(_c2) as recentplaymax,min(_c2) as recentplaymin,
+floor(median(_c2)) as recentplaymedian  from aidnum where  ds>=20150828 and ds<=20150830  group by artist_id;
+--前7天的播放量
+create table if not  exists  precentsongplay3 as
+select  artist_id,sum(_c2) as recentplay,floor(avg(_c2)) as recentplayavg,floor(stddev(_c2)) as recentplaystddev,
+floor(stddev_samp(_c2)) as recentplaystddev_samp,max(_c2) as recentplaymax,min(_c2) as recentplaymin,
+floor(median(_c2)) as recentplaymedian  from aidnum where  ds>=20150823 and ds<=20150830  group by artist_id;
+--前15天的播放量
+create table if not  exists  precentsongplay4 as
+select  artist_id,sum(_c2) as recentplay,floor(avg(_c2)) as recentplayavg,floor(stddev(_c2)) as recentplaystddev,
+floor(stddev_samp(_c2)) as recentplaystddev_samp,max(_c2) as recentplaymax,min(_c2) as recentplaymin,
+floor(median(_c2)) as recentplaymedian  from aidnum where  ds>=20150815 and ds<=20150830  group by artist_id;
+--前1月的播放量
+create table if not  exists  precentsongplay5 as
+select  artist_id,sum(_c2) as recentplay,floor(avg(_c2)) as recentplayavg,floor(stddev(_c2)) as recentplaystddev,
+floor(stddev_samp(_c2)) as recentplaystddev_samp,max(_c2) as recentplaymax,min(_c2) as recentplaymin,
+floor(median(_c2)) as recentplaymedian  from aidnum where  ds>=20150801 and ds<=20150830  group by artist_id;
+
+--前2月的播放量--两个月和+单月
+create table if not  exists  precentsongplay6 as
+select  artist_id,sum(_c2) as recentplay,floor(avg(_c2)) as recentplayavg,floor(stddev(_c2)) as recentplaystddev,
+floor(stddev_samp(_c2)) as recentplaystddev_samp,max(_c2) as recentplaymax,min(_c2) as recentplaymin,
+floor(median(_c2)) as recentplaymedian  from aidnum where  ds>=20150701 and ds<20150901  group by artist_id;
+
+select  * from  songplay6;
+
+--前3月的播放量--三个月和+单月
+create table if not  exists  precentsongplay7 as
+select  artist_id,sum(_c2) as recentplay,floor(avg(_c2)) as recentplayavg,floor(stddev(_c2)) as recentplaystddev,
+floor(stddev_samp(_c2)) as recentplaystddev_samp,max(_c2) as recentplaymax,min(_c2) as recentplaymin,
+floor(median(_c2)) as recentplaymedian  from aidnum where  ds>=20150601 and ds<20150901  group by artist_id;
+
+select  * from  songplay5;
+
+create table if not  exists  precentsongplayall as
+select precentsongplay1.*,
+precentsongplay2.recentplay as recentplayd3,
+precentsongplay2.recentplayavg as recentplayavgd3,
+precentsongplay2.recentplaystddev as recentplaystddevd3,
+precentsongplay2.recentplaystddev_samp as recentplaystddev_sampd3,
+precentsongplay2.recentplaymax as recentplaymaxd3,
+precentsongplay2.recentplaymin as recentplaymind3,
+precentsongplay2.recentplaymedian as recentplaymediand3,
+precentsongplay3.recentplay as recentplayd7,
+precentsongplay3.recentplayavg as recentplayavgd7,
+precentsongplay3.recentplaystddev as recentplaystddevd7,
+precentsongplay3.recentplaystddev_samp as recentplaystddev_sampd7,
+precentsongplay3.recentplaymax as recentplaymaxd7,
+precentsongplay3.recentplaymin as recentplaymind7,
+precentsongplay3.recentplaymedian as recentplaymediand7,
+precentsongplay4.recentplay as recentplayd15,
+precentsongplay4.recentplayavg as recentplayavgd15,
+precentsongplay4.recentplaystddev as recentplaystddevd15,
+precentsongplay4.recentplaystddev_samp as recentplaystddev_sampd15,
+precentsongplay4.recentplaymax as recentplaymaxd15,
+precentsongplay4.recentplaymin as recentplaymind15,
+precentsongplay4.recentplaymedian as recentplaymediand15,
+precentsongplay5.recentplay as recentplaym1,
+precentsongplay5.recentplayavg as recentplayavgm1,
+precentsongplay5.recentplaystddev as recentplaystddevm1,
+precentsongplay5.recentplaystddev_samp as recentplaystddev_sampm1,
+precentsongplay5.recentplaymax as recentplaymaxm1,
+precentsongplay5.recentplaymin as recentplayminm1,
+precentsongplay5.recentplaymedian as recentplaymedianm1,
+precentsongplay6.recentplay as recentplaym2,
+precentsongplay6.recentplayavg as recentplayavgm2,
+precentsongplay6.recentplaystddev as recentplaystddevm2,
+precentsongplay6.recentplaystddev_samp as recentplaystddev_sampm2,
+precentsongplay6.recentplaymax as recentplaymaxm2,
+precentsongplay6.recentplaymin as recentplayminm2,
+precentsongplay6.recentplaymedian as recentplaymedianm2,
+precentsongplay7.recentplay as recentplaym3,
+precentsongplay7.recentplayavg as recentplayavgm3,
+precentsongplay7.recentplaystddev as recentplaystddevm3,
+precentsongplay7.recentplaystddev_samp as recentplaystddev_sampm3,
+precentsongplay7.recentplaymax as recentplaymaxm3,
+precentsongplay7.recentplaymin as recentplayminm3,
+precentsongplay7.recentplaymedian as recentplaymedianm3,
+songplay6.play as recentplaym21,
+songplay6.playavg as recentplayavgm21,
+songplay6.playstddev as recentplaystddevm21,
+songplay6.playstddev_samp as recentplaystddev_sampm21,
+songplay6.playmax as recentplaymaxm21,
+songplay6.playmin as recentplayminm21,
+songplay6.playmedian as recentplaymedianm21,
+songplay5.play as recentplaym31,
+songplay5.playavg as recentplayavgm31,
+songplay5.playstddev as recentplaystddevm31,
+songplay5.playstddev_samp as recentplaystddev_sampm31,
+songplay5.playmax as recentplaymaxm31,
+songplay5.playmin as recentplayminm31,
+songplay5.playmedian as recentplaymedianm31
+from precentsongplay1 
+left outer join precentsongplay2  on precentsongplay1.artist_id=precentsongplay2.artist_id
+left outer join precentsongplay3  on precentsongplay1.artist_id=precentsongplay3.artist_id
+left outer join precentsongplay4  on precentsongplay1.artist_id=precentsongplay4.artist_id
+left outer join precentsongplay5  on precentsongplay1.artist_id=precentsongplay5.artist_id
+left outer join precentsongplay6  on precentsongplay1.artist_id=precentsongplay6.artist_id
+left outer join precentsongplay7  on precentsongplay1.artist_id=precentsongplay7.artist_id
+left outer join songplay6  on precentsongplay1.artist_id=songplay6.artist_id
+left outer join songplay5  on precentsongplay1.artist_id=songplay5.artist_id;
+
+拼接预测集--近多少天播放量+歌曲数(总数,前1月,前2月,前3月)+新歌数(前1月,前2月,前3月)+初始总播放量  laber 8月的均值
+create table if not  exists  featuretest2 as
+select precentsongplayall.*,songcountall.aid_sid_count,
+songcountall.aid_sid_count8 as aid_sid_countm1,songcountall.aid_sid_count7 as aid_sid_countm2,
+songcountall.aid_sid_count6 as aid_sid_countm3,songcountnew.new8 as newm1,
+songcountnew.new7 as newm2,songcountnew.new6 as newm3,songinitplays.initplays
+from precentsongplayall 
+left outer join songcountall  on precentsongplayall.artist_id=songcountall.artist_id
+left outer join songcountnew  on precentsongplayall.artist_id=songcountnew.artist_id
+left outer join songinitplays  on precentsongplayall.artist_id=songinitplays.artist_id;
+
+
+LRresult
+y=(x-MinValue)/(MaxValue-MinValue)  x=y*(MaxValue-MinValue)+MinValue
+target	{"name": "normalize", "paras":{"min":255, "max": 233484}}
+select artist_id,floor(prediction_score*233229+255) as num from LRresult;
+
+target	{"name": "normalize", "paras":{"min":255, "max": 233484}}
+select artist_id,floor(prediction_score*233229+255) as num from Xgboostresult;
+
+create table if not  exists  ttt1 as
+select holt1.*,floor(LRresult.prediction_score*233229+255) as num from holt1 left outer join LRresult  on holt1.artist_id=LRresult.artist_id;
+
+select artist_id,plays,num,plays-num from ttt1 group by artist_id,plays,num
+
+7. 喜欢歌手的用户的数量---------听过/收藏/下载 该歌手的总用户数量--每个月用户数量
+create table if not  exists feature5 as
+select  artist_id,count(distinct user_id) as t7 from allsong where action_type='1'  group by artist_id  ; 
+
+--前1天的
+         
+--前3天的
+
+--前7天的
+
+--前14天的
+
+--前1月的
+
+--前2月的--两个月和+单月
+
+--前3月的--三个月和+单月
+
+--前4月的--四个月和+单月
+
+--前5月的--五个月和+单月
+
+8.歌手最近的 综合 均值 方差 最小 中位数
+1 3 5 7 14 30 60 90
+create table if not  exists  xrecentsongplay1 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds=20150730  group by artist_id;
+create table if not  exists  xrecentsongplay2 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150727 and ds<=20150730  group by artist_id;
+create table if not  exists  xrecentsongplay3 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150725 and ds<=20150730  group by artist_id;
+create table if not  exists  xrecentsongplay4 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150723 and ds<=20150730  group by artist_id;
+create table if not  exists  xrecentsongplay5 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150716 and ds<=20150730  group by artist_id;
+create table if not  exists  xrecentsongplay6 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150630 and ds<=20150730  group by artist_id;
+create table if not  exists  xrecentsongplay7 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150531 and ds<=20150730  group by artist_id;
+create table if not  exists  xrecentsongplay8 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150501 and ds<=20150730  group by artist_id;
+
+
+create table if not  exists  xrecentsongplayall as
+select xrecentsongplay1.*,
+xrecentsongplay2.recentplay as recentplay_3,
+xrecentsongplay2.recentplayavg as recentplayavg_3,
+xrecentsongplay2.recentplaystddev as recentplaystddev_3,
+xrecentsongplay2.recentplaymin as recentplaymin_3,
+xrecentsongplay2.recentplaymedian as recentplaymedian_3,
+xrecentsongplay3.recentplay as recentplay_5,
+xrecentsongplay3.recentplayavg as recentplayavg_5,
+xrecentsongplay3.recentplaystddev as recentplaystddev_5,
+xrecentsongplay3.recentplaymin as recentplaymin_5,
+xrecentsongplay3.recentplaymedian as recentplaymedian_5,
+xrecentsongplay4.recentplay as recentplay_7,
+xrecentsongplay4.recentplayavg as recentplayavg_7,
+xrecentsongplay4.recentplaystddev as recentplaystddev_7,
+xrecentsongplay4.recentplaymin as recentplaymin_7,
+xrecentsongplay4.recentplaymedian as recentplaymedian_7,
+xrecentsongplay5.recentplay as recentplay_14,
+xrecentsongplay5.recentplayavg as recentplayavg_14,
+xrecentsongplay5.recentplaystddev as recentplaystddev_14,
+xrecentsongplay5.recentplaymin as recentplaymin_14,
+xrecentsongplay5.recentplaymedian as recentplaymedian_14,
+xrecentsongplay6.recentplay as recentplay_30,
+xrecentsongplay6.recentplayavg as recentplayavg_30,
+xrecentsongplay6.recentplaystddev as recentplaystddev_30,
+xrecentsongplay6.recentplaymin as recentplaymin_30,
+xrecentsongplay6.recentplaymedian as recentplaymedian_30,
+xrecentsongplay7.recentplay as recentplay_60,
+xrecentsongplay7.recentplayavg as recentplayavg_60,
+xrecentsongplay7.recentplaystddev as recentplaystddev_60,
+xrecentsongplay7.recentplaymin as recentplaymin_60,
+xrecentsongplay7.recentplaymedian as recentplaymedian_60,
+xrecentsongplay8.recentplay as recentplay_90,
+xrecentsongplay8.recentplayavg as recentplayavg_90,
+xrecentsongplay8.recentplaystddev as recentplaystddev_90,
+xrecentsongplay8.recentplaymin as recentplaymin_90,
+xrecentsongplay8.recentplaymedian as recentplaymedian_90
+from xrecentsongplay1 
+left outer join xrecentsongplay2  on xrecentsongplay1.artist_id=xrecentsongplay2.artist_id
+left outer join xrecentsongplay3  on xrecentsongplay1.artist_id=xrecentsongplay3.artist_id
+left outer join xrecentsongplay4  on xrecentsongplay1.artist_id=xrecentsongplay4.artist_id
+left outer join xrecentsongplay5  on xrecentsongplay1.artist_id=xrecentsongplay5.artist_id
+left outer join xrecentsongplay6  on xrecentsongplay1.artist_id=xrecentsongplay6.artist_id
+left outer join xrecentsongplay7  on xrecentsongplay1.artist_id=xrecentsongplay7.artist_id
+left outer join xrecentsongplay8  on xrecentsongplay1.artist_id=xrecentsongplay8.artist_id;
+
+新歌发布在该月第几号
+1，歌手的歌曲数量 aid_sid_count
+create table if not  exists  xsongcount1 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150727 and ds<=20150730 group by artist_id;
+create table if not  exists  xsongcount2 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150725 and ds<=20150727 group by artist_id;
+create table if not  exists  xsongcount3 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150723 and ds<=20150725 group by artist_id;
+create table if not  exists  xsongcount4 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150716 and ds<=20150723 group by artist_id;
+create table if not  exists  xsongcount5 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150630 and ds<=20150716 group by artist_id;
+create table if not  exists  xsongcount6 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150531 and ds<=20150730 group by artist_id;
+create table if not  exists  xsongcount7 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150501 and ds<=20150730 group by artist_id;
+
+create table if not  exists  xsongcountall as
+select 
+xsongcount1.artist_id,
+xsongcount1.aid_sid_count as aid_sid_count_3,
+xsongcount2.aid_sid_count as aid_sid_count_5,
+xsongcount3.aid_sid_count as aid_sid_count_7,
+xsongcount4.aid_sid_count as aid_sid_count_14,
+xsongcount5.aid_sid_count as aid_sid_count_30,
+xsongcount6.aid_sid_count as aid_sid_count_60,
+xsongcount7.aid_sid_count as aid_sid_count_90,
+case when floor(xsongcount1.aid_sid_count-xsongcount2.aid_sid_count)>0 then floor(xsongcount1.aid_sid_count-xsongcount2.aid_sid_count) else 0 end as new3,
+case when floor(xsongcount3.aid_sid_count-xsongcount4.aid_sid_count)>0 then floor(xsongcount3.aid_sid_count-xsongcount4.aid_sid_count) else 0 end as new7,
+case when floor(xsongcount4.aid_sid_count-xsongcount5.aid_sid_count)>0 then floor(xsongcount4.aid_sid_count-xsongcount5.aid_sid_count) else 0 end as new14
+from xsongcount1 
+left outer join xsongcount2  on xsongcount1.artist_id=xsongcount2.artist_id
+left outer join xsongcount3  on xsongcount1.artist_id=xsongcount3.artist_id
+left outer join xsongcount4  on xsongcount1.artist_id=xsongcount4.artist_id
+left outer join xsongcount5  on xsongcount1.artist_id=xsongcount5.artist_id
+left outer join xsongcount6  on xsongcount1.artist_id=xsongcount6.artist_id
+left outer join xsongcount7  on xsongcount1.artist_id=xsongcount7.artist_id;
+
+用户数   uidsidaidnumds
+create table if not  exists uidsidaidnumds  as
+SELECT t1.artist_id,t2.* FROM mars_tianchi_songs t1 JOIN uidtimenum3 t2 on t1.song_id=t2.song_id;
+最近3 5 7 14 30 60 90 
+create table if not  exists  xusercount1 as
+select  artist_id,count(distinct user_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150727 and ds<=20150730 group by artist_id;
+create table if not  exists  xusercount2 as
+select  artist_id,count(distinct user_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150725 and ds<=20150730 group by artist_id;
+create table if not  exists  xusercount3 as
+select  artist_id,count(distinct user_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150723 and ds<=20150730 group by artist_id;
+create table if not  exists  xusercount4 as
+select  artist_id,count(distinct user_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150716 and ds<=20150730 group by artist_id;
+create table if not  exists  xusercount5 as
+select  artist_id,count(distinct user_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150630 and ds<=20150730 group by artist_id;
+create table if not  exists  xusercount6 as
+select  artist_id,count(distinct user_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150531 and ds<=20150730 group by artist_id;
+create table if not  exists  xusercount7 as
+select  artist_id,count(distinct user_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150501 and ds<=20150730 group by artist_id;
+
+create table if not  exists  xusercountall as
+select 
+xusercount1.artist_id,
+xusercount1.aid_uid_count as aid_uid_count_3,
+xusercount2.aid_uid_count as aid_uid_count_5,
+xusercount3.aid_uid_count as aid_uid_count_7,
+xusercount4.aid_uid_count as aid_uid_count_14,
+xusercount5.aid_uid_count as aid_uid_count_30,
+xusercount6.aid_uid_count as aid_uid_count_60,
+xusercount7.aid_uid_count as aid_uid_count_90
+from xusercount1 
+left outer join xusercount2  on xusercount1.artist_id=xusercount2.artist_id
+left outer join xusercount3  on xusercount1.artist_id=xusercount3.artist_id
+left outer join xusercount4  on xusercount1.artist_id=xusercount4.artist_id
+left outer join xusercount5  on xusercount1.artist_id=xusercount5.artist_id
+left outer join xusercount6  on xusercount1.artist_id=xusercount6.artist_id
+left outer join xusercount7  on xusercount1.artist_id=xusercount7.artist_id;
+
+合并
+近多少天播放量(均值 方差 最小 中位数1 3 5 7 14 30 60 90)+歌曲数(最近的歌曲数1-3 3-5 5-7 7-14 14-30 60 90)+新歌数(前3天,前7天,前14天)+最近用户数(3 5 7 14 30 60 90)  laber 8月的均值/中位数
+xrecentsongplayall
+xsongcountall
+xusercountall
+
+create table if not  exists  xfeaturetest1 as
+select 
+xrecentsongplayall.*,
+xsongcountall.aid_sid_count_3,
+xsongcountall.aid_sid_count_5,
+xsongcountall.aid_sid_count_7,
+xsongcountall.aid_sid_count_14,
+xsongcountall.aid_sid_count_30,
+xsongcountall.aid_sid_count_60,
+xsongcountall.aid_sid_count_90,
+xsongcountall.new3,
+xsongcountall.new7,
+xsongcountall.new14,
+xusercountall.aid_uid_count_3,
+xusercountall.aid_uid_count_5,
+xusercountall.aid_uid_count_7,
+xusercountall.aid_uid_count_14,
+xusercountall.aid_uid_count_30,
+xusercountall.aid_uid_count_60,
+xusercountall.aid_uid_count_90
+from xrecentsongplayall 
+left outer join xsongcountall  on xrecentsongplayall.artist_id=xsongcountall.artist_id
+left outer join xusercountall  on xrecentsongplayall.artist_id=xusercountall.artist_id;
+
+create table if not  exists  xlaber8 as
+select  artist_id,floor(avg(plays)) as targetavg,
+floor(median(plays)) as targetmedian  from aidnumxin where  ds>=20150801 and ds<=20150830  group by artist_id;
+
+create table if not  exists  xfeaturetest11 as
+select  xfeaturetest1.*,xlaber8.targetavg,xlaber8.targetmedian
+from xfeaturetest1 
+left outer join xlaber8  on xfeaturetest1.artist_id=xlaber8.artist_id;
+
+预测9月
+歌手最近的 综合 均值 方差 最小 中位数
+1 3 5 7 14 30 60 90
+create table if not  exists  pxrecentsongplay1 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds=20150830  group by artist_id;
+create table if not  exists  pxrecentsongplay2 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150827 and ds<=20150830  group by artist_id;
+create table if not  exists  pxrecentsongplay3 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150825 and ds<=20150830  group by artist_id;
+create table if not  exists  pxrecentsongplay4 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150823 and ds<=20150830  group by artist_id;
+create table if not  exists  pxrecentsongplay5 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150816 and ds<=20150830  group by artist_id;
+create table if not  exists  pxrecentsongplay6 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150731 and ds<=20150830  group by artist_id;
+create table if not  exists  pxrecentsongplay7 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150701 and ds<=20150830  group by artist_id;
+create table if not  exists  pxrecentsongplay8 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150601 and ds<=20150830  group by artist_id;
+
+drop table if  exists pxrecentsongplayall;
+create table if not  exists  pxrecentsongplayall as
+select pxrecentsongplay1.*,
+pxrecentsongplay2.recentplay as recentplay_3,
+pxrecentsongplay2.recentplayavg as recentplayavg_3,
+pxrecentsongplay2.recentplaystddev as recentplaystddev_3,
+pxrecentsongplay2.recentplaymin as recentplaymin_3,
+pxrecentsongplay2.recentplaymedian as recentplaymedian_3,
+pxrecentsongplay3.recentplay as recentplay_5,
+pxrecentsongplay3.recentplayavg as recentplayavg_5,
+pxrecentsongplay3.recentplaystddev as recentplaystddev_5,
+pxrecentsongplay3.recentplaymin as recentplaymin_5,
+pxrecentsongplay3.recentplaymedian as recentplaymedian_5,
+pxrecentsongplay4.recentplay as recentplay_7,
+pxrecentsongplay4.recentplayavg as recentplayavg_7,
+pxrecentsongplay4.recentplaystddev as recentplaystddev_7,
+pxrecentsongplay4.recentplaymin as recentplaymin_7,
+pxrecentsongplay4.recentplaymedian as recentplaymedian_7,
+pxrecentsongplay5.recentplay as recentplay_14,
+pxrecentsongplay5.recentplayavg as recentplayavg_14,
+pxrecentsongplay5.recentplaystddev as recentplaystddev_14,
+pxrecentsongplay5.recentplaymin as recentplaymin_14,
+pxrecentsongplay5.recentplaymedian as recentplaymedian_14,
+pxrecentsongplay6.recentplay as recentplay_30,
+pxrecentsongplay6.recentplayavg as recentplayavg_30,
+pxrecentsongplay6.recentplaystddev as recentplaystddev_30,
+pxrecentsongplay6.recentplaymin as recentplaymin_30,
+pxrecentsongplay6.recentplaymedian as recentplaymedian_30,
+pxrecentsongplay7.recentplay as recentplay_60,
+pxrecentsongplay7.recentplayavg as recentplayavg_60,
+pxrecentsongplay7.recentplaystddev as recentplaystddev_60,
+pxrecentsongplay7.recentplaymin as recentplaymin_60,
+pxrecentsongplay7.recentplaymedian as recentplaymedian_60,
+pxrecentsongplay8.recentplay as recentplay_90,
+pxrecentsongplay8.recentplayavg as recentplayavg_90,
+pxrecentsongplay8.recentplaystddev as recentplaystddev_90,
+pxrecentsongplay8.recentplaymin as recentplaymin_90,
+pxrecentsongplay8.recentplaymedian as recentplaymedian_90
+from pxrecentsongplay1 
+left outer join pxrecentsongplay2  on pxrecentsongplay1.artist_id=pxrecentsongplay2.artist_id
+left outer join pxrecentsongplay3  on pxrecentsongplay1.artist_id=pxrecentsongplay3.artist_id
+left outer join pxrecentsongplay4  on pxrecentsongplay1.artist_id=pxrecentsongplay4.artist_id
+left outer join pxrecentsongplay5  on pxrecentsongplay1.artist_id=pxrecentsongplay5.artist_id
+left outer join pxrecentsongplay6  on pxrecentsongplay1.artist_id=pxrecentsongplay6.artist_id
+left outer join pxrecentsongplay7  on pxrecentsongplay1.artist_id=pxrecentsongplay7.artist_id
+left outer join pxrecentsongplay8  on pxrecentsongplay1.artist_id=pxrecentsongplay8.artist_id;
+
+新歌发布在该月第几号
+1，歌手的歌曲数量 aid_sid_count
+create table if not  exists  pxsongcount1 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150827 and ds<=20150830 group by artist_id;
+create table if not  exists  pxsongcount2 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150825 and ds<=20150827 group by artist_id;
+create table if not  exists  pxsongcount3 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150823 and ds<=20150825 group by artist_id;
+create table if not  exists  pxsongcount4 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150816 and ds<=20150823 group by artist_id;
+create table if not  exists  pxsongcount5 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150731 and ds<=20150816 group by artist_id;
+create table if not  exists  pxsongcount6 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150701 and ds<=20150830 group by artist_id;
+create table if not  exists  pxsongcount7 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150601 and ds<=20150830 group by artist_id;
+
+create table if not  exists  pxsongcountall as
+select 
+pxsongcount1.artist_id,
+pxsongcount1.aid_sid_count as aid_sid_count_3,
+pxsongcount2.aid_sid_count as aid_sid_count_5,
+pxsongcount3.aid_sid_count as aid_sid_count_7,
+pxsongcount4.aid_sid_count as aid_sid_count_14,
+pxsongcount5.aid_sid_count as aid_sid_count_30,
+pxsongcount6.aid_sid_count as aid_sid_count_60,
+pxsongcount7.aid_sid_count as aid_sid_count_90,
+case when floor(pxsongcount1.aid_sid_count-pxsongcount2.aid_sid_count)>0 then floor(pxsongcount1.aid_sid_count-pxsongcount2.aid_sid_count) else 0 end as new3,
+case when floor(pxsongcount3.aid_sid_count-pxsongcount4.aid_sid_count)>0 then floor(pxsongcount3.aid_sid_count-pxsongcount4.aid_sid_count) else 0 end as new7,
+case when floor(pxsongcount4.aid_sid_count-pxsongcount5.aid_sid_count)>0 then floor(pxsongcount4.aid_sid_count-pxsongcount5.aid_sid_count) else 0 end as new14
+from pxsongcount1 
+left outer join pxsongcount2  on pxsongcount1.artist_id=pxsongcount2.artist_id
+left outer join pxsongcount3  on pxsongcount1.artist_id=pxsongcount3.artist_id
+left outer join pxsongcount4  on pxsongcount1.artist_id=pxsongcount4.artist_id
+left outer join pxsongcount5  on pxsongcount1.artist_id=pxsongcount5.artist_id
+left outer join pxsongcount6  on pxsongcount1.artist_id=pxsongcount6.artist_id
+left outer join pxsongcount7  on pxsongcount1.artist_id=pxsongcount7.artist_id;
+
+用户数
+最近3 5 7 14 30 60 90 
+create table if not  exists  pxusercount1 as
+select  artist_id,count(distinct user_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150827 and ds<=20150830 group by artist_id;
+create table if not  exists  pxusercount2 as
+select  artist_id,count(distinct user_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150825 and ds<=20150830 group by artist_id;
+create table if not  exists  pxusercount3 as
+select  artist_id,count(distinct user_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150823 and ds<=20150830 group by artist_id;
+create table if not  exists  pxusercount4 as
+select  artist_id,count(distinct user_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150816 and ds<=20150830 group by artist_id;
+create table if not  exists  pxusercount5 as
+select  artist_id,count(distinct user_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150731 and ds<=20150830 group by artist_id;
+create table if not  exists  pxusercount6 as
+select  artist_id,count(distinct user_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150701 and ds<=20150830 group by artist_id;
+create table if not  exists  pxusercount7 as
+select  artist_id,count(distinct user_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150601 and ds<=20150830 group by artist_id;
+
+create table if not  exists  pxusercountall as
+select 
+pxusercount1.artist_id,
+pxusercount1.aid_uid_count as aid_uid_count_3,
+pxusercount2.aid_uid_count as aid_uid_count_5,
+pxusercount3.aid_uid_count as aid_uid_count_7,
+pxusercount4.aid_uid_count as aid_uid_count_14,
+pxusercount5.aid_uid_count as aid_uid_count_30,
+pxusercount6.aid_uid_count as aid_uid_count_60,
+pxusercount7.aid_uid_count as aid_uid_count_90
+from pxusercount1 
+left outer join pxusercount2  on pxusercount1.artist_id=pxusercount2.artist_id
+left outer join pxusercount3  on pxusercount1.artist_id=pxusercount3.artist_id
+left outer join pxusercount4  on pxusercount1.artist_id=pxusercount4.artist_id
+left outer join pxusercount5  on pxusercount1.artist_id=pxusercount5.artist_id
+left outer join pxusercount6  on pxusercount1.artist_id=pxusercount6.artist_id
+left outer join pxusercount7  on pxusercount1.artist_id=pxusercount7.artist_id;
+
+合并
+近多少天播放量(均值 方差 最小 中位数1 3 5 7 14 30 60 90)+歌曲数(最近的歌曲数1-3 3-5 5-7 7-14 14-30 60 90)+新歌数(前3天,前7天,前14天)+最近用户数(3 5 7 14 30 60 90)  laber 8月的均值/中位数
+pxrecentsongplayall
+pxsongcountall
+pxusercountall
+
+create table if not  exists  pxfeaturetest1 as
+select 
+pxrecentsongplayall.*,
+pxsongcountall.aid_sid_count_3,
+pxsongcountall.aid_sid_count_5,
+pxsongcountall.aid_sid_count_7,
+pxsongcountall.aid_sid_count_14,
+pxsongcountall.aid_sid_count_30,
+pxsongcountall.aid_sid_count_60,
+pxsongcountall.aid_sid_count_90,
+pxsongcountall.new3,
+pxsongcountall.new7,
+pxsongcountall.new14,
+pxusercountall.aid_uid_count_3,
+pxusercountall.aid_uid_count_5,
+pxusercountall.aid_uid_count_7,
+pxusercountall.aid_uid_count_14,
+pxusercountall.aid_uid_count_30,
+pxusercountall.aid_uid_count_60,
+pxusercountall.aid_uid_count_90
+from pxrecentsongplayall 
+left outer join pxsongcountall  on pxrecentsongplayall.artist_id=pxsongcountall.artist_id
+left outer join pxusercountall  on pxrecentsongplayall.artist_id=pxusercountall.artist_id;
+
+
+每月用户数量+每月用户转换率?收藏量转换率？下载量转换率？
+1, 2, 3, 4, 5, 6, 7, 14, 21, 30, 60, 180
+
+简单交叉验证
+S折交叉验证
+randMat = mat(random.rand(4,4))
+
+

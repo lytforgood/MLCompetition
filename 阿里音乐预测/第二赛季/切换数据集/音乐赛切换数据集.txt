@@ -1,0 +1,490 @@
+drop table  if exists p2_mars_tianchi_songs;
+create table if not  exists p2_mars_tianchi_songs  as
+select  * from odps_tc_257100_f673506e024.p2_mars_tianchi_songs;
+
+drop table  if exists p2_mars_tianchi_user_actions;
+create table if not  exists p2_mars_tianchi_user_actions  as
+select  * from odps_tc_257100_f673506e024.p2_mars_tianchi_user_actions;
+
+不去异常每首歌每天的播放量
+drop table  if exists p2_uidtimenum41;
+create table if not  exists p2_uidtimenum41  as
+select song_id,ds,count(gmt_create) as num1 from p2_mars_tianchi_user_actions group by song_id,ds;
+drop table  if exists p2_allsongjiu;
+create table if not  exists p2_allsongjiu  as
+SELECT t1.artist_id,t2.* FROM p2_mars_tianchi_songs t1 JOIN p2_uidtimenum41 t2 on t1.song_id=t2.song_id;
+drop table  if exists p2_aidnumjiu;
+create table if not  exists p2_aidnumjiu  as
+select  artist_id,ds,sum(num1) as plays from p2_allsongjiu group by artist_id,ds;
+
+
+create table if not  exists p2_aidnumjiu1  as
+select artist_id,concat(ds,"-",plays) as key from p2_aidnumjiu;
+
+create table if not  exists p2_aidnumjiu12  as
+select  artist_id,wm_concat(',',key) as keyx from  p2_aidnumjiu1   group by artist_id;
+
+create table if not  exists p2_aidnumjiu13  as
+select concat(artist_id,"+",keyx) as key,num2() from p2_aidnumjiu12;
+ 
+select wm_concat('=',key)  from p2_aidnumjiu13 group by floor(_c1/6);
+
+
+
+artist_id,use14days_pred
+005a79ef2f58997b37765b1973590449,749.063173778
+0068a901847c2ba4097af1b022bf5262,3709.78434574
+009f302ee13b7fef6df24fb985e1d5de,4011.83061017
+00a9da6a72cf2c85bcc0283c785898e4,1200.91813918
+00d51e630c7733acf6d94ed246e3291d,9652.62759076
+
+
+
+--聚类去异常
+drop table  if exists p2_mars_tianchi_user_actions2;
+create  table  if  not  exists p2_mars_tianchi_user_actions2  as
+select *,time(gmt_create) as time  from p2_mars_tianchi_user_actions;
+
+--每首歌每个小时的播放量
+drop table  if exists p2_songtimenum;
+create table if not  exists  p2_songtimenum as
+select song_id,count(gmt_create),time from p2_mars_tianchi_user_actions2 where action_type='1' group by song_id,time;
+
+--每个用户每个歌手每个小时的播放量 
+drop table  if exists p2_uidtimenum;
+create table if not  exists p2_uidtimenum  as
+select user_id,song_id,count(gmt_create) as num,time from p2_mars_tianchi_user_actions2 where action_type='1' group by user_id,song_id,time;
+--去除每小时播放量破20的异常/假设每个歌3分钟1个小时最多播放20次
+drop table  if exists p2_uidtimenum2;
+create table if not  exists p2_uidtimenum2  as
+select *  from p2_uidtimenum where num<20;
+--将每分钟的时间转换成每天
+drop table  if exists p2_uidtimenum3;
+create table if not  exists p2_uidtimenum3  as
+select *,substr(time,1,8) as ds  from p2_uidtimenum2;
+--计算去异常后每首歌每天的播放量
+drop table  if exists p2_uidtimenum4;
+create table if not  exists p2_uidtimenum4  as
+select song_id,ds,sum(num) as num1 from p2_uidtimenum3 group by song_id,ds;
+--连接艺人id
+drop table  if exists p2_allsongxin;
+create table if not  exists p2_allsongxin  as
+SELECT t1.artist_id,t2.* FROM p2_mars_tianchi_songs t1 JOIN p2_uidtimenum4 t2 on t1.song_id=t2.song_id;
+--按照艺人分组
+drop table  if exists p2_aidnumxin;
+create table if not  exists p2_aidnumxin  as
+select  artist_id,ds,sum(num1) as plays from p2_allsongxin group by artist_id,ds;
+--select * from p2_aidnumxin order  by  artist_id,ds limit 10000;
+--合并两列
+drop table  if exists p2_tmpxx2;
+create table if not  exists p2_tmpxx2  as
+select artist_id,concat(ds,"-",plays) as key from p2_aidnumxin;
+--压缩行数
+select  artist_id,wm_concat(',',key) as keyx from  p2_tmpxx2   group by artist_id;
+创建预测结果时间列
+drop table  if exists p2_time1;
+create  table  if  not  exists p2_time1  as
+select  artist_id,to_date(ds,"yyyymmdd") as ds1,plays from  p2_aidnumxin where ds>=20150701;
+desc p2_time1;
+drop table  if exists p2_time2;
+create  table  if  not  exists p2_time2  as
+select  artist_id,dateadd(ds1,61,"dd") as ds,plays from  p2_time1;
+create  table  if  not  exists p2_time3  as
+select artist_id,cast(ds as string) as ds from p2_time2;
+create  table  if  not  exists p2_time4  as
+select artist_id,concat(substr(substr(ds,1,10 ),1,4),substr(substr(ds,1,10 ),6,2),substr(substr(ds,1,10 ),9,2))as ds from p2_time3;
+create  table  if  not  exists p2_time5  as
+select artist_id,ds from p2_time4 where ds>=20150901;
+select count(*)  from p2_time5;
+下载歌手
+drop table  if exists tmpxx11;
+create  table  if  not  exists tmpxx11  as
+select  artist_id,plays from t order by artist_id limit 10000;
+select  wm_concat(',',plays) as keyx from  tmpxx11 limit 10000;
+
+
+
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/每个歌手每天播放量.txt",header = FALSE,sep="")
+w=sqldf("select V1 from w where V1 not in ('artist_id,keyx')")
+library(stringr)
+for(i in 1:length(w$V1)){
+t=w[i,]
+x=str_split(t,",")
+x1=x[[1]][1]
+x2=x[[1]][2:length(x[[1]])]
+x3=str_split(x2,"-")
+d=data.frame(x3)
+dd=as.matrix(d)
+dd1=t(dd)
+d1=dd1[,1]
+d2=dd1[,2]
+d3=rep(x1,length(d1))
+re=data.frame(d3,d1,d2)
+write.table (re, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/每个歌手每天播放量.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+#指数平滑
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/每个歌手每天播放量.csv",header = FALSE,sep=",")
+s=sqldf("select V1,V2,V3  from  w where V2>=20150701  ")
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+for (i in 1:length(e)){
+w1=s[which(s$V1==e[i]),]
+a=w1$V3
+#alpha不指定,beta=不指定,gamma不指定 三阶指数平滑 seasonal="additive"默认加法模型 "multiplicative"乘法模型
+rp=HoltWinters(a,beta=F,gamma=F)
+tmp=rp$coefficients
+#forecast(rp,h=2)
+p=rep(tmp,60)
+p=floor(p)
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/新序列指数平滑78月2.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+14均值平滑
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/每个歌手每天播放量.csv",header = FALSE,sep=",")
+s=sqldf("select V1,V2,V3  from  w where V2>20150816  ")
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+for (i in 1:length(e)){
+w1=s[which(s$V1==e[i]),]
+a=w1$V3
+p=rep(floor(boxplot.stats(a)$conf[1]),60)
+#p=rep(floor(boxplot.stats(a)$conf[2]),60)
+#p=rep(floor(mean(a)),60)
+#p=p[1:60]
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/均值14平滑.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+
+
+#stlm分解stl改进 
+异常-能用-4a56eb60ebb68200d1d948a0ada24416--8804387d9e53609c3f03b9ca6438fc08-不能用偏高
+ae0b7f14bda4f10505b5c892a1ab2de6
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/每个歌手每天播放量.csv",header = FALSE,sep=",")
+s=sqldf("select V1,V2,V3  from  w where V2>=20150701  ")
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+library(forecast)
+for (i in 1:length(e)){
+w1=s[which(s$V1==e[i]),]
+a=w1$V3
+#stlm分解
+#ts1=ts(a,frequency=7,start=c(1,1)) 
+if(i==293){
+pre<-stlm(ts(a[5:length(a)],frequency = 7),s.window = "periodic",allow.multiplicative.trend = TRUE,robust = T,etsmodel = 'MNN',)
+}else if(i==528){
+pre<-stlm(ts(a[length(a)-5:length(a)],frequency = 7),s.window = "periodic",allow.multiplicative.trend = TRUE,robust = T,etsmodel = 'MNN',)
+}else if(i==668){
+pre<-stlm(ts(a,frequency = 7))
+}else{
+pre<-stlm(ts(a,frequency = 7),s.window = "periodic",allow.multiplicative.trend = TRUE,robust = T,etsmodel = 'MNN',)
+}
+#pre<-stlm(ts(a,frequency = 7))
+#pre2<-stlf(ts(a,frequency = 7))
+#预测未来7个值 plot(forecast(pre2,h=7))   plot(pre$stl)
+p=forecast(pre,h=61)
+p=p$mean
+p=ceiling(p[2:length(p)])
+#mean(p)
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/stlm分解.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+
+
+融合0.75(指数平滑x+14均值)+0.25stlm两个月
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/均值14平滑.csv",header = FALSE,sep=",")
+w1=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/每首歌指数60.csv",header = FALSE,sep=",")
+w2=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/stlm分解.csv",header = FALSE,sep=",")
+re=data.frame(w$V1,floor((0.75*(floor(0.5*w$V2+0.5*w1$V2))+0.25*w2$V2)),w$V3)
+write.table (re, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/指数平滑x14均值stlm2.csv",sep =",",row.names = F,col.names=F,quote =F) 
+
+
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/均值14平滑.csv",header = FALSE,sep=",")
+w1=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/每首歌指数60.csv",header = FALSE,sep=",")
+w2=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/stlm分解.csv",header = FALSE,sep=",")
+re=data.frame(w$V1,floor((0.5*(floor(0.5*w$V2+0.5*w1$V2))+0.5*w2$V2)),w$V3)
+write.table (re, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/指数平滑x14均值stlm55分.csv",sep =",",row.names = F,col.names=F,quote =F) 
+
+
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/每个歌手每天播放量.csv",header = FALSE,sep=",")
+library(recharts)
+source("echartR.R")
+e=unique(w$V1)
+for (i in 1:length(e)){
+q=w[which(w$V1==e[i]),]
+plot(c(1:length(q$V1)),q$V3,type="l",main=i)
+}
+q=w[which(w$V1=="047e692906834bd3c24f99cdf11a3993"),]
+echartR(q,~V2,~V3,type = "linesmooth")
+047e692906834bd3c24f99cdf11a3993
+11e08a9c88682aaa9c98b6b79c9a5fbc  应该会偏低
+
+
+rm(list=ls())
+library(sqldf)
+w=read.table("D:/a.txt",header = FALSE,sep=",")
+d=as.vector(as.matrix(w))
+w1=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/均值14平滑.csv",header = FALSE,sep=",")
+s=sqldf("select V1  from  w1 group by V1 order by V1")
+re=data.frame(s,d)
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+for (i in 1:length(e)){
+p=rep(re[i,]$d,60)
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/每首歌指数60.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+前7天循环
+rm(list=ls())
+library(sqldf)
+w=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/每个歌手每天播放量.csv",header = FALSE,sep=",")
+s=sqldf("select V1,V2,V3  from  w where V2>=20150824  ")
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+for (i in 1:length(e)){
+w1=s[which(s$V1==e[i]),]
+a=w1$V3
+p=rep(a,9)
+p=p[2:61]
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/前7天循环.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+
+
+cd D:\eclipseHadoop1x\hadoop-test-indigoVersion-space\TianChiUdf
+d:
+mvn install
+艺人分类
+getwd()
+setwd("D:/Rworkspace")
+rm(list=ls())
+library(sqldf)
+w=read.table("E:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/每个歌手每天播放量.csv",header = FALSE,sep=",")
+d=read.table("E:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/指数平滑x14均值stlm2.csv",header = FALSE,sep=",")
+library(recharts)
+source("echartR.R")
+e=unique(w$V1)
+m=0
+for (i in 1:length(e)){
+q=w[which(w$V1==e[i]),]
+d1=d[which(d$V1==e[i]),] 
+tmp=c(q$V3,d1$V2)
+plot(c(1:length(tmp)),tmp,type="l",main=i)
+}
+for (i in 1:length(e)){
+q=d[which(d$V1==e[i]),]
+#plot(c(1:length(q$V1)),q$V3,type="l",main=i)
+m[i]=floor(mean(q$V2))
+}
+re=data.frame(e,m)
+re1=re[which(m>50000),]
+e1=unique(re1$e)
+for (i in 1:length(e1)){
+q=w[which(w$V1==e1[i]),]
+d1=d[which(d$V1==e1[i]),] 
+tmp=c(q$V3,d1$V2)
+plot(c(1:length(tmp)),tmp,type="l",main=i)
+}
+re2=re[which(m>9000 & m<=50000),]
+re2=re[which(m>30000 & m<=50000),]
+e1=unique(re2$e)
+i=length(e1)
+i=i-1
+aid=as.character(e1[i])
+aid="748c834ae76cb06743b9032fae099739"
+q=w[which(w$V1==aid),]
+d1=d[which(d$V1==aid),]
+d1=data.frame(d1$V1,d1$V3,d1$V2)
+names(d1)=c("V1","V2","V3")
+tt=rbind(q,d1)
+echartR(tt,~V2,~V3,type = "linesmooth",title=aid)
+plot(c(1:length(tt$V3)),tt$V3,type="l",main=aid)
+
+15  02fe6bac357e3a44a0bee82387a61a68 102761
+111 1b322374de83520bf45aa8928e18e70a 235423
+455 748c834ae76cb06743b9032fae099739 136744
+500 808eb4b2e83cc52cf554cd0f038ba2a5 121318
+518 862b53200cca8e15a4be8f2aec39edd6 129315
+692 b395a75ee07bc550574f0e20223c0532 279943
+
+748c834ae76cb06743b9032fae099739  开头部分升高
+808eb4b2e83cc52cf554cd0f038ba2a5  降低1w左右
+862b53200cca8e15a4be8f2aec39edd6  算算均值提一提
+02fe6bac357e3a44a0bee82387a61a68  提升几千？
+0ee6f9d13f27455adb0f017d2aff58da  提升小1万
+
+748c834ae76cb06743b9032fae099739  136690  8-11   123021
+1b322374de83520bf45aa8928e18e70a  23-25  246629
+b395a75ee07bc550574f0e20223c0532  28++   296591  285
+
+047e692906834bd3c24f99cdf11a3993  可以降低点
+11e08a9c88682aaa9c98b6b79c9a5fbc  应该会偏低
+f9a23361ef9520258a3de99342e50c8b  可以降低点
+f52be2f58b3df15f9b1a71e6c0976f65  试试前7天
+b840437a697cf62e51969a6ce8135d9b  可以稍微高点
+8cca42e3058ff4885f197275afc1cab2  波动应该还能降
+7515798a924851275518680e43258314  可以试试前7天/或者提高下均值
+4eacf1ab0bb2fd759b8f0df1e8401994  可以调低试试
+3db4fd808cc42cb3a6acb5f0c0c7bb29  调高调低试试
+02fe6bac357e3a44a0bee82387a61a68  可以调低试试
+1b322374de83520bf45aa8928e18e70a  调低试试
+fd8a73963d8747ba82446b4e56931eea  调高调低试试
+fd0ebe95cf550ca044cf225a90ee36ba
+fbf4562f4359d4524ab6378be9d36e82  调低试试
+f81d2c3accf707ae4894f6e87ac80d5c
+f79c8a31b2776430c83c32b87028f0d4  前7天试试
+e886c040406598c4f0020fc09a3e6a07
+ffba61f338fe0bd56d802fc7f802eb5a  调低试试14均值平滑
+ff34dbed6a7c027196ec560dc94c7588  调低试试14均值平滑
+f67f8584e121c09bc6f514ed02b876df  前7天试试
+d95133816e322a603ae32346c573ada8  调低试试
+cd5ce8f47e50971ddb629d86a0bc34f2  调高调低试试
+cbd0bb72fb89b198d4fd522f9922a8fa  先高后低
+b977cad86a21757755884bebfecf7dce 调低试试
+924aae262d158a554ebcc6766f7ee848  调低试试
+898d91754105d87b8581522b5d9bfee1  调低试试
+808eb4b2e83cc52cf554cd0f038ba2a5  调低试试
+7f97a68869a372dd259b09a01f297457  调低试试
+748c834ae76cb06743b9032fae099739  调低试试
+3cb24821e3629a0a365c13242513385e  调低试试
+209c3ac37651f1bef4996b7d56a31adf  下降趋势
+140ef1f57652ab448b0a6ed1e00424a4  调低试试
+01明显修改
+fe9892cc48d1d5fd0e38c3ea592bc45c  试试前7天
+d28d375b3e482dd51aeccee67b60a272  后30天下降--有下降趋势-d1[30:60,]$V3=floor(0.9*d1[30:60,]$V3)
+cf8adb2012a78ee6d49528befd90bc79  试试前7天
+b15e8846dc61824c1242a6b36796117b  试试前7天
+77211c9398d9a7e6d934433be62af607  试试前7天
+4abecc0c7ea1fd2572ef28e04c52ea9c   试试前7天
+0ee6f9d13f27455adb0f017d2aff58da  试试前7天
+4acf09fb6a44f995ba0c48d053599074  试试前7天
+97fd17d25cddbe4f97a826c84157a4d7  调低试试--用以前的数据
+d97531062a6aee3856e52b7d9d410d29  试试前7天
+fff33d0c998cf4c68e139d79db365c0e  调低试试-用14均值平滑
+a62bccaa408e02b0bc9dbe94f62b8a5a  修改后前7天-周1+周6-
+67ed1f7f1374e64a93bfca4b44f66dd6  试试前7天
+31c98153d86e87bcbc289b92198d621a  调低0.97
+
+d1=d[which(d$V1=="31c98153d86e87bcbc289b92198d621a"),] 
+d1=data.frame(d1$V1,d1$V3,d1$V2)
+names(d1)=c("V1","V2","V3")
+d2=data.frame(d1$V1,d1$V3,d1$V2)
+write.table (d2, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/单独修改.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+
+ppp=read.table("F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/判断修改/01基本肯定的大数据集.csv",header = FALSE,sep=",")
+ppp2=sqldf("select V1,count(V2) from ppp group by V1")
+
+avg(1/tk)/avg(1/tk^2)
+create table if not  exists p2_14p  as
+select artist_id,(1/plays) as p1,(1/(plays*plays)) as p2  from p2_aidnumjiu where ds>20150816;
+
+create table if not  exists p2_14p2  as
+select artist_id,avg(p1)/avg(p2) as plays  from p2_14p group by artist_id;
+
+artist_id,use14days_pred
+005a79ef2f58997b37765b1973590449,749.063173778
+0068a901847c2ba4097af1b022bf5262,3709.78434574
+009f302ee13b7fef6df24fb985e1d5de,4011.83061017
+00a9da6a72cf2c85bcc0283c785898e4,1200.91813918
+00d51e630c7733acf6d94ed246e3291d,9652.62759076
+
+rm(list=ls())
+library(sqldf)
+w=read.table("E:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/去异常倒数均值.txt",header = FALSE,sep=",")
+s=sqldf("select *  from  w  order by V1")
+d=seq(as.Date("2015/09/01"),as.Date("2015/10/30"), by="day")  #生成时间序列
+library("stringr")
+d=as.numeric(str_replace(str_replace(d,"-",""),"-",""))  #替换替换匹配的部分library("stringr")
+e=unique(s$V1)
+for (i in 1:length(e)){
+s1=s[which(s$V1==e[i]),]
+p=rep(round(s1$V2),60)
+aid=c(1:60)
+sc=data.frame(aid,p,d)
+sc$aid=e[i]
+write.table (sc, file ="E:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/去异常倒数均值.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+
+rm(list=ls())
+library(sqldf)
+w=read.table("E:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/去异常倒数均值.csv",header = FALSE,sep=",")
+w2=read.table("E:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/修改后最好的结果x2.csv",header = FALSE,sep=",")
+
+re=data.frame(w$V1,w$V2-w2$V2)
+names(re)=c("V1","V2")
+s=sqldf("select V1,sum(V2)/60  from  re group by V1")
+
+11e08a9c88682aaa9c98b6b79c9a5fbc  
+31c98153d86e87bcbc289b92198d621a
+4bd0a5c34cff276e2fde6916c774e811  ok
+4ee1e8ac0422b7bca62336b99b64bfac
+808eb4b2e83cc52cf554cd0f038ba2a5
+e67cf0b00127dc1414a871209a61d5c2
+e886c040406598c4f0020fc09a3e6a07  x
+edda9e94df8b70ed39e9a589e96c17ce
+
+JAVA_HOME
+C:\Program Files\Java\jdk1.7.0_51
+→寻找 Path 变量→编辑
+在变量值最后输入 %JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;
+新建 CLASSPATH 变量
+变量值填写   .;%JAVA_HOME%\lib;%JAVA_HOME%\lib\tools.jar
+
+M2_HOME
+D:\eclipseHadoop1x\apache-maven-3.3.3
+PATH
+%M2_HOME%\bin;
+
+re=data.frame(w$V1,floor((0.75*w2$V2)+0.25*w$V2),w$V3)
+write.table (re, file ="E:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/修改最好倒数均值.csv",sep =",",row.names = F,col.names=F,quote =F) 
+修改最好倒数均值之再改
+748c834ae76cb06743b9032fae099739  136690  8-11   8-10
+1b322374de83520bf45aa8928e18e70a  23-25  246629
+b395a75ee07bc550574f0e20223c0532  28++   296591  285
+
+setwd("D:/Rworkspace")
+rm(list=ls())
+library(sqldf)
+w=read.table("E:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/第二赛季平台赛/平台数据分析/切换数据集/每个歌手每天播放量.csv",header = FALSE,sep=",")
+library(recharts)
+source("echartR.R")
+e=unique(w$V1)
+aid="808eb4b2e83cc52cf554cd0f038ba2a5"
+q=w[which(w$V1==aid),]
+echartR(q,~V2,~V3,type = "linesmooth",title=aid)
+
+q=w[which(w$V1==e[10]),]
+echartR(q,~V2,~V3,type = "linesmooth",title=aid)

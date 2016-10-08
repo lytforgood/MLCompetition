@@ -1,0 +1,49 @@
+drop table  if exists p2_mars_tianchi_songs;
+create table if not  exists p2_mars_tianchi_songs  as
+select  * from odps_tc_257100_f673506e024.p2_mars_tianchi_songs;
+
+drop table  if exists p2_mars_tianchi_user_actions;
+create table if not  exists p2_mars_tianchi_user_actions  as
+select  * from odps_tc_257100_f673506e024.p2_mars_tianchi_user_actions;
+
+--聚类去异常
+drop table  if exists p2_mars_tianchi_user_actions2;
+create  table  if  not  exists p2_mars_tianchi_user_actions2  as
+select *,time(gmt_create) as time  from p2_mars_tianchi_user_actions;
+
+--每首歌每个小时的播放量
+drop table  if exists p2_songtimenum;
+create table if not  exists  p2_songtimenum as
+select song_id,count(gmt_create),time from p2_mars_tianchi_user_actions2 where action_type='1' group by song_id,time;
+
+--每个用户每个歌手每个小时的播放量 
+drop table  if exists p2_uidtimenum;
+create table if not  exists p2_uidtimenum  as
+select user_id,song_id,count(gmt_create) as num,time from p2_mars_tianchi_user_actions2 where action_type='1' group by user_id,song_id,time;
+--去除每小时播放量破20的异常/假设每个歌3分钟1个小时最多播放20次
+drop table  if exists p2_uidtimenum2;
+create table if not  exists p2_uidtimenum2  as
+select *  from p2_uidtimenum where num<20;
+--将每分钟的时间转换成每天
+drop table  if exists p2_uidtimenum3;
+create table if not  exists p2_uidtimenum3  as
+select *,substr(time,1,8) as ds  from p2_uidtimenum2;
+--计算去异常后每首歌每天的播放量
+drop table  if exists p2_uidtimenum4;
+create table if not  exists p2_uidtimenum4  as
+select song_id,ds,sum(num) as num1 from p2_uidtimenum3 group by song_id,ds;
+--连接艺人id
+drop table  if exists p2_allsongxin;
+create table if not  exists p2_allsongxin  as
+SELECT t1.artist_id,t2.* FROM p2_mars_tianchi_songs t1 JOIN p2_uidtimenum4 t2 on t1.song_id=t2.song_id;
+--按照艺人分组
+drop table  if exists p2_aidnumxin;
+create table if not  exists p2_aidnumxin  as
+select  artist_id,ds,sum(num1) as plays from p2_allsongxin group by artist_id,ds;
+--select * from p2_aidnumxin order  by  artist_id,ds limit 10000;
+--合并两列
+drop table  if exists p2_tmpxx2;
+create table if not  exists p2_tmpxx2  as
+select artist_id,concat(ds,"-",plays) as key from p2_aidnumxin;
+--压缩行数
+select  artist_id,wm_concat(',',key) as keyx from  p2_tmpxx2   group by artist_id;

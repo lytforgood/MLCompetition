@@ -1,0 +1,208 @@
+构建特征SQL
+1 3 5 7 14 30 60 90
+create table if not  exists  yrecentsongplay1 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds=20150630  group by artist_id;
+create table if not  exists  yrecentsongplay2 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150627 and ds<=20150630  group by artist_id;
+create table if not  exists  yrecentsongplay3 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150625 and ds<=20150630  group by artist_id;
+create table if not  exists  yrecentsongplay4 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150623 and ds<=20150630  group by artist_id;
+create table if not  exists  yrecentsongplay5 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150616 and ds<=20150630  group by artist_id;
+create table if not  exists  yrecentsongplay6 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150531 and ds<=20150630  group by artist_id;
+create table if not  exists  yrecentsongplay7 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150501 and ds<=20150630  group by artist_id;
+create table if not  exists  yrecentsongplay8 as
+select  artist_id,sum(plays) as recentplay,floor(avg(plays)) as recentplayavg,floor(stddev(plays)) as recentplaystddev,
+min(plays) as recentplaymin,
+floor(median(plays)) as recentplaymedian  from aidnumxin where  ds>=20150401 and ds<=20150630  group by artist_id;
+
+
+create table if not  exists  yrecentsongplayall as
+select yrecentsongplay1.*,
+yrecentsongplay2.recentplay as recentplay_3,
+yrecentsongplay2.recentplayavg as recentplayavg_3,
+yrecentsongplay2.recentplaystddev as recentplaystddev_3,
+yrecentsongplay2.recentplaymin as recentplaymin_3,
+yrecentsongplay2.recentplaymedian as recentplaymedian_3,
+yrecentsongplay3.recentplay as recentplay_5,
+yrecentsongplay3.recentplayavg as recentplayavg_5,
+yrecentsongplay3.recentplaystddev as recentplaystddev_5,
+yrecentsongplay3.recentplaymin as recentplaymin_5,
+yrecentsongplay3.recentplaymedian as recentplaymedian_5,
+yrecentsongplay4.recentplay as recentplay_7,
+yrecentsongplay4.recentplayavg as recentplayavg_7,
+yrecentsongplay4.recentplaystddev as recentplaystddev_7,
+yrecentsongplay4.recentplaymin as recentplaymin_7,
+yrecentsongplay4.recentplaymedian as recentplaymedian_7,
+yrecentsongplay5.recentplay as recentplay_14,
+yrecentsongplay5.recentplayavg as recentplayavg_14,
+yrecentsongplay5.recentplaystddev as recentplaystddev_14,
+yrecentsongplay5.recentplaymin as recentplaymin_14,
+yrecentsongplay5.recentplaymedian as recentplaymedian_14,
+yrecentsongplay6.recentplay as recentplay_30,
+yrecentsongplay6.recentplayavg as recentplayavg_30,
+yrecentsongplay6.recentplaystddev as recentplaystddev_30,
+yrecentsongplay6.recentplaymin as recentplaymin_30,
+yrecentsongplay6.recentplaymedian as recentplaymedian_30,
+yrecentsongplay7.recentplay as recentplay_60,
+yrecentsongplay7.recentplayavg as recentplayavg_60,
+yrecentsongplay7.recentplaystddev as recentplaystddev_60,
+yrecentsongplay7.recentplaymin as recentplaymin_60,
+yrecentsongplay7.recentplaymedian as recentplaymedian_60,
+yrecentsongplay8.recentplay as recentplay_90,
+yrecentsongplay8.recentplayavg as recentplayavg_90,
+yrecentsongplay8.recentplaystddev as recentplaystddev_90,
+yrecentsongplay8.recentplaymin as recentplaymin_90,
+yrecentsongplay8.recentplaymedian as recentplaymedian_90
+from yrecentsongplay1 
+left outer join yrecentsongplay2  on yrecentsongplay1.artist_id=yrecentsongplay2.artist_id
+left outer join yrecentsongplay3  on yrecentsongplay1.artist_id=yrecentsongplay3.artist_id
+left outer join yrecentsongplay4  on yrecentsongplay1.artist_id=yrecentsongplay4.artist_id
+left outer join yrecentsongplay5  on yrecentsongplay1.artist_id=yrecentsongplay5.artist_id
+left outer join yrecentsongplay6  on yrecentsongplay1.artist_id=yrecentsongplay6.artist_id
+left outer join yrecentsongplay7  on yrecentsongplay1.artist_id=yrecentsongplay7.artist_id
+left outer join yrecentsongplay8  on yrecentsongplay1.artist_id=yrecentsongplay8.artist_id;
+
+新歌发布在该月第几号
+1，歌手的歌曲数量 aid_sid_count
+create table if not  exists  ysongcount1 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150627 and ds<=20150630 group by artist_id;
+create table if not  exists  ysongcount2 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150625 and ds<=20150627 group by artist_id;
+create table if not  exists  ysongcount3 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150623 and ds<=20150625 group by artist_id;
+create table if not  exists  ysongcount4 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150616 and ds<=20150623 group by artist_id;
+create table if not  exists  ysongcount5 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150531 and ds<=20150616 group by artist_id;
+create table if not  exists  ysongcount6 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150501 and ds<=20150630 group by artist_id;
+create table if not  exists  ysongcount7 as
+select  artist_id,count(distinct song_id) as aid_sid_count from allsongxin where 
+ds>=20150401 and ds<=20150630 group by artist_id;
+
+create table if not  exists  ysongcountall as
+select 
+ysongcount1.artist_id,
+ysongcount1.aid_sid_count as aid_sid_count_3,
+ysongcount2.aid_sid_count as aid_sid_count_5,
+ysongcount3.aid_sid_count as aid_sid_count_7,
+ysongcount4.aid_sid_count as aid_sid_count_14,
+ysongcount5.aid_sid_count as aid_sid_count_30,
+ysongcount6.aid_sid_count as aid_sid_count_60,
+ysongcount7.aid_sid_count as aid_sid_count_90,
+case when floor(ysongcount1.aid_sid_count-ysongcount2.aid_sid_count)>0 then floor(ysongcount1.aid_sid_count-ysongcount2.aid_sid_count) else 0 end as new3,
+case when floor(ysongcount3.aid_sid_count-ysongcount4.aid_sid_count)>0 then floor(ysongcount3.aid_sid_count-ysongcount4.aid_sid_count) else 0 end as new7,
+case when floor(ysongcount4.aid_sid_count-ysongcount5.aid_sid_count)>0 then floor(ysongcount4.aid_sid_count-ysongcount5.aid_sid_count) else 0 end as new14
+from ysongcount1 
+left outer join ysongcount2 on ysongcount1.artist_id=ysongcount2.artist_id
+left outer join ysongcount3 on ysongcount1.artist_id=ysongcount3.artist_id
+left outer join ysongcount4 on ysongcount1.artist_id=ysongcount4.artist_id
+left outer join ysongcount5 on ysongcount1.artist_id=ysongcount5.artist_id
+left outer join ysongcount6 on ysongcount1.artist_id=ysongcount6.artist_id
+left outer join ysongcount7 on ysongcount1.artist_id=ysongcount7.artist_id;
+
+用户数   uidsidaidnumds
+最近3 5 7 14 30 60 90 
+create table if not  exists  yusercount1 as
+select  artist_id,count(distinct song_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150627 and ds<=20150630 group by artist_id;
+create table if not  exists  yusercount2 as
+select  artist_id,count(distinct song_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150625 and ds<=20150630 group by artist_id;
+create table if not  exists  yusercount3 as
+select  artist_id,count(distinct song_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150623 and ds<=20150630 group by artist_id;
+create table if not  exists  yusercount4 as
+select  artist_id,count(distinct song_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150616 and ds<=20150630 group by artist_id;
+create table if not  exists  yusercount5 as
+select  artist_id,count(distinct song_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150531 and ds<=20150630 group by artist_id;
+create table if not  exists  yusercount6 as
+select  artist_id,count(distinct song_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150501 and ds<=20150630 group by artist_id;
+create table if not  exists  yusercount7 as
+select  artist_id,count(distinct song_id) as aid_uid_count from uidsidaidnumds where 
+ds>=20150401 and ds<=20150630 group by artist_id;
+
+
+create table if not  exists  yusercountall as
+select 
+yusercount1.artist_id,
+yusercount1.aid_uid_count as aid_uid_count_3,
+yusercount2.aid_uid_count as aid_uid_count_5,
+yusercount3.aid_uid_count as aid_uid_count_7,
+yusercount4.aid_uid_count as aid_uid_count_14,
+yusercount5.aid_uid_count as aid_uid_count_30,
+yusercount6.aid_uid_count as aid_uid_count_60,
+yusercount7.aid_uid_count as aid_uid_count_90
+from yusercount1 
+left outer join yusercount2 on yusercount1.artist_id=yusercount2.artist_id
+left outer join yusercount3 on yusercount1.artist_id=yusercount3.artist_id
+left outer join yusercount4 on yusercount1.artist_id=yusercount4.artist_id
+left outer join yusercount5 on yusercount1.artist_id=yusercount5.artist_id
+left outer join yusercount6 on yusercount1.artist_id=yusercount6.artist_id
+left outer join yusercount7 on yusercount1.artist_id=yusercount7.artist_id;
+
+合并
+近多少天播放量(均值 方差 最小 中位数1 3 5 7 14 30 60 90)+歌曲数(最近的歌曲数1-3 3-5 5-7 7-14 14-30 60 90)+新歌数(前3天,前7天,前14天)+最近用户数(3 5 7 14 30 60 90)  laber 8月的均值/中位数
+yrecentsongplayall
+ysongcountall
+yusercountall
+
+create table if not  exists  yfeaturetest1 as
+select 
+yrecentsongplayall.*,
+ysongcountall.aid_sid_count_3,
+ysongcountall.aid_sid_count_5,
+ysongcountall.aid_sid_count_7,
+ysongcountall.aid_sid_count_14,
+ysongcountall.aid_sid_count_30,
+ysongcountall.aid_sid_count_60,
+ysongcountall.aid_sid_count_90,
+ysongcountall.new3,
+ysongcountall.new7,
+ysongcountall.new14,
+yusercountall.aid_uid_count_3,
+yusercountall.aid_uid_count_5,
+yusercountall.aid_uid_count_7,
+yusercountall.aid_uid_count_14,
+yusercountall.aid_uid_count_30,
+yusercountall.aid_uid_count_60,
+yusercountall.aid_uid_count_90
+from yrecentsongplayall 
+left outer join ysongcountall  on yrecentsongplayall.artist_id=ysongcountall.artist_id
+left outer join yusercountall  on yrecentsongplayall.artist_id=yusercountall.artist_id;
+
+create table if not  exists  ylaber7 as
+select  artist_id,floor(avg(plays)) as targetavg,
+floor(median(plays)) as targetmedian  from aidnumxin where  ds>=20150701 and ds<=20150730  group by artist_id;
+
+create table if not  exists  yfeaturetest11 as
+select  yfeaturetest1.*,ylaber7.targetavg,ylaber7.targetmedian
+from yfeaturetest1 
+left outer join ylaber7  on yfeaturetest1.artist_id=ylaber7.artist_id;
