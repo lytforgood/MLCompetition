@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><configuration>
+<property><name>odps.mapred.reduce.class</name><value>hadoop.TianChiMapreduce.MyReducer</value></property>
+<property><name>odps.stage.reducer.jvm.mem</name><value>0</value></property>
+<property><name>odps.mapred.map.class</name><value>hadoop.TianChiMapreduce.MyMapper</value></property>
+<property><name>odps.stage.mapper.jvm.mem</name><value>0</value></property>
+<property><name>odps.mapred.output.desc</name><value>[{"tblName":"wordcount_out","partSpec":{"dt":"20140102"},"label":"__default__"}]</value></property>
+<property><name>odps.stage.reducer.num</name><value>0</value></property>
+<property><name>odps.mapred.mapoutput.key.schema</name><value>word:STRING</value></property>
+<property><name>odps.mapred.combine.class</name><value>hadoop.TianChiMapreduce.MyCombiner</value></property>
+<property><name>odps.mapred.job.name</name><value>mr_20160517175352_483_8884</value></property>
+<property><name>odps.mapred.mapoutput.value.schema</name><value>cnt:BIGINT</value></property>
+<property><name>odps.mapred.input.desc</name><value>[{"tblName":"wordcount_in","partSpec":{"dt":"20140102"},"label":"__default__"},{"tblName":"wordcount_in","partSpec":{"dt":"20140101"},"label":"__default__"}]</value></property>
+</configuration>

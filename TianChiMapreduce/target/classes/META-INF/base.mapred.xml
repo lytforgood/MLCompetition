@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapred>
+    <!-- profile -->
+    <baseId>0761455691</baseId>
+    <projectId>12744</projectId>
+    <resourceName>TianChiMapreduce</resourceName>
+    <idePath>工作流/mapreduce</idePath>
+
+    <!-- classes -->
+    <jobLauncher>hadoop.TianChiMapreduce.JobLauncher</jobLauncher>
+    <mapper>hadoop.TianChiMapreduce.MyMapper</mapper>
+    
+    
+    <reducer>hadoop.TianChiMapreduce.MyReducer</reducer>
+    <!-- 
+    <combiner>hadoop.TianChiMapreduce.MyCombiner</combiner>
+     -->
+    <!--task-->
+    <mapOutputKey>str1:string</mapOutputKey>
+    <mapOutputValue>str2:string</mapOutputValue>
+    <!--
+    <partitionColumns>col1,col2</partitionColumns>
+    <outputKeySortColumns>col1,col2</outputKeySortColumns>
+    <outputKeySortOrders>ASC,DESC</outputKeySortOrders>
+    <outputGroupingColumns>col1,col2</outputGroupingColumns>
+    <numReduceTask>8</numReduceTask>
+    <memoryForMapTask>2048</memoryForMapTask>
+    <memoryForReduceTask>2048</memoryForReduceTask>
+    -->
+
+    <!-- tables -->
+    <inputTables>
+        <table>
+            <name>test2</name>
+             <!-- 
+            <partitions>
+                <partition>dt={yyyymmdd}</partition>
+                <partition>dt={yyyymmdd-1}</partition>
+            </partitions>
+            -->
+        </table>
+    </inputTables>
+    <outputTable>
+        <name>result</name>
+        <!--
+        <partition>dt={yyyymmdd}</partition>
+         -->
+    </outputTable>
+</mapred>
