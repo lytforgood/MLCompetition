@@ -1,0 +1,3754 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem xmlns="http://www.w3schools.com"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com vrp_xml_schema.xsd">
+     <problemType>
+          <fleetSize>FINITE</fleetSize>
+     </problemType>
+     <vehicles>
+          <vehicle>
+               <id>A034</id>
+               <typeId>A034Type</typeId>
+               <startLocation>
+                    <id>[x=121.61310356874][y=31.302977340621]</id>
+                    <coord x="121.61310356874" y="31.302977340621"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.61310356874][y=31.302977340621]</id>
+                    <coord x="121.61310356874" y="31.302977340621"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A050</id>
+               <typeId>A050Type</typeId>
+               <startLocation>
+                    <id>[x=121.457645][y=31.167299]</id>
+                    <coord x="121.457645" y="31.167299"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.457645][y=31.167299]</id>
+                    <coord x="121.457645" y="31.167299"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A040</id>
+               <typeId>A040Type</typeId>
+               <startLocation>
+                    <id>[x=121.511363][y=31.273124]</id>
+                    <coord x="121.511363" y="31.273124"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.511363][y=31.273124]</id>
+                    <coord x="121.511363" y="31.273124"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A039</id>
+               <typeId>A039Type</typeId>
+               <startLocation>
+                    <id>[x=121.374801][y=31.090224]</id>
+                    <coord x="121.374801" y="31.090224"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.374801][y=31.090224]</id>
+                    <coord x="121.374801" y="31.090224"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A059</id>
+               <typeId>A059Type</typeId>
+               <startLocation>
+                    <id>[x=121.35054275893][y=31.180916039816]</id>
+                    <coord x="121.35054275893" y="31.180916039816"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.35054275893][y=31.180916039816]</id>
+                    <coord x="121.35054275893" y="31.180916039816"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A043</id>
+               <typeId>A043Type</typeId>
+               <startLocation>
+                    <id>[x=121.42416155363][y=31.267772484832]</id>
+                    <coord x="121.42416155363" y="31.267772484832"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.42416155363][y=31.267772484832]</id>
+                    <coord x="121.42416155363" y="31.267772484832"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A045</id>
+               <typeId>A045Type</typeId>
+               <startLocation>
+                    <id>[x=121.412746][y=31.226553]</id>
+                    <coord x="121.412746" y="31.226553"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.412746][y=31.226553]</id>
+                    <coord x="121.412746" y="31.226553"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A032</id>
+               <typeId>A032Type</typeId>
+               <startLocation>
+                    <id>[x=121.28749287666][y=30.935619367651]</id>
+                    <coord x="121.28749287666" y="30.935619367651"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.28749287666][y=30.935619367651]</id>
+                    <coord x="121.28749287666" y="30.935619367651"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A058</id>
+               <typeId>A058Type</typeId>
+               <startLocation>
+                    <id>[x=121.424891][y=31.107117]</id>
+                    <coord x="121.424891" y="31.107117"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.424891][y=31.107117]</id>
+                    <coord x="121.424891" y="31.107117"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A046</id>
+               <typeId>A046Type</typeId>
+               <startLocation>
+                    <id>[x=121.42013360069][y=31.197307172212]</id>
+                    <coord x="121.42013360069" y="31.197307172212"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.42013360069][y=31.197307172212]</id>
+                    <coord x="121.42013360069" y="31.197307172212"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A055</id>
+               <typeId>A055Type</typeId>
+               <startLocation>
+                    <id>[x=121.345949][y=31.095212]</id>
+                    <coord x="121.345949" y="31.095212"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.345949][y=31.095212]</id>
+                    <coord x="121.345949" y="31.095212"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A061</id>
+               <typeId>A061Type</typeId>
+               <startLocation>
+                    <id>[x=121.31080665578][y=30.736170997278]</id>
+                    <coord x="121.31080665578" y="30.736170997278"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.31080665578][y=30.736170997278]</id>
+                    <coord x="121.31080665578" y="30.736170997278"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A042</id>
+               <typeId>A042Type</typeId>
+               <startLocation>
+                    <id>[x=121.547825][y=31.311026]</id>
+                    <coord x="121.547825" y="31.311026"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.547825][y=31.311026]</id>
+                    <coord x="121.547825" y="31.311026"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A036</id>
+               <typeId>A036Type</typeId>
+               <startLocation>
+                    <id>[x=121.43773871966][y=31.31941562954]</id>
+                    <coord x="121.43773871966" y="31.31941562954"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.43773871966][y=31.31941562954]</id>
+                    <coord x="121.43773871966" y="31.31941562954"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A052</id>
+               <typeId>A052Type</typeId>
+               <startLocation>
+                    <id>[x=121.377638][y=31.163671]</id>
+                    <coord x="121.377638" y="31.163671"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.377638][y=31.163671]</id>
+                    <coord x="121.377638" y="31.163671"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A048</id>
+               <typeId>A048Type</typeId>
+               <startLocation>
+                    <id>[x=121.351057][y=31.252125]</id>
+                    <coord x="121.351057" y="31.252125"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.351057][y=31.252125]</id>
+                    <coord x="121.351057" y="31.252125"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A049</id>
+               <typeId>A049Type</typeId>
+               <startLocation>
+                    <id>[x=121.456256][y=31.378379]</id>
+                    <coord x="121.456256" y="31.378379"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.456256][y=31.378379]</id>
+                    <coord x="121.456256" y="31.378379"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A047</id>
+               <typeId>A047Type</typeId>
+               <startLocation>
+                    <id>[x=121.344421][y=31.234845]</id>
+                    <coord x="121.344421" y="31.234845"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.344421][y=31.234845]</id>
+                    <coord x="121.344421" y="31.234845"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A054</id>
+               <typeId>A054Type</typeId>
+               <startLocation>
+                    <id>[x=121.47609180672][y=31.306943246859]</id>
+                    <coord x="121.47609180672" y="31.306943246859"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.47609180672][y=31.306943246859]</id>
+                    <coord x="121.47609180672" y="31.306943246859"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A038</id>
+               <typeId>A038Type</typeId>
+               <startLocation>
+                    <id>[x=121.645264][y=30.926983]</id>
+                    <coord x="121.645264" y="30.926983"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.645264][y=30.926983]</id>
+                    <coord x="121.645264" y="30.926983"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A044</id>
+               <typeId>A044Type</typeId>
+               <startLocation>
+                    <id>[x=121.133601][y=31.254956]</id>
+                    <coord x="121.133601" y="31.254956"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.133601][y=31.254956]</id>
+                    <coord x="121.133601" y="31.254956"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A051</id>
+               <typeId>A051Type</typeId>
+               <startLocation>
+                    <id>[x=121.746743][y=31.191404]</id>
+                    <coord x="121.746743" y="31.191404"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.746743][y=31.191404]</id>
+                    <coord x="121.746743" y="31.191404"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A041</id>
+               <typeId>A041Type</typeId>
+               <startLocation>
+                    <id>[x=121.5004385925][y=31.215776828181]</id>
+                    <coord x="121.5004385925" y="31.215776828181"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.5004385925][y=31.215776828181]</id>
+                    <coord x="121.5004385925" y="31.215776828181"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A053</id>
+               <typeId>A053Type</typeId>
+               <startLocation>
+                    <id>[x=121.320108][y=31.342156]</id>
+                    <coord x="121.320108" y="31.342156"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.320108][y=31.342156]</id>
+                    <coord x="121.320108" y="31.342156"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A062</id>
+               <typeId>A062Type</typeId>
+               <startLocation>
+                    <id>[x=121.41026658262][y=31.389581783811]</id>
+                    <coord x="121.41026658262" y="31.389581783811"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.41026658262][y=31.389581783811]</id>
+                    <coord x="121.41026658262" y="31.389581783811"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A033</id>
+               <typeId>A033Type</typeId>
+               <startLocation>
+                    <id>[x=121.5826692911][y=31.197038323245]</id>
+                    <coord x="121.5826692911" y="31.197038323245"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.5826692911][y=31.197038323245]</id>
+                    <coord x="121.5826692911" y="31.197038323245"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A037</id>
+               <typeId>A037Type</typeId>
+               <startLocation>
+                    <id>[x=121.421667][y=31.037546]</id>
+                    <coord x="121.421667" y="31.037546"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.421667][y=31.037546]</id>
+                    <coord x="121.421667" y="31.037546"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A057</id>
+               <typeId>A057Type</typeId>
+               <startLocation>
+                    <id>[x=121.52604259128][y=31.285085460834]</id>
+                    <coord x="121.52604259128" y="31.285085460834"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.52604259128][y=31.285085460834]</id>
+                    <coord x="121.52604259128" y="31.285085460834"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A056</id>
+               <typeId>A056Type</typeId>
+               <startLocation>
+                    <id>[x=121.56740228148][y=31.212145675149]</id>
+                    <coord x="121.56740228148" y="31.212145675149"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.56740228148][y=31.212145675149]</id>
+                    <coord x="121.56740228148" y="31.212145675149"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A035</id>
+               <typeId>A035Type</typeId>
+               <startLocation>
+                    <id>[x=121.2921914537][y=31.135080699096]</id>
+                    <coord x="121.2921914537" y="31.135080699096"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.2921914537][y=31.135080699096]</id>
+                    <coord x="121.2921914537" y="31.135080699096"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+          <vehicle>
+               <id>A060</id>
+               <typeId>A060Type</typeId>
+               <startLocation>
+                    <id>[x=121.322184][y=31.02918]</id>
+                    <coord x="121.322184" y="31.02918"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.322184][y=31.02918]</id>
+                    <coord x="121.322184" y="31.02918"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+     </vehicles>
+     <vehicleTypes>
+          <type>
+               <id>A032Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A033Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A034Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A035Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A036Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A037Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A038Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A039Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A040Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A041Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A042Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A043Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A044Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A045Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A046Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A047Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A048Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A049Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A050Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A051Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A052Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A053Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A054Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A055Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A056Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A057Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A058Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A059Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A060Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A061Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+          <type>
+               <id>A062Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+     </vehicleTypes>
+     <shipments>
+          <shipment id="E3576">
+               <pickup>
+                    <location>
+                         <id>[x=121.53683][y=31.29525]</id>
+                         <coord x="121.53683" y="31.29525"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>598.0</start>
+                              <end>598.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.533669][y=31.288586]</id>
+                         <coord x="121.533669" y="31.288586"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>598.0</start>
+                              <end>688.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3615">
+               <pickup>
+                    <location>
+                         <id>[x=121.54857][y=31.28926]</id>
+                         <coord x="121.54857" y="31.28926"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>587.0</start>
+                              <end>587.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.46048][y=31.213305]</id>
+                         <coord x="121.46048" y="31.213305"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>587.0</start>
+                              <end>677.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3616">
+               <pickup>
+                    <location>
+                         <id>[x=121.54857][y=31.28926]</id>
+                         <coord x="121.54857" y="31.28926"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>606.0</start>
+                              <end>606.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.556023][y=31.289707]</id>
+                         <coord x="121.556023" y="31.289707"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>606.0</start>
+                              <end>696.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3633">
+               <pickup>
+                    <location>
+                         <id>[x=121.54857][y=31.29019]</id>
+                         <coord x="121.54857" y="31.29019"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>598.0</start>
+                              <end>598.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.555809][y=31.293144]</id>
+                         <coord x="121.555809" y="31.293144"/>
+                    </location>
+                    <duration>12.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>598.0</start>
+                              <end>688.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">6</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3635">
+               <pickup>
+                    <location>
+                         <id>[x=121.54857][y=31.29019]</id>
+                         <coord x="121.54857" y="31.29019"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>477.0</start>
+                              <end>477.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.359085][y=31.825905]</id>
+                         <coord x="121.359085" y="31.825905"/>
+                    </location>
+                    <duration>12.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>477.0</start>
+                              <end>726.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">5</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3639">
+               <pickup>
+                    <location>
+                         <id>[x=121.54857][y=31.29019]</id>
+                         <coord x="121.54857" y="31.29019"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>581.0</start>
+                              <end>581.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.46048][y=31.213305]</id>
+                         <coord x="121.46048" y="31.213305"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>581.0</start>
+                              <end>671.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3640">
+               <pickup>
+                    <location>
+                         <id>[x=121.54857][y=31.29019]</id>
+                         <coord x="121.54857" y="31.29019"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>627.0</start>
+                              <end>627.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.46048][y=31.213305]</id>
+                         <coord x="121.46048" y="31.213305"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>627.0</start>
+                              <end>717.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3646">
+               <pickup>
+                    <location>
+                         <id>[x=121.54857][y=31.29019]</id>
+                         <coord x="121.54857" y="31.29019"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>621.0</start>
+                              <end>621.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.556023][y=31.289707]</id>
+                         <coord x="121.556023" y="31.289707"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>621.0</start>
+                              <end>711.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3674">
+               <pickup>
+                    <location>
+                         <id>[x=121.55011][y=31.28955]</id>
+                         <coord x="121.55011" y="31.28955"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>610.0</start>
+                              <end>610.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.555809][y=31.293144]</id>
+                         <coord x="121.555809" y="31.293144"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>610.0</start>
+                              <end>700.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3663">
+               <pickup>
+                    <location>
+                         <id>[x=121.55011][y=31.28955]</id>
+                         <coord x="121.55011" y="31.28955"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>602.0</start>
+                              <end>602.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.548431][y=31.289217]</id>
+                         <coord x="121.548431" y="31.289217"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>602.0</start>
+                              <end>692.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3676">
+               <pickup>
+                    <location>
+                         <id>[x=121.55011][y=31.28955]</id>
+                         <coord x="121.55011" y="31.28955"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>565.0</start>
+                              <end>565.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.359085][y=31.825905]</id>
+                         <coord x="121.359085" y="31.825905"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>565.0</start>
+                              <end>815.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3677">
+               <pickup>
+                    <location>
+                         <id>[x=121.55011][y=31.28955]</id>
+                         <coord x="121.55011" y="31.28955"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>555.0</start>
+                              <end>555.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.46048][y=31.213305]</id>
+                         <coord x="121.46048" y="31.213305"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>555.0</start>
+                              <end>645.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3678">
+               <pickup>
+                    <location>
+                         <id>[x=121.55011][y=31.28955]</id>
+                         <coord x="121.55011" y="31.28955"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>595.0</start>
+                              <end>595.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.46048][y=31.213305]</id>
+                         <coord x="121.46048" y="31.213305"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>595.0</start>
+                              <end>685.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3684">
+               <pickup>
+                    <location>
+                         <id>[x=121.55011][y=31.28955]</id>
+                         <coord x="121.55011" y="31.28955"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>622.0</start>
+                              <end>622.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.556023][y=31.289707]</id>
+                         <coord x="121.556023" y="31.289707"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>622.0</start>
+                              <end>712.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3693">
+               <pickup>
+                    <location>
+                         <id>[x=121.55149][y=31.29025]</id>
+                         <coord x="121.55149" y="31.29025"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>555.0</start>
+                              <end>555.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.46048][y=31.213305]</id>
+                         <coord x="121.46048" y="31.213305"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>555.0</start>
+                              <end>645.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3717">
+               <pickup>
+                    <location>
+                         <id>[x=121.55367][y=31.28554]</id>
+                         <coord x="121.55367" y="31.28554"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>549.0</start>
+                              <end>549.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.813438][y=31.093918]</id>
+                         <coord x="121.813438" y="31.093918"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>549.0</start>
+                              <end>680.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3738">
+               <pickup>
+                    <location>
+                         <id>[x=121.55367][y=31.28554]</id>
+                         <coord x="121.55367" y="31.28554"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>573.0</start>
+                              <end>573.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.46048][y=31.213305]</id>
+                         <coord x="121.46048" y="31.213305"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>573.0</start>
+                              <end>663.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3739">
+               <pickup>
+                    <location>
+                         <id>[x=121.55367][y=31.28554]</id>
+                         <coord x="121.55367" y="31.28554"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>598.0</start>
+                              <end>598.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.46048][y=31.213305]</id>
+                         <coord x="121.46048" y="31.213305"/>
+                    </location>
+                    <duration>11.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>598.0</start>
+                              <end>688.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">4</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3740">
+               <pickup>
+                    <location>
+                         <id>[x=121.55367][y=31.28554]</id>
+                         <coord x="121.55367" y="31.28554"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>615.0</start>
+                              <end>615.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.46048][y=31.213305]</id>
+                         <coord x="121.46048" y="31.213305"/>
+                    </location>
+                    <duration>13.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>615.0</start>
+                              <end>705.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">7</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3741">
+               <pickup>
+                    <location>
+                         <id>[x=121.55367][y=31.28554]</id>
+                         <coord x="121.55367" y="31.28554"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>621.0</start>
+                              <end>621.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.46048][y=31.213305]</id>
+                         <coord x="121.46048" y="31.213305"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>621.0</start>
+                              <end>711.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3778">
+               <pickup>
+                    <location>
+                         <id>[x=121.55475][y=31.28619]</id>
+                         <coord x="121.55475" y="31.28619"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>565.0</start>
+                              <end>565.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.46048][y=31.213305]</id>
+                         <coord x="121.46048" y="31.213305"/>
+                    </location>
+                    <duration>12.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>565.0</start>
+                              <end>655.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">5</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3779">
+               <pickup>
+                    <location>
+                         <id>[x=121.55475][y=31.28619]</id>
+                         <coord x="121.55475" y="31.28619"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>580.0</start>
+                              <end>580.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.46048][y=31.213305]</id>
+                         <coord x="121.46048" y="31.213305"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>580.0</start>
+                              <end>670.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3792">
+               <pickup>
+                    <location>
+                         <id>[x=121.55781][y=31.27935]</id>
+                         <coord x="121.55781" y="31.27935"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>578.0</start>
+                              <end>578.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.46048][y=31.213305]</id>
+                         <coord x="121.46048" y="31.213305"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>578.0</start>
+                              <end>668.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3865">
+               <pickup>
+                    <location>
+                         <id>[x=121.58865][y=31.26966]</id>
+                         <coord x="121.58865" y="31.26966"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>598.0</start>
+                              <end>598.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.582512][y=31.267292]</id>
+                         <coord x="121.582512" y="31.267292"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>598.0</start>
+                              <end>688.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3883">
+               <pickup>
+                    <location>
+                         <id>[x=121.59129][y=31.26541]</id>
+                         <coord x="121.59129" y="31.26541"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>611.0</start>
+                              <end>611.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.589661][y=31.274487]</id>
+                         <coord x="121.589661" y="31.274487"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>611.0</start>
+                              <end>701.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3942">
+               <pickup>
+                    <location>
+                         <id>[x=121.59767][y=31.26354]</id>
+                         <coord x="121.59767" y="31.26354"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>616.0</start>
+                              <end>616.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.596367][y=31.262463]</id>
+                         <coord x="121.596367" y="31.262463"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>616.0</start>
+                              <end>706.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3948">
+               <pickup>
+                    <location>
+                         <id>[x=121.6076][y=31.2642]</id>
+                         <coord x="121.6076" y="31.2642"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>613.0</start>
+                              <end>613.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.611008][y=31.263626]</id>
+                         <coord x="121.611008" y="31.263626"/>
+                    </location>
+                    <duration>13.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>613.0</start>
+                              <end>703.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">8</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3957">
+               <pickup>
+                    <location>
+                         <id>[x=121.60987][y=31.28227]</id>
+                         <coord x="121.60987" y="31.28227"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>622.0</start>
+                              <end>622.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.612259][y=31.254723]</id>
+                         <coord x="121.612259" y="31.254723"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>622.0</start>
+                              <end>712.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3958">
+               <pickup>
+                    <location>
+                         <id>[x=121.61022][y=31.28284]</id>
+                         <coord x="121.61022" y="31.28284"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>625.0</start>
+                              <end>625.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.615334][y=31.267572]</id>
+                         <coord x="121.615334" y="31.267572"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>625.0</start>
+                              <end>715.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3963">
+               <pickup>
+                    <location>
+                         <id>[x=121.61044][y=31.28134]</id>
+                         <coord x="121.61044" y="31.28134"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>610.0</start>
+                              <end>610.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.596504][y=31.280434]</id>
+                         <coord x="121.596504" y="31.280434"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>610.0</start>
+                              <end>700.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4178">
+               <pickup>
+                    <location>
+                         <id>[x=121.65461][y=31.27041]</id>
+                         <coord x="121.65461" y="31.27041"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>628.0</start>
+                              <end>628.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.651245][y=31.264698]</id>
+                         <coord x="121.651245" y="31.264698"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>628.0</start>
+                              <end>718.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4189">
+               <pickup>
+                    <location>
+                         <id>[x=121.65461][y=31.27041]</id>
+                         <coord x="121.65461" y="31.27041"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>624.0</start>
+                              <end>624.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.656609][y=31.261227]</id>
+                         <coord x="121.656609" y="31.261227"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>624.0</start>
+                              <end>714.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4190">
+               <pickup>
+                    <location>
+                         <id>[x=121.65461][y=31.27041]</id>
+                         <coord x="121.65461" y="31.27041"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>628.0</start>
+                              <end>628.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.678673][y=31.261314]</id>
+                         <coord x="121.678673" y="31.261314"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>628.0</start>
+                              <end>718.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4196">
+               <pickup>
+                    <location>
+                         <id>[x=121.65461][y=31.27041]</id>
+                         <coord x="121.65461" y="31.27041"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>622.0</start>
+                              <end>622.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.654434][y=31.26907]</id>
+                         <coord x="121.654434" y="31.26907"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>622.0</start>
+                              <end>712.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4202">
+               <pickup>
+                    <location>
+                         <id>[x=121.65717][y=31.26252]</id>
+                         <coord x="121.65717" y="31.26252"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>600.0</start>
+                              <end>600.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.656609][y=31.261227]</id>
+                         <coord x="121.656609" y="31.261227"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>600.0</start>
+                              <end>690.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4203">
+               <pickup>
+                    <location>
+                         <id>[x=121.65717][y=31.26252]</id>
+                         <coord x="121.65717" y="31.26252"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>604.0</start>
+                              <end>604.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.656609][y=31.261227]</id>
+                         <coord x="121.656609" y="31.261227"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>604.0</start>
+                              <end>694.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4205">
+               <pickup>
+                    <location>
+                         <id>[x=121.65717][y=31.26252]</id>
+                         <coord x="121.65717" y="31.26252"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>605.0</start>
+                              <end>605.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.649101][y=31.271759]</id>
+                         <coord x="121.649101" y="31.271759"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>605.0</start>
+                              <end>695.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4207">
+               <pickup>
+                    <location>
+                         <id>[x=121.65747][y=31.27604]</id>
+                         <coord x="121.65747" y="31.27604"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>602.0</start>
+                              <end>602.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.654152][y=31.276506]</id>
+                         <coord x="121.654152" y="31.276506"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>602.0</start>
+                              <end>692.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4213">
+               <pickup>
+                    <location>
+                         <id>[x=121.65747][y=31.27604]</id>
+                         <coord x="121.65747" y="31.27604"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>629.0</start>
+                              <end>629.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.651245][y=31.264698]</id>
+                         <coord x="121.651245" y="31.264698"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>629.0</start>
+                              <end>719.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4220">
+               <pickup>
+                    <location>
+                         <id>[x=121.65747][y=31.27604]</id>
+                         <coord x="121.65747" y="31.27604"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>556.0</start>
+                              <end>556.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.567703][y=31.245945]</id>
+                         <coord x="121.567703" y="31.245945"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>556.0</start>
+                              <end>646.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4221">
+               <pickup>
+                    <location>
+                         <id>[x=121.65747][y=31.27604]</id>
+                         <coord x="121.65747" y="31.27604"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>608.0</start>
+                              <end>608.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.647217][y=31.273314]</id>
+                         <coord x="121.647217" y="31.273314"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>608.0</start>
+                              <end>698.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4241">
+               <pickup>
+                    <location>
+                         <id>[x=121.65748][y=31.27663]</id>
+                         <coord x="121.65748" y="31.27663"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>597.0</start>
+                              <end>597.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.647217][y=31.273314]</id>
+                         <coord x="121.647217" y="31.273314"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>597.0</start>
+                              <end>687.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4242">
+               <pickup>
+                    <location>
+                         <id>[x=121.65748][y=31.27663]</id>
+                         <coord x="121.65748" y="31.27663"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>613.0</start>
+                              <end>613.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.647217][y=31.273314]</id>
+                         <coord x="121.647217" y="31.273314"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>613.0</start>
+                              <end>703.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4246">
+               <pickup>
+                    <location>
+                         <id>[x=121.65748][y=31.27663]</id>
+                         <coord x="121.65748" y="31.27663"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>597.0</start>
+                              <end>597.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.678055][y=31.252567]</id>
+                         <coord x="121.678055" y="31.252567"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>597.0</start>
+                              <end>687.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4247">
+               <pickup>
+                    <location>
+                         <id>[x=121.65748][y=31.27663]</id>
+                         <coord x="121.65748" y="31.27663"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>629.0</start>
+                              <end>629.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.649101][y=31.271759]</id>
+                         <coord x="121.649101" y="31.271759"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>629.0</start>
+                              <end>719.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4256">
+               <pickup>
+                    <location>
+                         <id>[x=121.65773][y=31.2613]</id>
+                         <coord x="121.65773" y="31.2613"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>616.0</start>
+                              <end>616.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.647217][y=31.273314]</id>
+                         <coord x="121.647217" y="31.273314"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>616.0</start>
+                              <end>706.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4260">
+               <pickup>
+                    <location>
+                         <id>[x=121.65773][y=31.2613]</id>
+                         <coord x="121.65773" y="31.2613"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>600.0</start>
+                              <end>600.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.656609][y=31.261227]</id>
+                         <coord x="121.656609" y="31.261227"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>600.0</start>
+                              <end>690.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4264">
+               <pickup>
+                    <location>
+                         <id>[x=121.65773][y=31.2613]</id>
+                         <coord x="121.65773" y="31.2613"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>593.0</start>
+                              <end>593.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.649101][y=31.271759]</id>
+                         <coord x="121.649101" y="31.271759"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>593.0</start>
+                              <end>683.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4265">
+               <pickup>
+                    <location>
+                         <id>[x=121.65773][y=31.2613]</id>
+                         <coord x="121.65773" y="31.2613"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>603.0</start>
+                              <end>603.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.649101][y=31.271759]</id>
+                         <coord x="121.649101" y="31.271759"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>603.0</start>
+                              <end>693.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4266">
+               <pickup>
+                    <location>
+                         <id>[x=121.65773][y=31.2613]</id>
+                         <coord x="121.65773" y="31.2613"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>624.0</start>
+                              <end>624.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.649101][y=31.271759]</id>
+                         <coord x="121.649101" y="31.271759"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>624.0</start>
+                              <end>714.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4275">
+               <pickup>
+                    <location>
+                         <id>[x=121.6585][y=31.27468]</id>
+                         <coord x="121.6585" y="31.27468"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>599.0</start>
+                              <end>599.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.654152][y=31.276506]</id>
+                         <coord x="121.654152" y="31.276506"/>
+                    </location>
+                    <duration>15.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>599.0</start>
+                              <end>689.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">12</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4276">
+               <pickup>
+                    <location>
+                         <id>[x=121.6585][y=31.27468]</id>
+                         <coord x="121.6585" y="31.27468"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>622.0</start>
+                              <end>622.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.654152][y=31.276506]</id>
+                         <coord x="121.654152" y="31.276506"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>622.0</start>
+                              <end>712.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4284">
+               <pickup>
+                    <location>
+                         <id>[x=121.6585][y=31.27468]</id>
+                         <coord x="121.6585" y="31.27468"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>596.0</start>
+                              <end>596.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.65847][y=31.274601]</id>
+                         <coord x="121.65847" y="31.274601"/>
+                    </location>
+                    <duration>19.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>596.0</start>
+                              <end>686.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">23</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4285">
+               <pickup>
+                    <location>
+                         <id>[x=121.6585][y=31.27468]</id>
+                         <coord x="121.6585" y="31.27468"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>614.0</start>
+                              <end>614.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.65847][y=31.274601]</id>
+                         <coord x="121.65847" y="31.274601"/>
+                    </location>
+                    <duration>19.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>614.0</start>
+                              <end>704.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">23</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4286">
+               <pickup>
+                    <location>
+                         <id>[x=121.6585][y=31.27468]</id>
+                         <coord x="121.6585" y="31.27468"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>629.0</start>
+                              <end>629.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.65847][y=31.274601]</id>
+                         <coord x="121.65847" y="31.274601"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>629.0</start>
+                              <end>719.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4289">
+               <pickup>
+                    <location>
+                         <id>[x=121.6585][y=31.27468]</id>
+                         <coord x="121.6585" y="31.27468"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>592.0</start>
+                              <end>592.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.647217][y=31.273314]</id>
+                         <coord x="121.647217" y="31.273314"/>
+                    </location>
+                    <duration>16.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>592.0</start>
+                              <end>682.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">14</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4290">
+               <pickup>
+                    <location>
+                         <id>[x=121.6585][y=31.27468]</id>
+                         <coord x="121.6585" y="31.27468"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>628.0</start>
+                              <end>628.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.647217][y=31.273314]</id>
+                         <coord x="121.647217" y="31.273314"/>
+                    </location>
+                    <duration>17.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>628.0</start>
+                              <end>718.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">17</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4307">
+               <pickup>
+                    <location>
+                         <id>[x=121.6585][y=31.27468]</id>
+                         <coord x="121.6585" y="31.27468"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>599.0</start>
+                              <end>599.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.649101][y=31.271759]</id>
+                         <coord x="121.649101" y="31.271759"/>
+                    </location>
+                    <duration>16.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>599.0</start>
+                              <end>689.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">13</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E1358">
+               <pickup>
+                    <location>
+                         <id>[x=121.23052][y=31.10895]</id>
+                         <coord x="121.23052" y="31.10895"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>599.0</start>
+                              <end>599.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.230751][y=31.109438]</id>
+                         <coord x="121.230751" y="31.109438"/>
+                    </location>
+                    <duration>13.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>599.0</start>
+                              <end>689.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">8</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E1393">
+               <pickup>
+                    <location>
+                         <id>[x=121.26988][y=31.11459]</id>
+                         <coord x="121.26988" y="31.11459"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>603.0</start>
+                              <end>603.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.263931][y=31.111771]</id>
+                         <coord x="121.263931" y="31.111771"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>603.0</start>
+                              <end>693.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E1397">
+               <pickup>
+                    <location>
+                         <id>[x=121.3163][y=31.13522]</id>
+                         <coord x="121.3163" y="31.13522"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>597.0</start>
+                              <end>597.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.294395][y=31.167295]</id>
+                         <coord x="121.294395" y="31.167295"/>
+                    </location>
+                    <duration>11.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>597.0</start>
+                              <end>687.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">4</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E1604">
+               <pickup>
+                    <location>
+                         <id>[x=121.39203][y=31.02599]</id>
+                         <coord x="121.39203" y="31.02599"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>627.0</start>
+                              <end>627.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.391479][y=31.024113]</id>
+                         <coord x="121.391479" y="31.024113"/>
+                    </location>
+                    <duration>13.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>627.0</start>
+                              <end>717.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">7</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E1611">
+               <pickup>
+                    <location>
+                         <id>[x=121.39203][y=31.02599]</id>
+                         <coord x="121.39203" y="31.02599"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>627.0</start>
+                              <end>627.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.39653][y=31.025841]</id>
+                         <coord x="121.39653" y="31.025841"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>627.0</start>
+                              <end>717.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E1617">
+               <pickup>
+                    <location>
+                         <id>[x=121.39313][y=31.02568]</id>
+                         <coord x="121.39313" y="31.02568"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>614.0</start>
+                              <end>614.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.393478][y=31.024921]</id>
+                         <coord x="121.393478" y="31.024921"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>614.0</start>
+                              <end>704.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E1710">
+               <pickup>
+                    <location>
+                         <id>[x=121.40267][y=31.00678]</id>
+                         <coord x="121.40267" y="31.00678"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>627.0</start>
+                              <end>627.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.403534][y=31.005795]</id>
+                         <coord x="121.403534" y="31.005795"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>627.0</start>
+                              <end>717.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2350">
+               <pickup>
+                    <location>
+                         <id>[x=121.42958][y=31.01679]</id>
+                         <coord x="121.42958" y="31.01679"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>616.0</start>
+                              <end>616.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.436195][y=31.021648]</id>
+                         <coord x="121.436195" y="31.021648"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>616.0</start>
+                              <end>706.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2581">
+               <pickup>
+                    <location>
+                         <id>[x=121.45017][y=31.03475]</id>
+                         <coord x="121.45017" y="31.03475"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>617.0</start>
+                              <end>617.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.451729][y=31.031666]</id>
+                         <coord x="121.451729" y="31.031666"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>617.0</start>
+                              <end>707.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2573">
+               <pickup>
+                    <location>
+                         <id>[x=121.45017][y=31.03475]</id>
+                         <coord x="121.45017" y="31.03475"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>626.0</start>
+                              <end>626.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.447617][y=31.034393]</id>
+                         <coord x="121.447617" y="31.034393"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>626.0</start>
+                              <end>716.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2577">
+               <pickup>
+                    <location>
+                         <id>[x=121.45017][y=31.03475]</id>
+                         <coord x="121.45017" y="31.03475"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>442.0</start>
+                              <end>442.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.299438][y=31.433102]</id>
+                         <coord x="121.299438" y="31.433102"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>442.0</start>
+                              <end>628.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2578">
+               <pickup>
+                    <location>
+                         <id>[x=121.45017][y=31.03475]</id>
+                         <coord x="121.45017" y="31.03475"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>525.0</start>
+                              <end>525.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.299438][y=31.433102]</id>
+                         <coord x="121.299438" y="31.433102"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>525.0</start>
+                              <end>711.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2579">
+               <pickup>
+                    <location>
+                         <id>[x=121.45017][y=31.03475]</id>
+                         <coord x="121.45017" y="31.03475"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>552.0</start>
+                              <end>552.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.299438][y=31.433102]</id>
+                         <coord x="121.299438" y="31.433102"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>552.0</start>
+                              <end>738.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2580">
+               <pickup>
+                    <location>
+                         <id>[x=121.45017][y=31.03475]</id>
+                         <coord x="121.45017" y="31.03475"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>614.0</start>
+                              <end>614.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.299438][y=31.433102]</id>
+                         <coord x="121.299438" y="31.433102"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>614.0</start>
+                              <end>800.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2750">
+               <pickup>
+                    <location>
+                         <id>[x=121.4558][y=31.04124]</id>
+                         <coord x="121.4558" y="31.04124"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>596.0</start>
+                              <end>596.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.299438][y=31.433102]</id>
+                         <coord x="121.299438" y="31.433102"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>596.0</start>
+                              <end>780.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2441">
+               <pickup>
+                    <location>
+                         <id>[x=121.43604][y=31.22512]</id>
+                         <coord x="121.43604" y="31.22512"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>608.0</start>
+                              <end>608.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.450066][y=31.225443]</id>
+                         <coord x="121.450066" y="31.225443"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>608.0</start>
+                              <end>698.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2481">
+               <pickup>
+                    <location>
+                         <id>[x=121.43941][y=31.22199]</id>
+                         <coord x="121.43941" y="31.22199"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>616.0</start>
+                              <end>616.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.448074][y=31.22967]</id>
+                         <coord x="121.448074" y="31.22967"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>616.0</start>
+                              <end>706.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2496">
+               <pickup>
+                    <location>
+                         <id>[x=121.44231][y=31.22128]</id>
+                         <coord x="121.44231" y="31.22128"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>611.0</start>
+                              <end>611.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.441757][y=31.227892]</id>
+                         <coord x="121.441757" y="31.227892"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>611.0</start>
+                              <end>701.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2584">
+               <pickup>
+                    <location>
+                         <id>[x=121.4504][y=31.22866]</id>
+                         <coord x="121.4504" y="31.22866"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>590.0</start>
+                              <end>590.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.46051][y=31.224546]</id>
+                         <coord x="121.46051" y="31.224546"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>590.0</start>
+                              <end>680.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2689">
+               <pickup>
+                    <location>
+                         <id>[x=121.45206][y=31.22911]</id>
+                         <coord x="121.45206" y="31.22911"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>435.0</start>
+                              <end>435.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.001007][y=30.836681]</id>
+                         <coord x="121.001007" y="30.836681"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>435.0</start>
+                              <end>680.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2727">
+               <pickup>
+                    <location>
+                         <id>[x=121.4548][y=31.21934]</id>
+                         <coord x="121.4548" y="31.21934"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>611.0</start>
+                              <end>611.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.444115][y=31.216589]</id>
+                         <coord x="121.444115" y="31.216589"/>
+                    </location>
+                    <duration>11.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>611.0</start>
+                              <end>701.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">4</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2718">
+               <pickup>
+                    <location>
+                         <id>[x=121.4548][y=31.21934]</id>
+                         <coord x="121.4548" y="31.21934"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>589.0</start>
+                              <end>589.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.454086][y=31.234411]</id>
+                         <coord x="121.454086" y="31.234411"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>589.0</start>
+                              <end>679.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2729">
+               <pickup>
+                    <location>
+                         <id>[x=121.4548][y=31.21934]</id>
+                         <coord x="121.4548" y="31.21934"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>601.0</start>
+                              <end>601.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.44178][y=31.21476]</id>
+                         <coord x="121.44178" y="31.21476"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>601.0</start>
+                              <end>691.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2735">
+               <pickup>
+                    <location>
+                         <id>[x=121.45483][y=31.21929]</id>
+                         <coord x="121.45483" y="31.21929"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>623.0</start>
+                              <end>623.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.486832][y=31.233156]</id>
+                         <coord x="121.486832" y="31.233156"/>
+                    </location>
+                    <duration>14.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>623.0</start>
+                              <end>713.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">9</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2737">
+               <pickup>
+                    <location>
+                         <id>[x=121.45483][y=31.21929]</id>
+                         <coord x="121.45483" y="31.21929"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>603.0</start>
+                              <end>603.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.459625][y=31.220764]</id>
+                         <coord x="121.459625" y="31.220764"/>
+                    </location>
+                    <duration>14.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>603.0</start>
+                              <end>693.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">10</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E2772">
+               <pickup>
+                    <location>
+                         <id>[x=121.46147][y=31.23167]</id>
+                         <coord x="121.46147" y="31.23167"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>607.0</start>
+                              <end>607.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.456642][y=31.240974]</id>
+                         <coord x="121.456642" y="31.240974"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>607.0</start>
+                              <end>697.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+     </shipments>
+     <solutions>
+          <solution>
+               <cost>0.0</cost>
+               <unassignedJobs>
+                    <job id="E1611"/>
+                    <job id="E4266"/>
+                    <job id="E2441"/>
+                    <job id="E4196"/>
+                    <job id="E3693"/>
+                    <job id="E3792"/>
+                    <job id="E4256"/>
+                    <job id="E4202"/>
+                    <job id="E3616"/>
+                    <job id="E3684"/>
+                    <job id="E3677"/>
+                    <job id="E3779"/>
+                    <job id="E3640"/>
+                    <job id="E2735"/>
+                    <job id="E3635"/>
+                    <job id="E3738"/>
+                    <job id="E4241"/>
+                    <job id="E4221"/>
+                    <job id="E3639"/>
+                    <job id="E4203"/>
+                    <job id="E4286"/>
+                    <job id="E2729"/>
+                    <job id="E3865"/>
+                    <job id="E4290"/>
+                    <job id="E4285"/>
+                    <job id="E2350"/>
+                    <job id="E2727"/>
+                    <job id="E3740"/>
+                    <job id="E2737"/>
+                    <job id="E3615"/>
+                    <job id="E4276"/>
+                    <job id="E1358"/>
+                    <job id="E4220"/>
+                    <job id="E3958"/>
+                    <job id="E3778"/>
+                    <job id="E3633"/>
+                    <job id="E4284"/>
+                    <job id="E2496"/>
+                    <job id="E3883"/>
+                    <job id="E4264"/>
+                    <job id="E2580"/>
+                    <job id="E2689"/>
+                    <job id="E2577"/>
+                    <job id="E3678"/>
+                    <job id="E3646"/>
+                    <job id="E4190"/>
+                    <job id="E3741"/>
+                    <job id="E4207"/>
+                    <job id="E1617"/>
+                    <job id="E4307"/>
+                    <job id="E4205"/>
+                    <job id="E1604"/>
+                    <job id="E2579"/>
+                    <job id="E3676"/>
+                    <job id="E2772"/>
+                    <job id="E4213"/>
+                    <job id="E3948"/>
+                    <job id="E2581"/>
+                    <job id="E1397"/>
+                    <job id="E4265"/>
+                    <job id="E4178"/>
+                    <job id="E2750"/>
+                    <job id="E4246"/>
+                    <job id="E4260"/>
+                    <job id="E3942"/>
+                    <job id="E2718"/>
+                    <job id="E2578"/>
+                    <job id="E3739"/>
+                    <job id="E1393"/>
+                    <job id="E4275"/>
+                    <job id="E2573"/>
+                    <job id="E3963"/>
+                    <job id="E4189"/>
+                    <job id="E1710"/>
+                    <job id="E4289"/>
+                    <job id="E3674"/>
+                    <job id="E4242"/>
+                    <job id="E3957"/>
+                    <job id="E3576"/>
+                    <job id="E2584"/>
+                    <job id="E3717"/>
+                    <job id="E4247"/>
+                    <job id="E3663"/>
+                    <job id="E2481"/>
+               </unassignedJobs>
+          </solution>
+          <solution>
+               <cost>0.0</cost>
+               <unassignedJobs>
+                    <job id="E3678"/>
+                    <job id="E4190"/>
+                    <job id="E3792"/>
+                    <job id="E2718"/>
+                    <job id="E4241"/>
+                    <job id="E4264"/>
+                    <job id="E4290"/>
+                    <job id="E2735"/>
+                    <job id="E4286"/>
+                    <job id="E3738"/>
+                    <job id="E2727"/>
+                    <job id="E3676"/>
+                    <job id="E4221"/>
+                    <job id="E4246"/>
+                    <job id="E3740"/>
+                    <job id="E2584"/>
+                    <job id="E4284"/>
+                    <job id="E2577"/>
+                    <job id="E4220"/>
+                    <job id="E4307"/>
+                    <job id="E2689"/>
+                    <job id="E1604"/>
+                    <job id="E4196"/>
+                    <job id="E3963"/>
+                    <job id="E1611"/>
+                    <job id="E3942"/>
+                    <job id="E2578"/>
+                    <job id="E4207"/>
+                    <job id="E4203"/>
+                    <job id="E4189"/>
+                    <job id="E4276"/>
+                    <job id="E2772"/>
+                    <job id="E1358"/>
+                    <job id="E4213"/>
+                    <job id="E4289"/>
+                    <job id="E4266"/>
+                    <job id="E1710"/>
+                    <job id="E3739"/>
+                    <job id="E2580"/>
+                    <job id="E3633"/>
+                    <job id="E3958"/>
+                    <job id="E3639"/>
+                    <job id="E2579"/>
+                    <job id="E2581"/>
+                    <job id="E3717"/>
+                    <job id="E4285"/>
+                    <job id="E2729"/>
+                    <job id="E3883"/>
+                    <job id="E3646"/>
+                    <job id="E3957"/>
+                    <job id="E3948"/>
+                    <job id="E3684"/>
+                    <job id="E2750"/>
+                    <job id="E3674"/>
+                    <job id="E4247"/>
+                    <job id="E3615"/>
+                    <job id="E3663"/>
+                    <job id="E4242"/>
+                    <job id="E3778"/>
+                    <job id="E1397"/>
+                    <job id="E3635"/>
+                    <job id="E2496"/>
+                    <job id="E2737"/>
+                    <job id="E4178"/>
+                    <job id="E3677"/>
+                    <job id="E4275"/>
+                    <job id="E4256"/>
+                    <job id="E3741"/>
+                    <job id="E2350"/>
+                    <job id="E1393"/>
+                    <job id="E4205"/>
+                    <job id="E3616"/>
+                    <job id="E2481"/>
+                    <job id="E3779"/>
+                    <job id="E3693"/>
+                    <job id="E4202"/>
+                    <job id="E3865"/>
+                    <job id="E3640"/>
+                    <job id="E4260"/>
+                    <job id="E3576"/>
+                    <job id="E4265"/>
+                    <job id="E2441"/>
+                    <job id="E2573"/>
+                    <job id="E1617"/>
+               </unassignedJobs>
+          </solution>
+          <solution>
+               <cost>0.0</cost>
+               <unassignedJobs>
+                    <job id="E1611"/>
+                    <job id="E4266"/>
+                    <job id="E2441"/>
+                    <job id="E4196"/>
+                    <job id="E3693"/>
+                    <job id="E3792"/>
+                    <job id="E4256"/>
+                    <job id="E4202"/>
+                    <job id="E3616"/>
+                    <job id="E3684"/>
+                    <job id="E3677"/>
+                    <job id="E3779"/>
+                    <job id="E3640"/>
+                    <job id="E2735"/>
+                    <job id="E3635"/>
+                    <job id="E3738"/>
+                    <job id="E4241"/>
+                    <job id="E4221"/>
+                    <job id="E3639"/>
+                    <job id="E4203"/>
+                    <job id="E4286"/>
+                    <job id="E2729"/>
+                    <job id="E3865"/>
+                    <job id="E4290"/>
+                    <job id="E4285"/>
+                    <job id="E2350"/>
+                    <job id="E2727"/>
+                    <job id="E3740"/>
+                    <job id="E2737"/>
+                    <job id="E3615"/>
+                    <job id="E4276"/>
+                    <job id="E1358"/>
+                    <job id="E4220"/>
+                    <job id="E3958"/>
+                    <job id="E3778"/>
+                    <job id="E3633"/>
+                    <job id="E4284"/>
+                    <job id="E2496"/>
+                    <job id="E3883"/>
+                    <job id="E4264"/>
+                    <job id="E2580"/>
+                    <job id="E2689"/>
+                    <job id="E2577"/>
+                    <job id="E3678"/>
+                    <job id="E3646"/>
+                    <job id="E4190"/>
+                    <job id="E3741"/>
+                    <job id="E4207"/>
+                    <job id="E1617"/>
+                    <job id="E4307"/>
+                    <job id="E4205"/>
+                    <job id="E1604"/>
+                    <job id="E2579"/>
+                    <job id="E3676"/>
+                    <job id="E2772"/>
+                    <job id="E4213"/>
+                    <job id="E3948"/>
+                    <job id="E2581"/>
+                    <job id="E1397"/>
+                    <job id="E4265"/>
+                    <job id="E4178"/>
+                    <job id="E2750"/>
+                    <job id="E4246"/>
+                    <job id="E4260"/>
+                    <job id="E3942"/>
+                    <job id="E2718"/>
+                    <job id="E2578"/>
+                    <job id="E3739"/>
+                    <job id="E1393"/>
+                    <job id="E4275"/>
+                    <job id="E2573"/>
+                    <job id="E3963"/>
+                    <job id="E4189"/>
+                    <job id="E1710"/>
+                    <job id="E4289"/>
+                    <job id="E3674"/>
+                    <job id="E4242"/>
+                    <job id="E3957"/>
+                    <job id="E3576"/>
+                    <job id="E2584"/>
+                    <job id="E3717"/>
+                    <job id="E4247"/>
+                    <job id="E3663"/>
+                    <job id="E2481"/>
+               </unassignedJobs>
+          </solution>
+     </solutions>
+</problem>
