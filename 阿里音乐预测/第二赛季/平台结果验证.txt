@@ -93,38 +93,6 @@ create table if not  exists  Xgboostresult3update2 as
 select avg53.artist_id,Xgboostresult3update.paly as plays,avg53.ds from avg53 
 left outer join Xgboostresult3update on avg53.artist_id=Xgboostresult3update.artist_id;
 
-
-library(recharts)
-source("echartR.R")
-q=s1[which(s1$V1=="4acf09fb6a44f995ba0c48d053599074"),]
-echartR(q,~V2,~V3,type = "linesmooth")
-
-前7天循环8次---有新歌--前30使用指数平滑后30使用均值/融合---较平稳的使用均值---波动的使用其他值---随机加方差？加噪声？
-088ff4b427effea392d3fd9bb94be25c  新歌
-140ef1f57652ab448b0a6ed1e00424a4   x
-1b322374de83520bf45aa8928e18e70a
-2dc8d3a917b12e65d4695e2277dd4943
-300dde62b988fc83eb6dba1b702e9af3  x
-4acf09fb6a44f995ba0c48d053599074  前n天循环x次--有明显周期性
-5540d2c258d7da1fa83a2a59846748ef  新歌-下降趋势
-924aae262d158a554ebcc6766f7ee848  轻微持续下降x
-97fd17d25cddbe4f97a826c84157a4d7  新歌下降
-9bc1528c1e692d918f6f323907f8ed7a  新歌下降--   x
-a507ecc6efacca68b8c275c7becbf5fb  有高的局势
-b56689f01bc9febd785aba53ac37a14f  有周期性x
-c5f0170f87a2fbb17bf65dc858c745e2  有周期性-周六日低x
-d1383958e0c89e6195d57cf92e70a9a0   明显异常！！
-d6583ed54536fecf80dcc3b020a42ebc   最后一天突然有新歌
-e7912240b9fb5bb5f560a8855f626789   最后突然增高
-efbbfd2611307e97bd36298b2fce2a02   波动带周期x
-
-w[which(w$artist_id=="b56689f01bc9febd785aba53ac37a14f"),]
-re[which(re$Vx=="b56689f01bc9febd785aba53ac37a14f"),]
-
-53180
-规则1 没有新歌的所有的歌手--plays1周67预测值减去前七天方差 plays2 效果不对  53011
-规则2 有新歌的所有的歌手--前30使用指数平滑plays1  后30使用均值/融合plays2  效果不对  规则1+2 52916
-
 drop table if exists guize1;
 
 create table if not  exists  guize2 as
@@ -212,12 +180,6 @@ ff[i]=(1-fc)*qz
 f=sum(ff)
 f
 
-预测第二个月的均值？中位数？
-我当时线下分了两类
-然后再对播放次数用dbscan聚类去除离群点/其实我想删最大最小各2-3个、、?
-最后提交K天均值
-稳定前十
-均值53400
 
 rm(list=ls())
 library(sqldf)

@@ -41,9 +41,3 @@ drop table  if exists p2_aidnumxin;
 create table if not  exists p2_aidnumxin  as
 select  artist_id,ds,sum(num1) as plays from p2_allsongxin group by artist_id,ds;
 --select * from p2_aidnumxin order  by  artist_id,ds limit 10000;
---合并两列
-drop table  if exists p2_tmpxx2;
-create table if not  exists p2_tmpxx2  as
-select artist_id,concat(ds,"-",plays) as key from p2_aidnumxin;
---压缩行数
-select  artist_id,wm_concat(',',key) as keyx from  p2_tmpxx2   group by artist_id;

@@ -46,33 +46,6 @@ j3=a[(floor(0.6*length(a))+floor(0.2*length(a))):length(a)]
 m1=arima(j1,order=c(1,1,1))
 pre1=c(predict(m1,length(j2))$pred)
 jcv=0.5*sum((pre1-j2)^2)
-R绘图
-plot(c(1:10),d3,type='b',pch=0,col='red')
-type= "p " 在图形中数据显示为点
-type= "l "  在图形中数据显示为线
-type= "b "  在图形中数据显示为点和连接线
-type= "o "  在图形中数据点覆盖在线上
-type= "h "  在图形中数据显示为从点到x轴的垂直线
-type= "s "   在图形中数据显示为阶梯图
-type= "n "  在图形中数据不显示
-pch	点的符号  0-19  pch=2
-lty  线条类型 1-6
-cex	符号的大小 默认大小为1 0.5  默认值的0.5倍
-lwd	线条宽度  默认值为1
-col 默认的绘图颜色 col=c(red, blue)
-col.axis	 	坐标轴刻度文字的颜色	 
-col.lab	 	坐标轴标签（名称）的颜色	 
-col.main	 	标题颜色	 
-col.sub	 	副标题颜色	 
-fg	 	图形的前景色	 
-bg	 	图形的背景色
-
-绘制x轴的刻度
-month<-paste(5,1:31,sep="/")
-sales<-sample(100,31)
-plot(1:31,sales,xaxt="n",xlab="Each day")  #xaxt="n"就是先不显示x的刻度
-axis(1,labels=month,at=1:31,las=3)  #1是你要对x轴作修改，labels就是你要打的内容，at就是你要多少个刻度(这里只能是1到31)，las是这些刻度的显示形式，3就是竖着
-
 
 matlab预测
 onlyone=load('F:/笔记学习/天池比赛/阿里音乐流行趋势预测大赛/处理后的csv文件/4.csv')

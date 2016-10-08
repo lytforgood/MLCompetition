@@ -1,29 +1,8 @@
 阿里音乐预测平台赛
-根据评测函数-得出最优的成绩应该是求什么
-把规则总结成非线性函数
-线性函数算半个规则
-围绕目录展开猜想
-多个人工规则才能有效---看出规律--分析问题-解决问题--规则调参
-均值加权和--时间序列问题--相关性很弱--构建多个测试集
-规则用了bagging--看看不同测试集结果怎么样，多个测试集好一般就好
-穿衣搭配--看老王PPT
-寻找target的原因
-稀疏数据--大几百维特征容易过拟合
-线性加权： 即D1, D2, D3中的搭配预测分别乘以权重w1， w2， w3。 （ 满足w1+w2+w3=1
-， 且w1,w2,w3非负。 ） 如果某个搭配商品同时出现在多个搭配集合中， 其搭配度为加权
-和。
-权重的确定： 由于要确定的权重只有两个， 所以对不同大小的线下测试集， 我们可以考
-虑用回溯法得到经验权重（ 如果要确定的参数较多， 建议用GA） 。 另外， 发现权重在所
-选的不同大小测试集上不敏感， 因此获得的经验权重直接作为线上预测时融合权重。
-预测的时候不要设置特征列
-同一个表"insert overwrite table select...where 条件取反" 等价于 "delete from table where 条件"  
-把数值转成了int，可以预测了，XGBoost，之前的double确实报数据类型错误	
+
 
 GBDT回归把指数底数改为1就有结果了
 
-企业别名 ：aliyun-tianchi
-用户名：TIANCHI_783
-密码：gE5%QsK2
 DESC odps_tc_257100_f673506e024.mars_tianchi_user_actions
 user_id         | string     |       |                                             |
 | song_id         | string     |       |                                             |
@@ -85,15 +64,7 @@ select  count(*) from songidnum;--2648178
 
 create table if not  exists songidnum2  as
 select song_id,artist_id,ds,_c3 as bofang,num2() as num from songidnum;
-合并字段
-create table if not  exists songidnum4  as
-select concat(song_id,"-",artist_id,"-",ds,"-",bofang) as key,num  from songidnum2;
-合并记录
-select  wm_concat(',',key) as key from songidnum4 group by floor(num/270)
-歌手每天播放量
-create table if not  exists tmpxx1  as
-select artist_id,concat(ds,"-",plays) as key from aidnumxin;
-select  artist_id,wm_concat(',',key) as keyx from  tmpxx1   group by artist_id;
+
 
 窗口函数  artist_id 每隔6行算一次
 select artist_id,ds,sum(plays) over( partition by artist_id order by ds rows 6 preceding) from aidnumxin;
@@ -1174,8 +1145,5 @@ left outer join pxusercountall  on pxrecentsongplayall.artist_id=pxusercountall.
 每月用户数量+每月用户转换率?收藏量转换率？下载量转换率？
 1, 2, 3, 4, 5, 6, 7, 14, 21, 30, 60, 180
 
-简单交叉验证
-S折交叉验证
-randMat = mat(random.rand(4,4))
 
 

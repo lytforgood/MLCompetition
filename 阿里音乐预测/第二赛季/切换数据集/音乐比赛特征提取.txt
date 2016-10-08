@@ -43,18 +43,6 @@ select wm_concat('=',key)  from p2_aidxia3 group by floor(_c1/6);
 create table if not  exists p2_aiduser1  as
 select  artist_id,Ds,count(distinct user_id) as uid_count from  p2_allxx where action_type='1' group by artist_id,Ds;
 
---压缩行数
-create table if not  exists p2_aiduser11  as
-select artist_id,concat(ds,"-",uid_count) as key from p2_aiduser1;
-
-create table if not  exists p2_aiduser12  as
-select  artist_id,wm_concat(',',key) as keyx from  p2_aiduser11   group by artist_id;
-
-create table if not  exists p2_aiduser13  as
-select concat(artist_id,"+",keyx) as key,num2() from p2_aiduser12;
- 
-select wm_concat('=',key)  from p2_aiduser13 group by floor(_c1/6);
-
 
 create table if not  exists p2_aiduser2  as
 select  artist_id,Ds,count(distinct user_id) as uid_count from  p2_allxx where action_type='2' group by artist_id,Ds;
@@ -63,20 +51,6 @@ select  artist_id,Ds,count(distinct user_id) as uid_count from  p2_allxx where a
 --艺人每天的歌曲数
 create table if not  exists p2_aidsong1  as
 select  artist_id,Ds,count(distinct song_id) as sid_count from  p2_allxx where action_type='1' group by artist_id,Ds;
-
---压缩行数
-create table if not  exists p2_aidsong11  as
-select artist_id,concat(ds,"-",sid_count) as key from p2_aidsong1;
-
-create table if not  exists p2_aidsong12  as
-select  artist_id,wm_concat(',',key) as keyx from  p2_aidsong11   group by artist_id;
-
-create table if not  exists p2_aidsong13  as
-select concat(artist_id,"+",keyx) as key,num2() from p2_aidsong12;
- 
-select wm_concat('=',key)  from p2_aidsong13 group by floor(_c1/6);
-
-
 
 create table if not  exists p2_aidsong2  as
 select  artist_id,Ds,count(distinct song_id) as sid_count from  p2_allxx where action_type='2' group by artist_id,Ds;
@@ -94,18 +68,6 @@ SELECT t1.artist_id,t2.* FROM p2_mars_tianchi_songs t1 JOIN p2_sidnew t2 on t1.s
 create table if not  exists p2_sidnew3  as
 select artist_id,newds,count(song_id) from p2_sidnew2 group by artist_id,newds;
 
-
---压缩行数
-create table if not  exists p2_sidnew31  as
-select artist_id,concat(newds,"-",_c2) as key from p2_sidnew3;
-
-create table if not  exists p2_sidnew32  as
-select  artist_id,wm_concat(',',key) as keyx from  p2_sidnew31   group by artist_id;
-
-create table if not  exists p2_sidnew33  as
-select concat(artist_id,"+",keyx) as key,num2() from p2_sidnew32;
- 
-select wm_concat('=',key)  from p2_sidnew33 group by floor(_c1/6);
 
 rm(list=ls())
 library(sqldf)
@@ -193,9 +155,6 @@ write.table (sc, file ="F:/笔记学习/天池比赛/阿里音乐流行趋势预
 
 }
 
-服务器目录说明
-listenlisten
-训练集-4-5预测-6-7
 
 rm(list=ls())
 library(sqldf)
