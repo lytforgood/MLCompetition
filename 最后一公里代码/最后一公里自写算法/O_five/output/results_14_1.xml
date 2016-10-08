@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem xmlns="http://www.w3schools.com"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com vrp_xml_schema.xsd">
+     <problemType>
+          <fleetSize>INFINITE</fleetSize>
+     </problemType>
+     <vehicles>
+          <vehicle>
+               <id>A015</id>
+               <typeId>A015Type</typeId>
+               <startLocation>
+                    <id>[x=121.473346][y=31.199352]</id>
+                    <coord x="121.473346" y="31.199352"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.473346][y=31.199352]</id>
+                    <coord x="121.473346" y="31.199352"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>1.7976931348623157E308</end>
+               </timeSchedule>
+               <returnToDepot>true</returnToDepot>
+          </vehicle>
+     </vehicles>
+     <vehicleTypes>
+          <type>
+               <id>A015Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+     </vehicleTypes>
+     <solutions>
+          <solution>
+               <cost>0.0</cost>
+          </solution>
+          <solution>
+               <cost>0.0</cost>
+          </solution>
+     </solutions>
+</problem>

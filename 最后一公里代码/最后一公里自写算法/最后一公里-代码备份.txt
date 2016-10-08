@@ -1,0 +1,395 @@
+最后一公里
+
+结果
+Courier_id快递员id
+Addr网点或配送点或商户id
+Arrival_time到达时长（距离08:00时长分钟数. e.g. 到达时刻为11:00，则到达时间为180）
+Departure离开时长（距离08:00时长分钟数. e.g. 离开时刻为15:00，则离开时间为420）
+Amount取/送货量（取为+，送为-）
+Order_id订单id
+
+
+rm(list=ls())
+library(sqldf)
+#全局信息
+#网点与经纬度 124
+w=read.table("E:/笔记学习/天池比赛/最后一公里/数据/1.csv",header = FALSE,sep=",")
+w=w[-1,]
+#配送点与经纬度 9214
+w2=read.table("E:/笔记学习/天池比赛/最后一公里/数据/2.csv",header = FALSE,sep=",")
+w2=w2[-1,]
+#商户id与经纬度 598
+w3=read.table("E:/笔记学习/天池比赛/最后一公里/数据/3.csv",header = FALSE,sep=",")
+w3=w3[-1,]
+#电商订单 9214笔
+w4=read.table("E:/笔记学习/天池比赛/最后一公里/数据/4.csv",header = FALSE,sep=",")
+w4=w4[-1,]
+#oto订单 3273笔
+w5=read.table("E:/笔记学习/天池比赛/最后一公里/数据/5.csv",header = FALSE,sep=",")
+w5=w5[-1,]
+#快递员列表
+w6=read.table("E:/笔记学习/天池比赛/最后一公里/数据/6.csv",header = FALSE,sep=",")
+w6=w6[-1,]
+kdy=as.character(w6)
+
+#函数列表
+#当前包裹量-初始化包裹-取订单过程
+num_init<-function(oid){
+oid=oid
+c1num=0
+c1oid<-0
+while((c1num+as.numeric(as.character(oid[1,]$V4)))<=140){
+#print(oid[1,]$V4) 
+c1num=c1num+as.numeric(as.character(oid[1,]$V4))
+#print(c1num) 
+if(length(c1oid)==0){
+c1oid<-oid[1,]
+#print(c1oid) 
+}else{
+c1oid<-rbind(c1oid,oid[1,])
+#print(c1oid) 
+}
+#ifelse(c1oid==0,c1oid<-oid[1,],c1oid<-rbind(c1oid,oid[1,]))
+oid=oid[-1,]
+if(length(oid$V1)==0){
+break
+}
+}
+return<-list(c1oid,oid)
+}
+#计算距离返回路程使用时间-lat纬度long经度
+dist_time<-function(longi1, lati1, longi2, lati2){
+longi1=as.numeric(as.character(longi1))
+lati1=as.numeric(as.character(lati1)) 
+longi2=as.numeric(as.character(longi2)) 
+lati2=as.numeric(as.character(lati2)) 
+delta_lati = (lati1 - lati2) / 2
+delta_longi = (longi1 - longi2) / 2
+tmp_val = (sin(3.1415926/180*delta_lati)^2) + (cos(3.1415926/180*lati1)*cos(3.1415926/180*lati2))*(sin(3.1415926/180*delta_longi)^2)
+return<-ceiling((2*asin(tmp_val^0.5)*6378137) / (15*1000/60))
+}
+#计算停留时间
+stay_time<-function(x){
+x=as.numeric(as.character(x))
+return<-ceiling(3*x^0.5+5)
+}
+for(r in 1:length(w$V1)){
+#对于其中一个网点
+wd=w[r,]
+#该网点的所有订单
+oid=w4[which(w4$V3==wd$V1),]
+#需要的快递员的订单
+c1num=0
+c1oid<-0
+while((c1num+as.numeric(as.character(oid[1,]$V4)))<=140){
+c1num=c1num+as.numeric(as.character(oid[1,]$V4))
+if(c1oid==0){
+c1oid<-oid[1,]
+}else{
+c1oid<-rbind(c1oid,oid[1,])
+}
+#ifelse(c1oid==0,c1oid<-oid[1,],c1oid<-rbind(c1oid,oid[1,]))
+oid=oid[-1,]
+}
+#初始化-取货
+re1=c(as.character(w6[1]))
+re2=as.character(c1oid$V3)
+#re1=rep(w6[1]),length(re2))
+re3=rep(0,length(re2))
+re4=rep(0,length(re2))
+re5=as.numeric(as.character(c1oid$V4)) 
+re6=as.character(c1oid$V1)
+#送货开始
+#第一次送货过程
+while(length(c1oid$V1)>0) {
+if(length(which(w$V1==re2[length(re2)]))>0){
+begin=w[which(w$V1==re2[length(re2)]),]
+}else{
+begin=w2[which(w2$V1==re2[length(re2)]),]
+}
+end=w2[which(c1oid[1,]$V2==w2$V1),]
+re2=c(re2,as.character(c1oid[1,]$V2))
+d1time=re4[length(re4)]+dist_time(begin$V2,begin$V3,end$V2,end$V3)
+re3=c(re3,d1time)
+leavetime=re3[length(re3)]+stay_time(c1oid[1,]$V4)
+re4=c(re4,leavetime)
+tmp5=as.numeric(paste("-",c1oid[1,]$V4,sep=""))
+re5=c(re5,tmp5)
+re6=c(re6,as.character(c1oid[1,]$V1))
+c1oid=c1oid[-1,]
+}
+
+#如果还有货可取-初始化取货
+while(length(oid$V1)>0){
+begin=w2[which(w2$V1==re2[length(re2)]),]
+end=wd
+d1time=re4[length(re4)]+dist_time(begin$V2,begin$V3,end$V2,end$V3)
+listinit<-num_init(oid)
+c1oid=listinit[[1]]
+oid=listinit[[2]]
+c1oid=na.omit(c1oid)
+re2=c(re2,as.character(c1oid$V3))
+re3=c(re3,rep(d1time,length(as.character(c1oid$V3))))
+re4=c(re4,rep(d1time,length(as.character(c1oid$V3))))
+re5=c(re5,as.numeric(as.character(c1oid$V4)) )
+re6=c(re6,as.character(c1oid$V1))
+
+#循环送货过程
+while(length(c1oid$V1)>0) {
+if(length(which(w$V1==re2[length(re2)]))>0){
+begin=w[which(w$V1==re2[length(re2)]),]
+}else{
+begin=w2[which(w2$V1==re2[length(re2)]),]
+}
+end=w2[which(c1oid[1,]$V2==w2$V1),]
+re2=c(re2,as.character(c1oid[1,]$V2))
+d1time=re4[length(re4)]+dist_time(begin$V2,begin$V3,end$V2,end$V3)
+re3=c(re3,d1time)
+leavetime=re3[length(re3)]+stay_time(c1oid[1,]$V4)
+re4=c(re4,leavetime)
+tmp5=as.numeric(paste("-",c1oid[1,]$V4,sep=""))
+re5=c(re5,tmp5)
+re6=c(re6,as.character(c1oid[1,]$V1))
+c1oid=c1oid[-1,]
+}
+}
+#列出所有取货送货时间单
+re=data.frame(re1,re2,re3,re4,re5,re6)
+#计算去取货的记录的第一个索引
+jilu=0
+for(i in 2:length(re$re2)){
+if(re[i-1,]$re5<0){
+if(re[i,]$re5>0){
+jilu=c(jilu,i)
+}
+}
+}
+jilu=jilu[-1]
+#计算需要多少个快递员
+tmpn=0
+for(i in 1:length(jilu)){
+l=re[jilu[i]-1,]$re4/720
+tmpn=c(tmpn,l)
+}
+tmpn=ceiling(tmpn[-1])
+#计算切割快递员的记录的索引
+e=unique(tmpn)
+tmpn2=0
+for(i in 1:length(e)){
+l=max(which(tmpn==e[i]))
+tmpn2=c(tmpn2,l)
+}
+tmpn2=tmpn2[-1]
+#计算切割快递员的记录的索引2
+tmpn2x=0
+for(i in 1:length(tmpn2)){
+l=jilu[tmpn2[i]]
+tmpn2x=c(tmpn2x,l)
+}
+tmpn2x[1]=1
+#修正初始取货的时间
+for(i in 1:(length(tmpn2x)-1)){
+l=re[tmpn2x[i]:(tmpn2x[i+1]-1),]
+l$re3=l$re3-l$re3[1]
+l$re4=l$re4-l$re4[1]
+l$re1=kdy[1]
+kdy=kdy[-1]
+write.table (l, file ="E:/笔记学习/天池比赛/最后一公里/结果/t1.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE) 
+}
+l=re[tmpn2x[length(tmpn2x)]:(length(re$re2)),]
+l$re3=l$re3-l$re3[1]
+l$re4=l$re4-l$re4[1]
+l$re1=kdy[1]
+kdy=kdy[-1]
+write.table (l, file ="E:/笔记学习/天池比赛/最后一公里/结果/t1.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE)
+} 
+
+
+
+#转换成距8点的分钟
+tomins<-function(time){
+time=as.character(time)
+t=as.difftime(time, format = "%H:%M", units = "mins")
+t=as.numeric(t)-480
+return<-t
+}
+
+o2oid2=w5
+o2oid2$V4=tomins(o2oid2$V4)
+o2oid2$V5=tomins(o2oid2$V5)
+for(j in 1:length(w6)){
+o2oid=o2oid2
+#o2oid$V4=tomins(o2oid$V4)
+#o2oid$V5=tomins(o2oid$V5)
+#数据框排序
+o2oid=o2oid[order(o2oid[,4]),]
+#第一个快递员初始化送货
+re1=c(as.character(w6)[length(w6)-j+1])
+#初始化包裹
+c2oid<-0
+c2oid<-o2oid[1,]
+o2oid=o2oid[-1,]
+re2=as.character(c2oid$V3)
+re3=as.numeric(0)
+re4=as.numeric(as.character(c2oid$V4))
+re5=as.numeric(as.character(c2oid$V6)) 
+re6=as.character(c2oid$V1)
+#一次送货过程
+while(length(c2oid$V1)>0) {
+begin=w3[which(w3$V1==re2[length(re2)]),]
+end=w2[which(as.character(c2oid[1,]$V2)==w2$V1),]
+re2=c(re2,as.character(c2oid[1,]$V2))
+d1time=re4[length(re4)]+dist_time(begin$V2,begin$V3,end$V2,end$V3)
+re3=c(re3,d1time)
+leavetime=re3[length(re3)]+stay_time(c2oid[1,]$V6)
+re4=c(re4,leavetime)
+tmp5=as.numeric(paste("-",c2oid[1,]$V6,sep=""))
+re5=c(re5,tmp5)
+re6=c(re6,as.character(c2oid[1,]$V1))
+c2oid=c2oid[-1,]
+}
+#循环送货过程
+o2oid2<-0
+while(length(o2oid$V1)>0){
+begin=w2[which(w2$V1==re2[length(re2)]),]
+c2oid<-o2oid[1,]
+#到达下一个取货地点
+end=w3[which(w3$V1==as.character(c2oid$V3)),]
+#判断是否满足取送货时间
+d1time=re4[length(re4)]+dist_time(begin$V2,begin$V3,end$V2,end$V3)
+if(d1time>=as.numeric(as.character(c2oid$V4)) & d1time<=as.numeric(as.character(c2oid$V5))){
+o2oid=o2oid[-1,]
+re2=c(re2,as.character(c2oid$V3))
+re3=c(re3,d1time)
+re4=c(re4,d1time)
+re5=c(re5,as.numeric(as.character(c2oid$V6)) )
+re6=c(re6,as.character(c2oid$V1))
+#一次送货过程
+while(length(c2oid$V1)>0) {
+begin=w3[which(as.character(w3$V1)==re2[length(re2)]),]
+end=w2[which(as.character(c2oid[1,]$V2)==w2$V1),]
+re2=c(re2,as.character(c2oid[1,]$V2))
+d1time=re4[length(re4)]+dist_time(begin$V2,begin$V3,end$V2,end$V3)
+re3=c(re3,d1time)
+leavetime=re3[length(re3)]+stay_time(c2oid[1,]$V6)
+re4=c(re4,leavetime)
+tmp5=as.numeric(paste("-",c2oid[1,]$V6,sep=""))
+re5=c(re5,tmp5)
+re6=c(re6,as.character(c2oid[1,]$V1))
+c2oid=c2oid[-1,]
+}
+}else{
+o2oid2<-rbind(o2oid2,o2oid[1,])
+c2oid=c2oid[-1,]
+o2oid=o2oid[-1,]
+}
+}
+re=data.frame(re1,re2,re3,re4,re5,re6)
+write.table (re, file ="E:/笔记学习/天池比赛/最后一公里/结果/o2o.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE)
+o2oid2=na.omit(o2oid2)
+if(length(o2oid$V1)==0){
+break
+}
+}
+
+wd=w[1,]
+#该网点的所有订单
+oid=w4[which(w4$V3==wd$V1),]
+t<-{}
+for(i in 1:length(oid$V2)){
+begin=wd
+end=w2[which(oid[i,]$V2==w2$V1),]
+t=c(t,dist_time(begin$V2,begin$V3,end$V2,end$V3))
+}
+oid2=data.frame(oid,t)
+#排序
+oid2=oid2[order(oid2[,5]),]
+
+twd=w[1,]
+o2oid2=w5
+t<-{}
+for(i in 1:length(o2oid2$V2)){
+begin=twd
+end=w2[which(as.character(o2oid2[i,]$V2)==as.character(w2$V1)),]
+t=c(t,dist_time(begin$V2,begin$V3,end$V2,end$V3))
+}
+o2oid2=data.frame(o2oid2,t)
+#排序
+o2oid2=o2oid2[order(o2oid2[,7]),]
+o2oid2=o2oid2[,-7]
+
+#聚类代码
+hc <- hclust(dist(w3[,2:3]))
+hc <- hclust(dist(dft$t))
+plclust(hc, labels = FALSE, hang = -1)
+re <- rect.hclust(hc, k = 9)
+dft[re[[5]],]
+
+kc=kmeans(dft$t,centers=8,nstart=10)
+V4=kc$cluster
+da=data.frame(w3,V4)
+
+kc=kmeans(w3[,2:3],centers=8,nstart=10)
+plotcluster(w3[,2:3], kc$cluster)
+fitted(kc)
+V4=kc$cluster
+da=data.frame(w3,V4)
+
+
+t<-{}
+for(i in 1:length(o2oid2$V2)){
+begin=twd
+end=w2[which(as.character(o2oid2[i,]$V2)==as.character(w2$V1)),]
+t=c(t,dist_time(begin$V2,begin$V3,end$V2,end$V3))
+}
+o2oid2=data.frame(o2oid2,t)
+#排序
+o2oid2=o2oid2[order(o2oid2[,7]),]
+o2oid2=o2oid2[,-7]
+
+#开始去按照订单取货
+for(i in 1:length(c1oid$V1)){
+if(i==1){
+re2=as.character(c1oid[i,]$V3)
+#初始化到达时间
+m=sqldf("select c1oid.*,q1.V2 as V7 from c1oid left join q1 on c1oid.V3=q1.V1")
+re3=as.numeric(m$V7[1])
+re4=as.numeric(as.character(c1oid$V4[1]))
+re5=as.numeric(as.character(c1oid$V6[1])) 
+re6=as.character(c1oid$V1[1])
+#data.frame(re1,re2,re3,re4,re5,re6)
+}else{
+#去其他地方取货
+begin=w3[which(w3$V1==re2[length(re2)]),]
+if(length(begin$V1)==0){
+begin=w2[which(w2$V1==re2[length(re2)]),]
+}
+end=w2[which(as.character(c1oid[i,]$V2)==w2$V1),]
+re2=c(re2,as.character(c1oid[i,]$V2))
+d1time=re4[length(re4)]+dist_time(begin$V2,begin$V3,end$V2,end$V3)
+re3=c(re3,d1time)
+#离开时间
+errorcount<-0
+if(d1time<as.character(c1oid[i,]$V4)){
+leavetime=as.numeric(as.character(c1oid[i,]$V4))
+}else if(d1time>=as.numeric(as.character(c1oid$V4)) & d1time<=as.numeric(as.character(c1oid$V5))){
+leavetime=re3[length(re3)]
+}else{
+errorcount=errorcount+1
+leavetime=re3[length(re3)]
+}
+re4=c(re4,leavetime)
+tmp5=as.numeric(paste("",c1oid[i,]$V6,sep=""))
+re5=c(re5,tmp5)
+re6=c(re6,as.character(c1oid[i,]$V1))
+}
+}
+
+x=c(1000:1200)
+y<-{}
+for(i in 1:length(x)){
+y=rbind(y,paste("D",as.character(x[i]),seq=""))
+}
+write.table (y, file ="E:/笔记学习/天池比赛/最后一公里/结果/增加快递员.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE)
+
+

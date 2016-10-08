@@ -1,0 +1,42 @@
+成绩记录
+总耗时      电商    o2o   人数
+暴力破解
+2379204, postman: 850
+1007695, postman: 629
+1371509, postman: 221
+使用最近距离-使用时间排序
+1947624, postman: 794
+582081, postman: 571
+1365543, postman: 223
+o2o只使用最近距离排序-不使用时间排序
+1761005, postman: 814
+582081, postman: 571
+1178924, postman: 243
+020加入判断最晚是否能送到
+cost: 1113984, postman: 268
+020使用聚类分类去送
+cost: 1609292, postman: 909
+cost: 582081, postman: 571
+cost: 1027211, postman: 338
+电商距离排序使用TSP去送
+cost: 311124, postman: 518
+电商全局使用TSP去送
+cost: 383121, postman: 500
+电商全局使用TSP再局部tsp去送
+cost: 376177, postman: 501
+电商tsp距离/订单排序使用TSP去送
+cost: 365809, postman: 512
+020一个商点初始一堆快递员去送
+cost: 637035, postman: 662
+优化时间阈值35-保证送到
+cost: 630930, postman: 656
+保证送到?-遍历所有查询
+
+
+
+目前最优化
+cost: 948159, postman: 1180
+电商距离排序使用TSP去送
+cost: 311124, postman: 518
+020使用聚类分类去送
+cost: 637035, postman: 662

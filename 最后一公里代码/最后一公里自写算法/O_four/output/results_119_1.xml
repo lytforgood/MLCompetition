@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem xmlns="http://www.w3schools.com"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com vrp_xml_schema.xsd">
+     <problemType>
+          <fleetSize>FINITE</fleetSize>
+     </problemType>
+     <vehicles>
+          <vehicle>
+               <id>A120</id>
+               <typeId>A120Type</typeId>
+               <startLocation>
+                    <id>[x=121.66743][y=31.053474]</id>
+                    <coord x="121.66743" y="31.053474"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.66743][y=31.053474]</id>
+                    <coord x="121.66743" y="31.053474"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+     </vehicles>
+     <vehicleTypes>
+          <type>
+               <id>A120Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+     </vehicleTypes>
+     <solutions>
+          <solution>
+               <cost>0.0</cost>
+          </solution>
+          <solution>
+               <cost>0.0</cost>
+          </solution>
+     </solutions>
+</problem>

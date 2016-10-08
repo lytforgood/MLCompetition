@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem xmlns="http://www.w3schools.com"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com vrp_xml_schema.xsd">
+     <problemType>
+          <fleetSize>FINITE</fleetSize>
+     </problemType>
+     <vehicles>
+          <vehicle>
+               <id>A089</id>
+               <typeId>A089Type</typeId>
+               <startLocation>
+                    <id>[x=121.573631216][y=31.267938533348]</id>
+                    <coord x="121.573631216" y="31.267938533348"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.573631216][y=31.267938533348]</id>
+                    <coord x="121.573631216" y="31.267938533348"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+     </vehicles>
+     <vehicleTypes>
+          <type>
+               <id>A089Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+     </vehicleTypes>
+     <shipments>
+          <shipment id="E3581">
+               <pickup>
+                    <location>
+                         <id>[x=121.53782][y=31.2878]</id>
+                         <coord x="121.53782" y="31.2878"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>625.0</start>
+                              <end>625.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.499596][y=31.334791]</id>
+                         <coord x="121.499596" y="31.334791"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>625.0</start>
+                              <end>715.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E3594">
+               <pickup>
+                    <location>
+                         <id>[x=121.54143][y=31.28182]</id>
+                         <coord x="121.54143" y="31.28182"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>616.0</start>
+                              <end>616.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.491943][y=31.37973]</id>
+                         <coord x="121.491943" y="31.37973"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>616.0</start>
+                              <end>706.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+     </shipments>
+     <solutions>
+          <solution>
+               <cost>0.0</cost>
+               <unassignedJobs>
+                    <job id="E3594"/>
+                    <job id="E3581"/>
+               </unassignedJobs>
+          </solution>
+          <solution>
+               <cost>0.0</cost>
+               <unassignedJobs>
+                    <job id="E3594"/>
+                    <job id="E3581"/>
+               </unassignedJobs>
+          </solution>
+     </solutions>
+</problem>

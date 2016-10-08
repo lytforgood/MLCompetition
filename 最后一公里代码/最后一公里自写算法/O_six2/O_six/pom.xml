@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>lastkilometer</groupId>
+  <artifactId>O_six</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>O_six</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+   <dependencies>
+     <!-- https://mvnrepository.com/artifact/com.sleepycat/je -->
+<dependency>
+    <groupId>com.sleepycat</groupId>
+    <artifactId>je</artifactId>
+    <version>5.0.73</version>
+</dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+   <dependency>
+    <groupId>jsprit</groupId>
+    <artifactId>jsprit-core</artifactId>
+    <version>1.6.2</version>
+  </dependency>
+  <dependency>
+    <groupId>jsprit</groupId>
+    <artifactId>jsprit-analysis</artifactId>
+    <version>1.6.2</version>
+  </dependency>
+  <dependency>
+    <groupId>jsprit</groupId>
+    <artifactId>jsprit-instances</artifactId>
+    <version>1.6.2</version>
+  </dependency>
+    <dependency>   
+      <groupId>dom4j</groupId>    
+      <artifactId>dom4j</artifactId>    
+      <version>1.6</version>   
+    </dependency>   
+    
+    <dependency>  
+    <groupId>xml-apis</groupId>  
+    <artifactId>xml-apis</artifactId>  
+    <version>1.4.01</version>  
+</dependency> 
+    
+  </dependencies>
+  
+  <repositories> <!-- add this, if you don't have any repository definitions yet -->
+  <repository>
+    <id>jsprit-releases</id>
+    <url>https://github.com/jsprit/mvn-rep/raw/master/releases</url>
+  </repository>
+</repositories> <!-- add this, if you don't have any repository definitions yet -->
+</project>

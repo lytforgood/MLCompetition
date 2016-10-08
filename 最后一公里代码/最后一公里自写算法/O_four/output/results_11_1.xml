@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem xmlns="http://www.w3schools.com"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com vrp_xml_schema.xsd">
+     <problemType>
+          <fleetSize>FINITE</fleetSize>
+     </problemType>
+     <vehicles>
+          <vehicle>
+               <id>A012</id>
+               <typeId>A012Type</typeId>
+               <startLocation>
+                    <id>[x=121.282956][y=31.404118]</id>
+                    <coord x="121.282956" y="31.404118"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.282956][y=31.404118]</id>
+                    <coord x="121.282956" y="31.404118"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+     </vehicles>
+     <vehicleTypes>
+          <type>
+               <id>A012Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+     </vehicleTypes>
+     <shipments>
+          <shipment id="F0688">
+               <pickup>
+                    <location>
+                         <id>[x=121.282956][y=31.404118]</id>
+                         <coord x="121.282956" y="31.404118"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>0.0</start>
+                              <end>1.7976931348623157E308</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.241005][y=31.363903]</id>
+                         <coord x="121.241005" y="31.363903"/>
+                    </location>
+                    <duration>29.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>0.0</start>
+                              <end>720.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">65</dimension>
+               </capacity-dimensions>
+          </shipment>
+     </shipments>
+     <solutions>
+          <solution>
+               <cost>23.978316584665958</cost>
+               <routes>
+                    <route>
+                         <driverId>noDriver</driverId>
+                         <vehicleId>A012</vehicleId>
+                         <start>0.0</start>
+                         <act type="pickupShipment">
+                              <shipmentId>F0688</shipmentId>
+                              <arrTime>0.0</arrTime>
+                              <endTime>0.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>F0688</shipmentId>
+                              <arrTime>23.978316584665958</arrTime>
+                              <endTime>52.97831658466596</endTime>
+                         </act>
+                         <end>52.97831658466596</end>
+                    </route>
+               </routes>
+          </solution>
+          <solution>
+               <cost>23.978316584665958</cost>
+               <routes>
+                    <route>
+                         <driverId>noDriver</driverId>
+                         <vehicleId>A012</vehicleId>
+                         <start>0.0</start>
+                         <act type="pickupShipment">
+                              <shipmentId>F0688</shipmentId>
+                              <arrTime>0.0</arrTime>
+                              <endTime>0.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>F0688</shipmentId>
+                              <arrTime>23.978316584665958</arrTime>
+                              <endTime>52.97831658466596</endTime>
+                         </act>
+                         <end>52.97831658466596</end>
+                    </route>
+               </routes>
+          </solution>
+     </solutions>
+</problem>

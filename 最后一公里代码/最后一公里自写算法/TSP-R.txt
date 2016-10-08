@@ -1,0 +1,42 @@
+library("TSP")
+data <- matrix(runif(10^2), ncol = 10, dimnames = list(1:10, 1:10))
+atsp <- ATSP(data)
+atsp
+## use some methods
+n_of_cities(atsp)
+labels(atsp)
+## calculate a tour
+tour <- solve_TSP(atsp, method = "nn")
+tour
+tour_length(tour)
+image(atsp, tour)
+names(tour)
+
+x <- data.frame(x = runif(20), y = runif(20), row.names = LETTERS[1:20])
+## create a TSP
+etsp <- ETSP(x)
+etsp
+## use some methods
+n_of_cities(etsp)
+labels(etsp)
+## plot ETSP and solution
+tour <- solve_TSP(etsp)
+tour
+plot(etsp, tour, tour_col = "red")
+
+
+x<-{}
+x=rbind(x,c(0,2,3))
+x=rbind(x,c(2,0,4))
+x=rbind(x,c(3,4,0))
+colnames(x)=c(1:3)
+rownames(x)=c(1:3)
+## create TSP, ATSP and ETSP (2D)
+tsp <- TSP(x)
+tour <- solve_TSP(tsp, method = "nn")
+tour
+tour_length(tour)
+image(tsp, tour)
+names(tour)
+y=names(tour)
+c(y[which(y=="1"):length(y)],y[1:which(y=="1")-1])

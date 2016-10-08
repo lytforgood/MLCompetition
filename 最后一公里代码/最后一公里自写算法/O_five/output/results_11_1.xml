@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem xmlns="http://www.w3schools.com"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com vrp_xml_schema.xsd">
+     <problemType>
+          <fleetSize>INFINITE</fleetSize>
+     </problemType>
+     <vehicles>
+          <vehicle>
+               <id>A012</id>
+               <typeId>A012Type</typeId>
+               <startLocation>
+                    <id>[x=121.282956][y=31.404118]</id>
+                    <coord x="121.282956" y="31.404118"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.282956][y=31.404118]</id>
+                    <coord x="121.282956" y="31.404118"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>1.7976931348623157E308</end>
+               </timeSchedule>
+               <returnToDepot>true</returnToDepot>
+          </vehicle>
+     </vehicles>
+     <vehicleTypes>
+          <type>
+               <id>A012Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+     </vehicleTypes>
+     <shipments>
+          <shipment id="E1380">
+               <pickup>
+                    <location>
+                         <id>[x=121.24325][y=31.3668]</id>
+                         <coord x="121.24325" y="31.3668"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>291.0</start>
+                              <end>291.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.249977][y=31.377104]</id>
+                         <coord x="121.249977" y="31.377104"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>291.0</start>
+                              <end>381.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E1381">
+               <pickup>
+                    <location>
+                         <id>[x=121.24325][y=31.3668]</id>
+                         <coord x="121.24325" y="31.3668"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>512.0</start>
+                              <end>512.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.249977][y=31.377104]</id>
+                         <coord x="121.249977" y="31.377104"/>
+                    </location>
+                    <duration>8.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>512.0</start>
+                              <end>602.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">1</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E1382">
+               <pickup>
+                    <location>
+                         <id>[x=121.24325][y=31.3668]</id>
+                         <coord x="121.24325" y="31.3668"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>582.0</start>
+                              <end>582.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.249977][y=31.377104]</id>
+                         <coord x="121.249977" y="31.377104"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>582.0</start>
+                              <end>672.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E1379">
+               <pickup>
+                    <location>
+                         <id>[x=121.24325][y=31.3668]</id>
+                         <coord x="121.24325" y="31.3668"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>345.0</start>
+                              <end>345.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.235703][y=31.374361]</id>
+                         <coord x="121.235703" y="31.374361"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>345.0</start>
+                              <end>435.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E1383">
+               <pickup>
+                    <location>
+                         <id>[x=121.24325][y=31.3668]</id>
+                         <coord x="121.24325" y="31.3668"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>240.0</start>
+                              <end>240.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.236115][y=31.366249]</id>
+                         <coord x="121.236115" y="31.366249"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>240.0</start>
+                              <end>330.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E1384">
+               <pickup>
+                    <location>
+                         <id>[x=121.24325][y=31.3668]</id>
+                         <coord x="121.24325" y="31.3668"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>378.0</start>
+                              <end>378.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.236115][y=31.366249]</id>
+                         <coord x="121.236115" y="31.366249"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>378.0</start>
+                              <end>468.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E1385">
+               <pickup>
+                    <location>
+                         <id>[x=121.24325][y=31.3668]</id>
+                         <coord x="121.24325" y="31.3668"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>538.0</start>
+                              <end>538.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.246208][y=31.378229]</id>
+                         <coord x="121.246208" y="31.378229"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>538.0</start>
+                              <end>628.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+     </shipments>
+     <solutions>
+          <solution>
+               <cost>72.0</cost>
+               <routes>
+                    <route>
+                         <driverId>noDriver</driverId>
+                         <vehicleId>A012</vehicleId>
+                         <start>0.0</start>
+                         <act type="pickupShipment">
+                              <shipmentId>E1383</shipmentId>
+                              <arrTime>22.0</arrTime>
+                              <endTime>240.0</endTime>
+                         </act>
+                         <act type="pickupShipment">
+                              <shipmentId>E1380</shipmentId>
+                              <arrTime>240.0</arrTime>
+                              <endTime>291.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>E1380</shipmentId>
+                              <arrTime>296.0</arrTime>
+                              <endTime>306.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>E1383</shipmentId>
+                              <arrTime>313.0</arrTime>
+                              <endTime>322.0</endTime>
+                         </act>
+                         <act type="pickupShipment">
+                              <shipmentId>E1379</shipmentId>
+                              <arrTime>325.0</arrTime>
+                              <endTime>345.0</endTime>
+                         </act>
+                         <act type="pickupShipment">
+                              <shipmentId>E1384</shipmentId>
+                              <arrTime>345.0</arrTime>
+                              <endTime>378.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>E1379</shipmentId>
+                              <arrTime>382.0</arrTime>
+                              <endTime>392.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>E1384</shipmentId>
+                              <arrTime>396.0</arrTime>
+                              <endTime>406.0</endTime>
+                         </act>
+                         <act type="pickupShipment">
+                              <shipmentId>E1381</shipmentId>
+                              <arrTime>409.0</arrTime>
+                              <endTime>512.0</endTime>
+                         </act>
+                         <act type="pickupShipment">
+                              <shipmentId>E1385</shipmentId>
+                              <arrTime>512.0</arrTime>
+                              <endTime>538.0</endTime>
+                         </act>
+                         <act type="pickupShipment">
+                              <shipmentId>E1382</shipmentId>
+                              <arrTime>538.0</arrTime>
+                              <endTime>582.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>E1385</shipmentId>
+                              <arrTime>587.0</arrTime>
+                              <endTime>596.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>E1381</shipmentId>
+                              <arrTime>598.0</arrTime>
+                              <endTime>606.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>E1382</shipmentId>
+                              <arrTime>606.0</arrTime>
+                              <endTime>616.0</endTime>
+                         </act>
+                         <end>633.0</end>
+                    </route>
+               </routes>
+          </solution>
+          <solution>
+               <cost>72.0</cost>
+               <routes>
+                    <route>
+                         <driverId>noDriver</driverId>
+                         <vehicleId>A012</vehicleId>
+                         <start>0.0</start>
+                         <act type="pickupShipment">
+                              <shipmentId>E1383</shipmentId>
+                              <arrTime>22.0</arrTime>
+                              <endTime>240.0</endTime>
+                         </act>
+                         <act type="pickupShipment">
+                              <shipmentId>E1380</shipmentId>
+                              <arrTime>240.0</arrTime>
+                              <endTime>291.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>E1380</shipmentId>
+                              <arrTime>296.0</arrTime>
+                              <endTime>306.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>E1383</shipmentId>
+                              <arrTime>313.0</arrTime>
+                              <endTime>322.0</endTime>
+                         </act>
+                         <act type="pickupShipment">
+                              <shipmentId>E1379</shipmentId>
+                              <arrTime>325.0</arrTime>
+                              <endTime>345.0</endTime>
+                         </act>
+                         <act type="pickupShipment">
+                              <shipmentId>E1384</shipmentId>
+                              <arrTime>345.0</arrTime>
+                              <endTime>378.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>E1384</shipmentId>
+                              <arrTime>381.0</arrTime>
+                              <endTime>391.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>E1379</shipmentId>
+                              <arrTime>395.0</arrTime>
+                              <endTime>405.0</endTime>
+                         </act>
+                         <act type="pickupShipment">
+                              <shipmentId>E1381</shipmentId>
+                              <arrTime>409.0</arrTime>
+                              <endTime>512.0</endTime>
+                         </act>
+                         <act type="pickupShipment">
+                              <shipmentId>E1385</shipmentId>
+                              <arrTime>512.0</arrTime>
+                              <endTime>538.0</endTime>
+                         </act>
+                         <act type="pickupShipment">
+                              <shipmentId>E1382</shipmentId>
+                              <arrTime>538.0</arrTime>
+                              <endTime>582.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>E1385</shipmentId>
+                              <arrTime>587.0</arrTime>
+                              <endTime>596.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>E1381</shipmentId>
+                              <arrTime>598.0</arrTime>
+                              <endTime>606.0</endTime>
+                         </act>
+                         <act type="deliverShipment">
+                              <shipmentId>E1382</shipmentId>
+                              <arrTime>606.0</arrTime>
+                              <endTime>616.0</endTime>
+                         </act>
+                         <end>633.0</end>
+                    </route>
+               </routes>
+          </solution>
+     </solutions>
+</problem>

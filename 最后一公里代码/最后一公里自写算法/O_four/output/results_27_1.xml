@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem xmlns="http://www.w3schools.com"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com vrp_xml_schema.xsd">
+     <problemType>
+          <fleetSize>FINITE</fleetSize>
+     </problemType>
+     <vehicles>
+          <vehicle>
+               <id>A028</id>
+               <typeId>A028Type</typeId>
+               <startLocation>
+                    <id>[x=121.55930720558][y=31.13068323736]</id>
+                    <coord x="121.55930720558" y="31.13068323736"/>
+               </startLocation>
+               <endLocation>
+                    <id>[x=121.55930720558][y=31.13068323736]</id>
+                    <coord x="121.55930720558" y="31.13068323736"/>
+               </endLocation>
+               <timeSchedule>
+                    <start>0.0</start>
+                    <end>600.0</end>
+               </timeSchedule>
+               <returnToDepot>false</returnToDepot>
+          </vehicle>
+     </vehicles>
+     <vehicleTypes>
+          <type>
+               <id>A028Type</id>
+               <capacity-dimensions>
+                    <dimension index="0">140</dimension>
+               </capacity-dimensions>
+               <costs>
+                    <fixed>0.0</fixed>
+                    <distance>1.0</distance>
+                    <time>0.0</time>
+               </costs>
+          </type>
+     </vehicleTypes>
+     <shipments>
+          <shipment id="E4124">
+               <pickup>
+                    <location>
+                         <id>[x=121.63078][y=31.17822]</id>
+                         <coord x="121.63078" y="31.17822"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>618.0</start>
+                              <end>618.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.630928][y=31.182547]</id>
+                         <coord x="121.630928" y="31.182547"/>
+                    </location>
+                    <duration>10.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>618.0</start>
+                              <end>708.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">3</dimension>
+               </capacity-dimensions>
+          </shipment>
+          <shipment id="E4125">
+               <pickup>
+                    <location>
+                         <id>[x=121.63078][y=31.17822]</id>
+                         <coord x="121.63078" y="31.17822"/>
+                    </location>
+                    <duration>0.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>610.0</start>
+                              <end>610.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </pickup>
+               <delivery>
+                    <location>
+                         <id>[x=121.637253][y=31.166557]</id>
+                         <coord x="121.637253" y="31.166557"/>
+                    </location>
+                    <duration>9.0</duration>
+                    <timeWindows>
+                         <timeWindow>
+                              <start>610.0</start>
+                              <end>700.0</end>
+                         </timeWindow>
+                    </timeWindows>
+               </delivery>
+               <capacity-dimensions>
+                    <dimension index="0">2</dimension>
+               </capacity-dimensions>
+          </shipment>
+     </shipments>
+     <solutions>
+          <solution>
+               <cost>0.0</cost>
+               <unassignedJobs>
+                    <job id="E4125"/>
+                    <job id="E4124"/>
+               </unassignedJobs>
+          </solution>
+          <solution>
+               <cost>0.0</cost>
+               <unassignedJobs>
+                    <job id="E4125"/>
+                    <job id="E4124"/>
+               </unassignedJobs>
+          </solution>
+     </solutions>
+</problem>

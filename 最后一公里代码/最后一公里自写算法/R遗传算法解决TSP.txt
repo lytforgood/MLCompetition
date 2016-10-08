@@ -1,0 +1,270 @@
+#清空工作空间中的变量
+rm(list=ls())
+#（1）适应度函数
+fit=function(len,m,maxlen,minlen)
+{ 
+fitness=len;
+for(i in 1:length(len))
+fitness[i]=(1-(len[i]-minlen)/(maxlen-minlen+0.0001))^m;
+return(fitness)
+}
+#（2）个体距离计算函数
+myLength=function(D,p)
+{
+N=nrow(D);
+NN=ncol(D);  #[N,NN]=size(D);
+len=D[p[N],p[1]];
+for( i in 1:(N-1))
+    len=len+D[p[i],p[i+1]];
+return(len)
+}
+#D<- 1:25
+#dim(D) <- c(5, 5)
+#p<-c(2,1,3,4,5)
+#N=nrow(D);
+#N=ncol(D);  #[N,NN]=size(D);
+#len=D[p[N],p[1]];
+#for( i in 1:(N-1))
+    #len=len+D[p[i],p[i+1]];
+#（3）交叉操作函数
+cross=function(A,B)
+{
+L=length(A);
+if (L<10){
+    W=L
+}else{
+if (   ((L/10)-floor(L/10))>=runif(1)&&L>10   ){
+W=ceiling(L/10)+8
+}else{
+W=floor(L/10)+8
+}}
+p=floor((L-W+1)*runif(1))+1;
+#print('p=%d ',p);
+
+for (i in 1:W)
+  {
+    x=which(A==B[p+i-1])
+    y=which(B==A[p+i-1])
+
+        temp1=A[p+i-1]
+      A[p+i-1]=B[p+i-1]
+      B[p+i-1]=temp1
+
+      temp2=A[x]
+      A[x]=B[y]
+      B[y]=temp2
+   }
+return(list(A,B))
+}
+#L=9999
+#A<-c(2,1,3,5,4)
+#B<-c(4,3,5,2,1)
+#cross(A,B)
+#（4）变异函数
+Mutation=function(A)
+{
+index1=0;
+index2=0;
+nnper=sample(length(A));#因为A是向量不是矩阵，此时，用length而不是ncol,matlab中的size函数
+index1=nnper[1];
+index2=nnper[2];
+temp=0;
+temp=A[index1];
+A[index1]=A[index2];
+A[index2]=temp;
+a=A;
+return(a)
+}
+#A<-c(1,2,3,4,5,6)
+#Mutation(A)
+
+#rm=(list=ls())
+#（5）连点画图函数
+plot_route=function(a,R)
+#a代表矩阵，N*2,N个城市的坐标
+#R代表一个种群
+{	
+        x=a[,1]
+        y=a[,2]
+        plot(x,y)
+#######################给城市表上序号
+for(i in 1:length(R))
+{
+text(x[i],y[i],i)
+}
+########################
+
+        #lines(c(a[R[1],1],a[R[length(R)],1]),c( a[R[1],2],a[R[length(R)],2]),"l")
+
+lines(c(a[R[1],1],a[R[length(R)],1]),c( a[R[1],2],a[R[length(R)],2]),"l")
+
+for( i in 2:length(R))
+{
+    x0=a[R[i-1],1];
+    y0=a[R[i-1],2];
+    x1=a[R[i],1];
+    y1=a[R[i],2];
+    lines(c(x0,x1),c(y0,y1),"l")
+}
+}
+#a<-matrix(c(1,1,2,3,2,2,1,1,2,4),5,2)
+#R<-c(2,4,5,1,3)
+#plot_route(a,R)
+
+#（6）生成单位圆地图                         
+getRoundMap = function(n)
+{
+theta = seq(0,2*pi,length.out=n+1)[1:n]
+x = cos(theta)
+y = sin(theta)
+ans = as.matrix(dist(cbind(x,y)))
+return(list(x=x,y=y,ans=ans))
+}
+#（7）主函数
+#N=5;
+N=15
+M=300;#matlab中M=300
+C=500;#迭代次数
+C_old=C;
+m=2; 
+Pc=0.99;
+Pmutation=0.05;
+#生成城市的坐标
+        #pos=randn(N,2); matlab
+        #利用生成单位圆地图生成城市坐标
+        #getRoundMap = function(n) return(list(x=x,y=y,ans=ans))
+
+roundots = getRoundMap(N)
+pos=cbind(roundots[1],roundots[2])
+#生成城市之间距离矩阵D（已知距离）
+D<-{}
+D=rbind(D,c(0,2,3))
+D=rbind(D,c(2,0,4))
+D=rbind(D,c(3,4,0))
+#D=as.matrix(read.table("C:/Users/rong/Desktop/统计建模与R语言/tsp15.txt",header=FALSE,sep=""))
+#生成初始群体
+popm=matrix(0,M,N);
+for (i in 1:M)
+{
+    popm[i,]=sample(N)
+}
+
+#随机选择一个种群
+R=popm[1,];
+#R1=popm[2,];
+#画出该初始种群各城市之间的连线
+plot_route(pos,R);  
+#windows()  #保留原图，新开一个画图窗口
+#plot_route(pos,R1); 
+
+
+
+#初始化种群及其适应函数
+fitness=matrix(0,M,1);
+len=matrix(0,M,1);
+for (i in 1:M)
+{ 
+   len[i,1]=myLength(D,popm[i,]);
+}
+
+maxlen=max(len);
+minlen=min(len);
+fitness=fit(len,m,maxlen,minlen);
+rr=which(len==minlen);
+R=popm[rr[1],];
+for (i in 1:N)
+{
+ cat(R[i]);
+}
+cat("\n")
+fitness=fitness/sum(fitness);
+distance_min=matrix(0,C+1,1);  #各次迭代的最小的种群的距离
+
+
+
+
+while (C>=0)
+{
+cat("迭代第",C,"次\n")
+#选择操作
+len_1=numeric();
+nn=0;
+ popm_sel_da=matrix( , ,N);#被选择的种群+第一个初始种群
+    popm_sel=matrix( , ,N);#被选择的种群
+for (i in 1:nrow(popm))
+{
+    #i=1;###########################################################
+    len_1[i]=myLength(D,popm[i,]);
+    jc=runif(1)*0.3;
+   # popm_sel_zi=matrix( ,1,N);#一行的矩阵，第一个被选择的种群
+   
+    popm_sel_da[1,]=matrix();
+    for (j in 1:nrow(popm))
+     {  
+        #j=1;
+
+          if(fitness[j,1]>=jc){
+        nn=nn+1;
+        
+        popm_sel_da=rbind(popm_sel_da,popm[j,]);
+        break;#跳出当前循环
+                            }
+      }
+}
+
+#每次选择都保存最优的种群
+popm_sel=popm_sel_da[1:nn+1,];
+len_m=min(len_1);
+len_indexAll=c(which(len_1==min(len_1)));
+len_index=len_indexAll[1]
+popm_sel=rbind(popm_sel,popm[len_index,]);
+ 
+#交叉操作
+nnper=sample(nn);
+A=popm_sel[nnper[1],];
+B=popm_sel[nnper[2],];
+for (i in 1:nn*Pc)
+{
+AB=cross(A,B);
+A=AB[1];
+B=AB[2];
+popm_sel[nnper[1],]=A;
+popm_sel[nnper[2],]=B;
+}
+#变异操作
+for (i in 1:nn)
+{
+    pick=runif(1);
+    while (pick==0){
+         pick=runif(1)
+    }
+    if (pick<=Pmutation){
+       popm_sel[i,]=Mutation(popm_sel[i,]);
+    }
+}
+
+#求适应度函数
+NN=nrow(popm_sel);
+len=matrix(0,NN,1);
+for (i in 1:NN)
+{
+    len[i]=myLength(D,popm_sel[i,]);
+}
+maxlen=max(len);
+minlen=min(len);
+distance_min[C+1,1]=minlen;
+fitness=fit(len,m,maxlen,minlen);
+rr=which(len==minlen);
+cat("minlen=",minlen,"\n");
+R=popm_sel[rr[1],];
+for (i in 1:N)
+{
+cat(R[i],",");
+}
+popm=matrix();
+popm=popm_sel;
+C=C-1;
+}  
+#画出一种最优解的图形
+windows()  #保留原图，新开一个画图窗口
+plot_route(pos,R);

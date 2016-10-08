@@ -1,0 +1,306 @@
+oto订单按照距离切割成多个(聚类)
+按照聚类规则去送
+
+#生成相关JSON地理信息绘图
+rm(list=ls())
+library(sqldf)
+#全局信息
+#网点与经纬度 124
+w=read.table("E:/笔记学习/天池比赛/最后一公里/数据/1.csv",header = FALSE,sep=",")
+w=w[-1,]
+#配送点与经纬度 9214
+w2=read.table("E:/笔记学习/天池比赛/最后一公里/数据/2.csv",header = FALSE,sep=",")
+w2=w2[-1,]
+#商户id与经纬度 598
+w3=read.table("E:/笔记学习/天池比赛/最后一公里/数据/3.csv",header = FALSE,sep=",")
+w3=w3[-1,]
+library("RJSONIO")
+w2=w3
+da<-{}
+name<-{}
+for(i in 1:length(w2$V1)){
+x=c(as.numeric(as.character(w2[i,]$V2)),as.numeric(as.character(w2[i,]$V3)))
+da=cbind(da,x)
+name=c(name,as.character(w2[i,]$V1))
+}
+colnames(da)=name
+re=toJSON(as.data.frame(da))
+write.table (re, file ="E:/笔记学习/天池比赛/最后一公里/结果/商户.json",sep =",",row.names = F,col.names=F,quote =F)
+
+name=as.character(w2$V1)
+value=rep(40,length(name))
+da=data.frame(name,value)
+dad=as.matrix(da)
+#cat(toJSON(dad))
+write.table (toJSON(dad), file ="E:/笔记学习/天池比赛/最后一公里/结果/商户标记.json",sep =",",row.names = F,col.names=F,quote =F)
+
+
+#商户聚类
+rm(list=ls())
+library(sqldf)
+#全局信息
+#网点与经纬度 124
+w=read.table("E:/笔记学习/天池比赛/最后一公里/数据/1.csv",header = FALSE,sep=",")
+w=w[-1,]
+#配送点与经纬度 9214
+w2=read.table("E:/笔记学习/天池比赛/最后一公里/数据/2.csv",header = FALSE,sep=",")
+w2=w2[-1,]
+#商户id与经纬度 598
+w3=read.table("E:/笔记学习/天池比赛/最后一公里/数据/3.csv",header = FALSE,sep=",")
+w3=w3[-1,]
+#电商订单 9214笔
+w4=read.table("E:/笔记学习/天池比赛/最后一公里/数据/4.csv",header = FALSE,sep=",")
+w4=w4[-1,]
+#oto订单 3273笔
+w5=read.table("E:/笔记学习/天池比赛/最后一公里/数据/5.csv",header = FALSE,sep=",")
+w5=w5[-1,]
+#快递员列表
+w6=read.table("E:/笔记学习/天池比赛/最后一公里/数据/6.csv",header = FALSE,sep=",")
+w6=w6[-1,]
+
+s425
+#计算商家s425-商家到商家s425的时间
+#计算时间
+dist_time<-function(longi1, lati1, longi2, lati2){
+longi1=as.numeric(as.character(longi1))
+lati1=as.numeric(as.character(lati1)) 
+longi2=as.numeric(as.character(longi2)) 
+lati2=as.numeric(as.character(lati2)) 
+delta_lati = (lati1 - lati2) / 2
+delta_longi = (longi1 - longi2) / 2
+tmp_val = (sin(3.1415926/180*delta_lati)^2) + (cos(3.1415926/180*lati1)*cos(3.1415926/180*lati2))*(sin(3.1415926/180*delta_longi)^2)
+return<-round((2*asin(tmp_val^0.5)*6378137) / (15*1000/60))
+}
+#计算距离
+begin=w3[424,]
+t<-{}
+for(j in 1:length(w3$V1)){
+end=w3[j,]
+t=c(t,dist_time(begin$V2,begin$V3,end$V2,end$V3))
+}
+#距离聚类
+V1=as.character(w3$V1)
+dft=data.frame(V1,t)
+kc=kmeans(dft$t,centers=8,nstart=10)
+V4=kc$cluster
+da=data.frame(w3,V4)
+dft=data.frame(dft,V4)
+
+write.table (dft, file ="E:/笔记学习/天池比赛/最后一公里/结果/商家425距离聚类.csv",sep =",",row.names = F,col.names=F,quote =F)
+
+#商户o2o订单分类
+rm(list=ls())
+library(sqldf)
+#全局信息
+#网点与经纬度 124
+w=read.table("E:/笔记学习/天池比赛/最后一公里/数据/1.csv",header = FALSE,sep=",")
+w=w[-1,]
+#配送点与经纬度 9214
+w2=read.table("E:/笔记学习/天池比赛/最后一公里/数据/2.csv",header = FALSE,sep=",")
+w2=w2[-1,]
+#商户id与经纬度 598
+w3=read.table("E:/笔记学习/天池比赛/最后一公里/数据/3.csv",header = FALSE,sep=",")
+w3=w3[-1,]
+#电商订单 9214笔
+w4=read.table("E:/笔记学习/天池比赛/最后一公里/数据/4.csv",header = FALSE,sep=",")
+w4=w4[-1,]
+#oto订单 3273笔
+w5=read.table("E:/笔记学习/天池比赛/最后一公里/数据/5.csv",header = FALSE,sep=",")
+w5=w5[-1,]
+#快递员列表
+w6=read.table("E:/笔记学习/天池比赛/最后一公里/数据/6.csv",header = FALSE,sep=",")
+w6=w6[-1,]
+q=read.table("E:/笔记学习/天池比赛/最后一公里/结果/商家425距离聚类.csv",header = FALSE,sep=",")
+e=unique(q$V3)
+#遍历每一类
+for(i in 1:length(e)){
+#遍历每一类的每一个网点
+q1=q[which(q$V3==e[i]),]
+q3<-{}
+for(j in 1:length(q1$V1)){
+q2=q1[j,]
+q3=rbind(q3,w5[which(as.character(w5$V3)==q2$V1),])
+}
+filename<-paste("E:/笔记学习/天池比赛/最后一公里/结果/聚类/",i,".csv",sep="")
+write.table (q3, file =filename,sep =",",row.names = F,col.names=F,quote =F)
+}
+
+#o2o订单配送
+rm(list=ls())
+library(sqldf)
+#全局信息
+#网点与经纬度 124
+w=read.table("E:/笔记学习/天池比赛/最后一公里/数据/1.csv",header = FALSE,sep=",")
+w=w[-1,]
+#配送点与经纬度 9214
+w2=read.table("E:/笔记学习/天池比赛/最后一公里/数据/2.csv",header = FALSE,sep=",")
+w2=w2[-1,]
+#商户id与经纬度 598
+w3=read.table("E:/笔记学习/天池比赛/最后一公里/数据/3.csv",header = FALSE,sep=",")
+w3=w3[-1,]
+#电商订单 9214笔
+w4=read.table("E:/笔记学习/天池比赛/最后一公里/数据/4.csv",header = FALSE,sep=",")
+w4=w4[-1,]
+#oto订单 3273笔
+w5=read.table("E:/笔记学习/天池比赛/最后一公里/数据/5.csv",header = FALSE,sep=",")
+w5=w5[-1,]
+#快递员列表
+w6=read.table("E:/笔记学习/天池比赛/最后一公里/数据/6.csv",header = FALSE,sep=",")
+w6=w6[-1,]
+kdy=as.character(w6)
+q1=read.table("E:/笔记学习/天池比赛/最后一公里/结果/商家最近网点距离.csv",header = FALSE,sep=",")
+
+#函数列表
+#当前包裹量-初始化包裹-取订单过程
+num_init<-function(oid){
+oid=oid
+c1num=0
+c1oid<-0
+while((c1num+as.numeric(as.character(oid[1,]$V4)))<=140){
+#print(oid[1,]$V4) 
+c1num=c1num+as.numeric(as.character(oid[1,]$V4))
+#print(c1num) 
+if(length(c1oid)==0){
+c1oid<-oid[1,]
+#print(c1oid) 
+}else{
+c1oid<-rbind(c1oid,oid[1,])
+#print(c1oid) 
+}
+#ifelse(c1oid==0,c1oid<-oid[1,],c1oid<-rbind(c1oid,oid[1,]))
+oid=oid[-1,]
+if(length(oid$V1)==0){
+break
+}
+}
+return<-list(c1oid,oid)
+}
+#计算距离返回路程使用时间-lat纬度long经度
+dist_time<-function(longi1, lati1, longi2, lati2){
+longi1=as.numeric(as.character(longi1))
+lati1=as.numeric(as.character(lati1)) 
+longi2=as.numeric(as.character(longi2)) 
+lati2=as.numeric(as.character(lati2)) 
+delta_lati = (lati1 - lati2) / 2
+delta_longi = (longi1 - longi2) / 2
+tmp_val = (sin(3.1415926/180*delta_lati)^2) + (cos(3.1415926/180*lati1)*cos(3.1415926/180*lati2))*(sin(3.1415926/180*delta_longi)^2)
+return<-round((2*asin(tmp_val^0.5)*6378137) / (15*1000/60))
+}
+#计算停留时间
+stay_time<-function(x){
+x=as.numeric(as.character(x))
+return<-round(3*x^0.5+5)
+}
+
+#转换成距8点的分钟
+tomins<-function(time){
+time=as.character(time)
+t=as.difftime(time, format = "%H:%M", units = "mins")
+t=as.numeric(t)-480
+return<-t
+}
+
+#按照距离排序
+twd=w[1,]
+#1-8循环
+for(ii in 1:8){
+filename<-paste("E:/笔记学习/天池比赛/最后一公里/结果/聚类/",ii,".csv",sep="")
+w5=read.table(filename,header = FALSE,sep=",")
+o2oid2=w5
+t<-{}
+for(i in 1:length(o2oid2$V2)){
+begin=twd
+end=w2[which(as.character(o2oid2[i,]$V2)==as.character(w2$V1)),]
+t=c(t,dist_time(begin$V2,begin$V3,end$V2,end$V3))
+}
+o2oid2=data.frame(o2oid2,t)
+#排序
+o2oid2=o2oid2[order(o2oid2[,7]),]
+o2oid2=o2oid2[,-7]
+
+
+o2oid2$V4=tomins(o2oid2$V4)
+o2oid2$V5=tomins(o2oid2$V5)
+for(j in 1:length(w6)){
+o2oid=o2oid2
+#o2oid$V4=tomins(o2oid$V4)
+#o2oid$V5=tomins(o2oid$V5)
+#数据框排序-时间排序
+#o2oid=o2oid[order(o2oid[,4]),]
+#第一个快递员初始化送货
+re1=c(as.character(w6[length(w6)]))
+w6=w6[-length(w6)]
+#初始化包裹
+c2oid<-0
+c2oid<-o2oid[1,]
+o2oid=o2oid[-1,]
+re2=as.character(c2oid$V3)
+#初始化到达时间
+m=sqldf("select c2oid.*,q1.V2 as V7 from c2oid left join q1 on c2oid.V3=q1.V1")
+re3=as.numeric(m$V7)
+
+re4=as.numeric(as.character(c2oid$V4))
+re5=as.numeric(as.character(c2oid$V6)) 
+re6=as.character(c2oid$V1)
+#一次送货过程
+while(length(c2oid$V1)>0) {
+begin=w3[which(w3$V1==re2[length(re2)]),]
+end=w2[which(as.character(c2oid[1,]$V2)==w2$V1),]
+re2=c(re2,as.character(c2oid[1,]$V2))
+d1time=re4[length(re4)]+dist_time(begin$V2,begin$V3,end$V2,end$V3)
+re3=c(re3,d1time)
+leavetime=re3[length(re3)]+stay_time(c2oid[1,]$V6)
+re4=c(re4,leavetime)
+tmp5=as.numeric(paste("-",c2oid[1,]$V6,sep=""))
+re5=c(re5,tmp5)
+re6=c(re6,as.character(c2oid[1,]$V1))
+c2oid=c2oid[-1,]
+}
+#循环送货过程
+o2oid2<-0
+while(length(o2oid$V1)>0){
+begin=w2[which(w2$V1==re2[length(re2)]),]
+c2oid<-o2oid[1,]
+#到达下一个取货地点
+end=w3[which(w3$V1==as.character(c2oid$V3)),]
+#判断是否满足取货时间
+d1time=re4[length(re4)]+dist_time(begin$V2,begin$V3,end$V2,end$V3)
+#判断是否满足送到时间
+begin1=w3[which(w3$V1==as.character(c2oid$V3)),]
+end1=w2[which(as.character(c2oid[1,]$V2)==w2$V1),]
+d1time1=d1time+dist_time(begin1$V2,begin1$V3,end1$V2,end1$V3)
+if(d1time>=as.numeric(as.character(c2oid$V4)) & d1time<=as.numeric(as.character(c2oid$V5)) & d1time1<= as.numeric(as.character(c2oid$V5))){
+o2oid=o2oid[-1,]
+re2=c(re2,as.character(c2oid$V3))
+re3=c(re3,d1time)
+re4=c(re4,d1time)
+re5=c(re5,as.numeric(as.character(c2oid$V6)) )
+re6=c(re6,as.character(c2oid$V1))
+#一次送货过程
+while(length(c2oid$V1)>0) {
+begin=w3[which(as.character(w3$V1)==re2[length(re2)]),]
+end=w2[which(as.character(c2oid[1,]$V2)==w2$V1),]
+re2=c(re2,as.character(c2oid[1,]$V2))
+d1time=re4[length(re4)]+dist_time(begin$V2,begin$V3,end$V2,end$V3)
+re3=c(re3,d1time)
+leavetime=re3[length(re3)]+stay_time(c2oid[1,]$V6)
+re4=c(re4,leavetime)
+tmp5=as.numeric(paste("-",c2oid[1,]$V6,sep=""))
+re5=c(re5,tmp5)
+re6=c(re6,as.character(c2oid[1,]$V1))
+c2oid=c2oid[-1,]
+}
+}else{
+o2oid2<-rbind(o2oid2,o2oid[1,])
+c2oid=c2oid[-1,]
+o2oid=o2oid[-1,]
+}
+}
+re=data.frame(re1,re2,re3,re4,re5,re6)
+write.table (re, file ="E:/笔记学习/天池比赛/最后一公里/结果/o2o.csv",sep =",",row.names = F,col.names=F,quote =F,append = TRUE)
+o2oid2=na.omit(o2oid2)
+if(as.character(o2oid2)==0){
+break
+}
+}
+}
