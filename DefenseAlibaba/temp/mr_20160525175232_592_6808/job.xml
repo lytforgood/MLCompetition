@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><configuration>
+<property><name>odps.mapred.reduce.class</name><value>hadoop.TianChiMapreduce.MyReducer</value></property>
+<property><name>odps.stage.reducer.jvm.mem</name><value>0</value></property>
+<property><name>odps.mapred.map.class</name><value>hadoop.TianChiMapreduce.MyMapper</value></property>
+<property><name>odps.stage.mapper.jvm.mem</name><value>0</value></property>
+<property><name>odps.mapred.output.desc</name><value>[{"tblName":"result","partSpec":{},"label":"__default__"}]</value></property>
+<property><name>odps.stage.reducer.num</name><value>0</value></property>
+<property><name>odps.mapred.mapoutput.key.schema</name><value>str1:STRING</value></property>
+<property><name>odps.mapred.job.name</name><value>mr_20160525175232_592_6808</value></property>
+<property><name>odps.mapred.mapoutput.value.schema</name><value>str2:STRING</value></property>
+<property><name>odps.mapred.input.desc</name><value>[{"tblName":"test2","partSpec":{},"label":"__default__"}]</value></property>
+</configuration>
